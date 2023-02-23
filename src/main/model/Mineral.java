@@ -1,10 +1,7 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+// Class Declaration: Mineral with lab number, name, color, hardness, and crystal system
 
-// Class Declaration: Mineral with associated properties
 public class Mineral {
     private int lab;
     private String name;
@@ -12,14 +9,15 @@ public class Mineral {
     private int hardness;
     private String crystalSystem;
 
-    // EFFECTS: mineral has given lab number and properties
-    public Mineral() { //int lab, String name, String color, int hardness, String crystalStystem) {
+    public Mineral() {
         lab = 0;
         name = "";
         color = "";
         hardness = 0;
         crystalSystem = "";
     }
+
+    //SET methods:
 
     //MODIFIES: this
     public void setLab(int inputLab) {
@@ -41,10 +39,14 @@ public class Mineral {
         hardness = inputHardness;
     }
 
-    //MODIFIES: this
+    // MODIFIES: this
+    // EFFECTS: sets crystal system as full name from input abbreviation
     public void setCrystalSystem(String inputCrystalSystem) {
-        crystalSystem = inputCrystalSystem;
+        crystalSystem = crystalSystemName(inputCrystalSystem);
     }
+
+
+    // GET methods:
 
     public int getLab() {
         return lab;
@@ -63,38 +65,36 @@ public class Mineral {
     }
 
     public String getCrystalSystem() {
-        return crystalSystemName(crystalSystem);
-        //return crystalSystem;
+        return crystalSystem;
     }
 
     // EFFECTS: print mineral and it's properties
     public void printMineral() {
-        System.out.println("Lab: " + lab);
-        System.out.println("Name: " + name);
-        System.out.println("Color: " + color);
-        System.out.println("Hardness: " + hardness);
-        System.out.println("Crystal System: " + crystalSystem);
-        // get it to print full name
-        //System.out.println("Crystal System: " + crystalSystemName(mineralToPrint.getCrystalSystem()));
+        // stub
     }
-
-
 
     // EFFECTS: returns full name of the crystal system from input abbreviation
     public String crystalSystemName(String letter) {
         String str = letter;
-        if (letter.equals("i")) {
-            str = "isometric";
-        } else if (letter.equals("tetra")) {
-            str = "tetragonal";
-        } else if (letter.equals("tri")) {
-            str = "triclinic";
-        } else if (letter.equals("h")) {
-            str = "hexagonal";
-        } else if (letter.equals("m")) {
-            str = "monoclinic";
-        } else if (letter.equals("o")) {
-            str = "orthorhombic";
+        switch (letter) {
+            case "i":
+                str = "isometric";
+                break;
+            case "tetra":
+                str = "tetragonal";
+                break;
+            case "tri":
+                str = "triclinic";
+                break;
+            case "h":
+                str = "hexagonal";
+                break;
+            case "m":
+                str = "monoclinic";
+                break;
+            case "o":
+                str = "orthorhombic";
+                break;
         }
         return str;
     }
