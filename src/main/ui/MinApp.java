@@ -10,7 +10,6 @@ import java.util.Scanner;
 
 // Mineral studying application
 public class MinApp {
-    protected Mineral mineral;
     private int mineralsStudied;
     private static final int NUM_PROPERTIES = 5;
     private Scanner input;
@@ -40,7 +39,7 @@ public class MinApp {
                 }
             }
         }
-        System.out.println("Quit from run app");
+        System.out.println("App Quit!");
         learned.printLearnedList();
         toReview.printReviewList();
         System.exit(0);
@@ -56,10 +55,10 @@ public class MinApp {
     // EFFECTS: Print start menu options
     public void startMenu() {
         System.out.println("What would you like to do?");
-        System.out.println("s to study");
-        System.out.println("m to enter minerals");
-        System.out.println("o to organize folders");
-        System.out.println("q to quit anytime");
+        System.out.println("\ts to study");
+        System.out.println("\tm to enter minerals");
+        System.out.println("\to to organize folders");
+        System.out.println("\tq to quit anytime");
     }
 
     // EFFECTS: Takes user input from runApp() and determines next activity
@@ -70,21 +69,21 @@ public class MinApp {
         } else if (chosen.equals("m")) {
             while (!chosen.equals("q")) {
                 toReview.addToReview(addMineralPrompts());
-                System.out.println("Enter c to continue or q to return to main menu.");
+                System.out.println("Enter c to continue or m to return to main menu.");
                 chosen = input.next();
                 quit(chosen);
             }
         } else if (chosen.equals("o")) {
             while (!chosen.equals("q")) {
                 organizeFolders();
-                System.out.println("Keep organizing? c to continue, q to return to main menu.");
+                System.out.println("Keep organizing? c to continue, m to return to main menu.");
                 chosen = input.next();
                 quit(chosen);
             }
         } else if (chosen.equals("q")) {
             quitMenu();
         } else {
-            System.out.println("Invalid Input");
+            System.out.println("Invalid input");
             runApp("a");
         }
     }
@@ -123,7 +122,7 @@ public class MinApp {
             if (inName.equals(inMineral.getName())) {
                 learned.removeFromLearned(inMineral);
                 toReview.addToReview(inMineral);
-                System.out.println(inMineral.getName() + " moved to review list.");
+                System.out.println("\t" + inMineral.getName() + " moved to review list.");
                 val = true;
             }
         }
@@ -140,7 +139,7 @@ public class MinApp {
             if (inName.equals(inMineral.getName())) {
                 toReview.removeFromReview(inMineral);
                 learned.addToLearned(inMineral);
-                System.out.println(inMineral.getName() + " moved to learned list.");
+                System.out.println("\t" + inMineral.getName() + " moved to learned list.");
                 val = true;
             }
         }
@@ -211,7 +210,7 @@ public class MinApp {
         } else {
             System.out.println("Incorrect, the mineral was " + currentMin.getName());
         }
-        System.out.println("Enter c to continue studying or q to return to main menu.");
+        System.out.println("\nEnter c to continue studying or q to return to main menu.");
         selection = input.next();
         quit(selection);
         startGame();
@@ -222,11 +221,11 @@ public class MinApp {
         if (selection.equals("q")) {
             quitMenu();
         } else if (selection.equals("h")) {
-            System.out.println("Hardness: " + currentMin.getHardness());
+            System.out.println("\nHardness: " + currentMin.getHardness());
         } else if (selection.equals("cs")) {
-            System.out.println("Crystal System: " + currentMin.getCrystalSystem());
+            System.out.println("\nCrystal System: " + currentMin.getCrystalSystem());
         } else if (selection.equals("c")) {
-            System.out.println("Color: " + currentMin.getColor());
+            System.out.println("\nColor: " + currentMin.getColor());
         } else if (selection.equals("g")) {
             guessMineral(currentMin);
         }
@@ -236,6 +235,8 @@ public class MinApp {
     public void quit(String selection) {
         if (selection.equals("q")) {
             quitMenu();
+        } else if (selection.equals("m")) {
+            runApp(selection);
         }
     }
 
@@ -248,16 +249,12 @@ public class MinApp {
         int i = 0;
         while (i < NUM_PROPERTIES) {
             System.out.println(messagesList(i));
-            input = new Scanner(System.in);
-            if (input.next().equalsIgnoreCase("q")) {
-                return (nextMin);
-            } else {
-                try {
-                    setProperties(nextMin, input, i);
-                    i += 1;
-                } catch (Exception e) {
-                    System.out.println("Please enter a number");
-                }
+            Scanner input = new Scanner(System.in);
+            try {
+                setProperties(nextMin, input, i);
+                i += 1;
+            } catch (Exception e) {
+                System.out.println("Please enter a number");
             }
         }
         return (nextMin);
@@ -272,7 +269,7 @@ public class MinApp {
         messages.add("\nColor:");
         messages.add("\nHardness:");
         messages.add("\nCrystal System: "
-                + "\ni for isometric, "
+                + "\n" + "\ti for isometric, "
                 + "tetra for tetragonal, "
                 + "tri for triclinic, "
                 + "h for hexagonal, "
