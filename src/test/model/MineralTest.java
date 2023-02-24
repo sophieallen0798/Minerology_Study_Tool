@@ -12,11 +12,6 @@ public class MineralTest {
     @BeforeEach
     void runBefore() {
         testMineral = new Mineral();
-        testMineral.setLab(1);
-        testMineral.setName("A");
-        testMineral.setColor("green");
-        testMineral.setHardness(4);
-        testMineral.setCrystalSystem("isometric");
     }
 
     // Test set, get lab
@@ -71,6 +66,16 @@ public class MineralTest {
         assertEquals("hexagonal", testMineral.crystalSystemName("h"));
         testMineral.setCrystalSystem("h");
         assertEquals("hexagonal", testMineral.getCrystalSystem());
+    }
+
+    @Test
+    void testPrintMineral() {
+        testMineral.setLab(4);
+        testMineral.setName("Magnatite");
+        testMineral.setColor("black");
+        testMineral.setHardness(7);
+        testMineral.setCrystalSystem("triclinic");
+        testMineral.printMineral();
     }
 
 }

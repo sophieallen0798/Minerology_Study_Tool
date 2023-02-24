@@ -3,6 +3,9 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 // Test Folder Class
@@ -28,6 +31,18 @@ public class FolderTest {
         testMineralB.setCrystalSystem("hexagonal");
 
         testFolder = new Folder();
+    }
+
+    // Test get mineral list
+    @Test
+    void testGetMineralList() {
+        List<Mineral> minList = new ArrayList<>();
+        testFolder.addToMineralList(testMineralA);
+        testFolder.addToMineralList(testMineralB);
+        minList = testFolder.getMineralList();
+        assertEquals(testMineralA, minList.get(0));
+        assertEquals(testMineralB, minList.get(1));
+        assertEquals(2, minList.size());
     }
 
     // Test add mineral to list
@@ -111,4 +126,25 @@ public class FolderTest {
         assertTrue(testFolder.checkInMineralList(testMineralA.getName()));
         assertFalse(testFolder.checkInMineralList(testMineralB.getName()));
     }
+
+    // Test that mineral list prints as it should
+    @Test
+    void testPrintMineralList() {
+        testFolder.addToMineralList(testMineralA);
+        testFolder.printMineralList();
+        testFolder.addToMineralList(testMineralB);
+        testFolder.printMineralList();
+    }
+
+    // Test check mineral is in list
+    @Test
+    void testCheckMineralInList() {
+        assertFalse(testFolder.checkInMineralList(testMineralA.getName()));
+        testFolder.addToMineralList(testMineralA);
+        assertTrue(testFolder.checkInMineralList(testMineralA.getName()));
+        testFolder.addToMineralList(testMineralB);
+        assertTrue(testFolder.checkInMineralList(testMineralA.getName()));
+        assertTrue(testFolder.checkInMineralList(testMineralB.getName()));
+    }
+
 }

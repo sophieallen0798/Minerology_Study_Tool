@@ -26,7 +26,7 @@ public class MineralApp {
     //EFFECTS: Display start menu, get user input and sends to next activity, quit if user input == "q"
     private void runApp(String str) {
         if (!str.equals("q")) {
-            while (!str.equals("q")) {
+            while (true) {
                 startMenu();
                 input = new Scanner(System.in);
                 String choose = input.next();
@@ -116,8 +116,7 @@ public class MineralApp {
     public boolean checkInLearned(String inName) {
         boolean val = false;
         List<Mineral> learnedList = learned.getMineralList();
-        for (int i = 0; i < learnedList.size(); i++) {
-            Mineral inMineral = learnedList.get(i);
+        for (Mineral inMineral : learnedList) {
             if (inName.equals(inMineral.getName())) {
                 learned.removeFromMineralList(inMineral);
                 toReview.addToMineralList(inMineral);
@@ -157,9 +156,9 @@ public class MineralApp {
 
     // EFFECTS: Get new random mineral, start study game, continue game while user does not input "q"
     public void startGame() {
-        String selection = "";
+        String selection;
         if (toReview.mineralListNotEmpty()) {
-            while (!selection.equals("q")) {
+            while (true) {
                 Mineral currentMin = toReview.nextStudyMineral();
                 System.out.println("Mineral Number " + mineralsStudied + ":");
                 mineralsStudied += 1;
