@@ -70,7 +70,11 @@ public class Mineral {
 
     // EFFECTS: print mineral and it's properties
     public void printMineral() {
-        // stub
+        System.out.println("Lab: " + lab);
+        System.out.println("Name: " + name);
+        System.out.println("Color: " + color);
+        System.out.println("Hardness: " + hardness);
+        System.out.println("Crystal System: " + crystalSystem);
     }
 
     // EFFECTS: returns full name of the crystal system from input abbreviation
