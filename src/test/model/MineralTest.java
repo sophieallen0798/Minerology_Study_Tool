@@ -42,7 +42,7 @@ public class MineralTest {
         assertEquals(4,testMineral.getHardness());
     }
 
-    // Test set, get hardness
+    // Test set, get crystal system
     @Test
     void testCrystalSystem() {
         testMineral.setCrystalSystem("isometric");
@@ -57,6 +57,7 @@ public class MineralTest {
         assertEquals("isometric", testMineral.getCrystalSystem());
     }
 
+    // Test crystal system change name
     @Test
     void testCrystalSystemNameChange() {
         assertEquals("tetragonal", testMineral.crystalSystemName("tetra"));
@@ -68,6 +69,23 @@ public class MineralTest {
         assertEquals("hexagonal", testMineral.getCrystalSystem());
     }
 
+    // Test remaining crystal systems
+    @Test
+    void testCrystalSystemNames() {
+        assertEquals("triclinic", testMineral.crystalSystemName("tri"));
+        testMineral.setCrystalSystem("tri");
+        assertEquals("triclinic", testMineral.getCrystalSystem());
+
+        assertEquals("monoclinic", testMineral.crystalSystemName("m"));
+        testMineral.setCrystalSystem("m");
+        assertEquals("monoclinic", testMineral.getCrystalSystem());
+
+        assertEquals("orthorhombic", testMineral.crystalSystemName("o"));
+        testMineral.setCrystalSystem("o");
+        assertEquals("orthorhombic", testMineral.getCrystalSystem());
+    }
+
+    // Test print mineral
     @Test
     void testPrintMineral() {
         testMineral.setLab(4);

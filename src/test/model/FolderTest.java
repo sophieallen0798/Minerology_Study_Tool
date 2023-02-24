@@ -13,6 +13,7 @@ public class FolderTest {
     private Mineral testMineralA;
     private Mineral testMineralB;
     private Folder testFolder;
+    private Folder testFolder2;
 
     @BeforeEach
     void runBefore() {
@@ -31,6 +32,7 @@ public class FolderTest {
         testMineralB.setCrystalSystem("hexagonal");
 
         testFolder = new Folder();
+        testFolder2 = new Folder();
     }
 
     // Test get mineral list
@@ -86,6 +88,7 @@ public class FolderTest {
         assertFalse(testFolder.mineralListNotEmpty());
         testFolder.addToMineralList(testMineralA);
         assertTrue(testFolder.mineralListNotEmpty());
+        assertFalse(testFolder2.mineralListNotEmpty());
     }
 
     // Test mineral list is not empty with two elements
