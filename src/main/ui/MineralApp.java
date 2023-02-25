@@ -4,11 +4,19 @@ import model.Folder;
 import model.Mineral;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 // Application to study and keep a list of minerals
 public class MineralApp {
+    // sout colors
+    public static final String BLUE = "\u001B[34m";
+    public static final String PURPLE = "\u001B[35m";
+    public static final String YELLOW = "\u001B[33m";
+    public static final String GREEN = "\u001B[32m";
+    public static final String RED = "\u001B[31m";
+    public static final String RESET = "\u001B[0m";
 
     private int mineralsStudied;
     private static final int NUM_PROPERTIES = 5;  // number of properties in mineral class
@@ -82,25 +90,38 @@ public class MineralApp {
         } else if (chosen.equals("q")) {
             quitMenu();
         } else {
-            System.out.println("Invalid input");
+            System.out.println(RED + "Invalid input" + RESET);
             runApp("");
         }
     }
 
     // EFFECTS: Print learned folder and review folder, prompt user for name of mineral to move
     public void organizeFolders() {
-        learned.printMineralList();
-        toReview.printMineralList();
-        System.out.println("Which mineral would you like to move?");
-        String selection = input.next();
-        if (!selection.equals("q") && !selection.equals("m")) {
-            folderOptionsMenu(selection);
+        if (learned.mineralListNotEmpty() | toReview.mineralListNotEmpty()) {
+            System.out.println(BLUE + "Learned List:" + RESET);
+            if (!learned.mineralListNotEmpty()) {
+                System.out.println("(empty)");
+            }
+            learned.printMineralList();
+            System.out.println(BLUE + "Review List:" + RESET);
+            if (!toReview.mineralListNotEmpty()) {
+                System.out.println("(empty)");
+            }
+            toReview.printMineralList();
+            System.out.println("Which mineral would you like to move?");
+            String selection = input.next();
+            if (!selection.equals("q") && !selection.equals("m")) {
+                folderOptionsMenu(selection);
+            } else {
+                quit(selection);
+            }
         } else {
-            quit(selection);
+            System.out.println(RED + "Both lists are empty. Please add at least one mineral.\n" + RESET);
+            quit("m");
         }
     }
 
-    // EFFECTS: move minerals chosen by user to other folder
+    // EFFECTS: If both lists aren't empty, move minerals chosen by user to other folder, otherwise return to main menu
     public void folderOptionsMenu(String selection) {
         if (checkInLearned(selection)) {
             organizeFolders();
@@ -111,8 +132,7 @@ public class MineralApp {
         organizeFolders();
     }
 
-    // EFFECTS: Check if mineral is in learned list, if true, remove from learn and put in review
-    // else return false
+    // EFFECTS: Check if mineral is in learned list, if true, remove from learn and put in review, else return false
     public boolean checkInLearned(String inName) {
         boolean val = false;
         List<Mineral> learnedList = learned.getMineralList();
@@ -120,7 +140,7 @@ public class MineralApp {
             if (inName.equals(inMineral.getName())) {
                 learned.removeFromMineralList(inMineral);
                 toReview.addToMineralList(inMineral);
-                System.out.println("\t" + inMineral.getName() + " moved to review list.");
+                System.out.println(GREEN + "\t" + inMineral.getName() + " moved to review list." + RESET);
                 val = true;
             }
         }
@@ -137,7 +157,7 @@ public class MineralApp {
             if (inName.equals(inMineral.getName())) {
                 toReview.removeFromMineralList(inMineral);
                 learned.addToMineralList(inMineral);
-                System.out.println("\t" + inMineral.getName() + " moved to learned list.");
+                System.out.println(GREEN + "\t" + inMineral.getName() + " moved to learned list." + RESET);
                 val = true;
             }
         }
@@ -149,8 +169,8 @@ public class MineralApp {
 
     // EFFECTS: Print study options for user
     private void studyMenu() {
-        System.out.println("Select a property to view.");
-        System.out.println("c for color, " + "h for hardness, "
+        System.out.println("\nSelect a property to view.");
+        System.out.println("\tc for color, " + "h for hardness, "
                 + "cs for crystal system, " + "or g to guess mineral name");
     }
 
@@ -160,7 +180,7 @@ public class MineralApp {
         if (toReview.mineralListNotEmpty()) {
             while (true) {
                 Mineral currentMin = toReview.nextStudyMineral();
-                System.out.println("Mineral Number " + mineralsStudied + ":");
+                System.out.println("\nMineral Number " + mineralsStudied + ":");
                 mineralsStudied += 1;
                 studyMenu();
                 selection = input.next().toLowerCase();
@@ -171,7 +191,7 @@ public class MineralApp {
                 nextProperty(selection, currentMin);
             }
         } else {
-            System.out.println("Review list is empty. Please add minerals.");
+            System.out.println(RED + "Review list is empty. Please add at least one mineral.\n" + RESET);
         }
     }
 
@@ -184,7 +204,7 @@ public class MineralApp {
                 selection = input.next().toLowerCase();
                 quit(selection);
             } else if (!propertyValid(selection)) {
-                System.out.println("Please enter a valid letter.");
+                System.out.println(RED + "Please enter a valid letter." + RESET);
                 selection = input.next().toLowerCase();
                 quit(selection);
             }
@@ -198,12 +218,12 @@ public class MineralApp {
 
     // EFFECTS: Determine if user guessed mineral name correctly, give option to continue playing
     public void guessMineral(Mineral currentMin) {
-        System.out.println("Enter guess:");
+        System.out.println(YELLOW + "Enter guess:" + RESET);
         String selection = input.next().toLowerCase();
         if (selection.equals(currentMin.getName())) {
-            System.out.println("Correct!");
+            System.out.println(GREEN + "Correct!" + RESET);
         } else {
-            System.out.println("Incorrect, the mineral was " + currentMin.getName());
+            System.out.println(RED + "Incorrect, the mineral was " + RESET + currentMin.getName());
         }
         System.out.println("\nEnter c to continue studying or m to return to main menu.");
         selection = input.next().toLowerCase();
@@ -216,11 +236,11 @@ public class MineralApp {
         if (selection.equals("q") | selection.equals("m")) {
             quit(selection);
         } else if (selection.equals("h")) {
-            System.out.println("\nHardness: " + currentMin.getHardness());
+            System.out.println(PURPLE + "\nHardness: " + RESET + currentMin.getHardness());
         } else if (selection.equals("cs")) {
-            System.out.println("\nCrystal System: " + currentMin.getCrystalSystem());
+            System.out.println(PURPLE + "\nCrystal System: " + RESET + currentMin.getCrystalSystem());
         } else if (selection.equals("c")) {
-            System.out.println("\nColor: " + currentMin.getColor());
+            System.out.println(PURPLE + "\nColor: " + RESET + currentMin.getColor());
         } else if (selection.equals("g")) {
             guessMineral(currentMin);
         }
@@ -249,7 +269,7 @@ public class MineralApp {
                 setProperties(nextMin, input, i);
                 i += 1;
             } catch (Exception e) {
-                System.out.println("Please enter a number");
+                System.out.println(RED + "Please enter a number." + RESET);
             }
         }
         return (nextMin);
@@ -259,17 +279,17 @@ public class MineralApp {
     // EFFECTS: Return next prompt message for mineral input by index int
     public String messagesList(int i) {
         List<String> messages = new ArrayList<>();
-        messages.add("\nLab Number:");
-        messages.add("\nMineral Name:");
-        messages.add("\nColor:");
-        messages.add("\nHardness:");
-        messages.add("\nCrystal System: "
+        messages.add(PURPLE + "\nLab Number:" + RESET);
+        messages.add(PURPLE + "\nMineral Name:" + RESET);
+        messages.add(PURPLE + "\nColor:" + RESET);
+        messages.add(PURPLE + "\nHardness:" + RESET);
+        messages.add(PURPLE + "\nCrystal System: "
                 + "\n" + "\ti for isometric, "
                 + "tetra for tetragonal, "
                 + "tri for triclinic, "
                 + "h for hexagonal, "
                 + "m for monoclinic,  "
-                + "o for orthorhombic");
+                + "o for orthorhombic" + RESET);
         return messages.get(i);
     }
 

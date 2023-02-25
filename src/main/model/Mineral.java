@@ -8,6 +8,8 @@ public class Mineral {
     private String color;
     private int hardness;
     private String crystalSystem;
+    public static final String PURPLE = "\u001B[35m";
+    public static final String RESET = "\u001B[0m";
 
     public Mineral() {
         lab = 0;
@@ -70,11 +72,11 @@ public class Mineral {
 
     // EFFECTS: print mineral and it's properties
     public void printMineral() {
-        System.out.println("Lab: " + lab);
-        System.out.println("Name: " + name);
-        System.out.println("Color: " + color);
-        System.out.println("Hardness: " + hardness);
-        System.out.println("Crystal System: " + crystalSystem);
+        System.out.println(PURPLE + "Lab: " + RESET + lab);
+        System.out.println(PURPLE + "Name: " + RESET + name);
+        System.out.println(PURPLE + "Color: " + RESET + color);
+        System.out.println(PURPLE + "Hardness: " + RESET + hardness);
+        System.out.println(PURPLE + "Crystal System: " + RESET + crystalSystem);
     }
 
     // EFFECTS: returns full name of the crystal system from input abbreviation
