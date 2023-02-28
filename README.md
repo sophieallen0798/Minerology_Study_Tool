@@ -20,3 +20,8 @@ minerals on the review list that they created.
 - As a user, I want to be able to guess the name of a mineral based on revealed properties
 - As a user, I want to be able to move minerals from a list of minerals to review to a list of learned minerals (and 
   back).
+- As a user, when entering the crystal system of a mineral, I want the option to enter a letter code to a corresponding 
+  crystal system instead of the full name
+- As a user, when I select quit from the main menu, I want to be prompted to save my review folder and learned folder
+  as they are, or the option not to save them
+- As a user, when I open my application, I want to have the option to load the folders I have created previously

@@ -1,5 +1,7 @@
 package model;
 
+import model.exceptions.EmptyListExcepetion;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -23,8 +25,9 @@ public class Folder {
 
     // MODIFIES: this
     // EFFECTS: If list is not empty, remove specified mineral
+    //          If list is empty, throw empty list exception
     public void removeFromMineralList(Mineral min) {
-        if (mineralList.size() > 0) {
+        if (!mineralList.isEmpty()) {
             mineralList.remove(mineralList.indexOf(min));
         }
     }

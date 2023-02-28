@@ -4,7 +4,6 @@ import model.Folder;
 import model.Mineral;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -275,7 +274,6 @@ public class MineralApp {
         return (nextMin);
     }
 
-
     // EFFECTS: Return next prompt message for mineral input by index int
     public String messagesList(int i) {
         List<String> messages = new ArrayList<>();
@@ -308,6 +306,26 @@ public class MineralApp {
         } else if (i == 4) {
             m.setCrystalSystem(inpu.next().toLowerCase());
         }
+    }
+
+    public void checkInt() {
+//        String input;
+//        int inAsInt = -1;
+//        boolean isInt = false;
+//
+//        while (true) {
+//            input = this.input.next();
+//            isInt = input.matches("[0-9]+");
+//            if (isInt) {
+//                inAsInt = Integer.getInteger(input);
+//                if (inAsInt > 10 || inAsInt == 0) {
+//                    continue;
+//                }
+//            }
+//            break;
+//        }
+//    }
+
     }
 }
 
