@@ -2,7 +2,12 @@ package ui;
 
 import model.Folder;
 import model.Mineral;
+import org.json.JSONArray;
+import persistance.JsonReader;
+import persistance.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -20,14 +25,45 @@ public class MineralApp {
     private int mineralsStudied;
     private static final int NUM_PROPERTIES = 5;  // number of properties in mineral class
     private Scanner input;
-    private final Folder toReview;
-    private final Folder learned;
+    private Folder toReview;
+    private Folder learned;
+    private JsonWriter jsonWriterRev;
+    private JsonReader jsonReaderRev;
+    private JsonWriter jsonWriterLearn;
+    private JsonReader jsonReaderLearn;
+    private JSONArray jsonReview;
+    private JSONArray jsonLearned;
+    private static final String JSON_FOLDERS_R = "./data/review.json";
+    private static final String JSON_FOLDERS_L = "./data/learned.json";
 
-
+    // Initialize Folders and json writers and readers, start menu
     public MineralApp() {
-        this.learned = new Folder();
-        this.toReview = new Folder();
-        runApp("");
+        this.learned = new Folder("Learned");
+        this.toReview = new Folder("Review");
+        jsonReview = new JSONArray(toReview.getMineralList());
+        jsonLearned = new JSONArray(learned.getMineralList());
+        jsonReaderRev = new JsonReader(JSON_FOLDERS_R);
+        jsonWriterRev = new JsonWriter(JSON_FOLDERS_R);
+        jsonReaderLearn = new JsonReader(JSON_FOLDERS_L);
+        jsonWriterLearn = new JsonWriter(JSON_FOLDERS_L);
+        openMenu();
+    }
+
+    // EFFECTS: prompt use to load folders, if user input = y, load folders, if n, proceed to main menu, if neither,
+    // ask user again
+    public void openMenu() {
+        System.out.println("load folders? y for yes, n to proceed to main menu");
+        input = new Scanner(System.in);
+        String pu = input.next();
+        if (pu.equals("y")) {
+            loadFolders();
+            runApp("");
+        } else if (pu.equals("n")) {
+            runApp("");
+        } else {
+            System.out.println("Please enter y or n.");
+            openMenu();
+        }
     }
 
     //EFFECTS: Display start menu, get user input and sends to next activity, quit if user input == "q"
@@ -45,15 +81,17 @@ public class MineralApp {
                 }
             }
         }
+        System.out.println("Save folders? s to save, q to quit without saving");
+        if (input.next().equals("s")) {
+            saveFolders();
+        }
         System.out.println("App Quit!");
-        learned.printMineralList();
-        toReview.printMineralList();
         System.exit(0);
     }
 
     // EFFECTS: Quit app when prompted by user
     public void quitMenu() {
-        System.out.println("Quit?  q to quit, any other key to return to main menu");
+        System.out.println("Quit?  q to quit, m to return main menu");
         String choice = input.next().toLowerCase();
         runApp(choice);
     }
@@ -61,74 +99,73 @@ public class MineralApp {
     // EFFECTS: Print start menu options
     public void startMenu() {
         System.out.println("What would you like to do?");
-        System.out.println("\ts to study");
+        System.out.println("\tb to begin studying");
         System.out.println("\tm to enter minerals");
         System.out.println("\to to organize folders");
+        System.out.println("\tl to load folders");
+        System.out.println("\ts to save folders");
         System.out.println("\tq to quit anytime");
     }
 
     // EFFECTS: Takes user input from runApp() and determines next activity
     public void nextActivity(String chosen) {
-        if (chosen.equals("s")) {
+        if (chosen.equals("b")) {
             mineralsStudied = 1;
             startGame();
         } else if (chosen.equals("m")) {
-            while (!chosen.equals("q")) {
-                toReview.addToMineralList(addMineralPrompts());
-                System.out.println("Enter c to continue or m to return to main menu.");
-                chosen = input.next();
-                quit(chosen);
-            }
+            addMineralsActivity();
         } else if (chosen.equals("o")) {
-            while (!chosen.equals("q")) {
-                organizeFolders();
-                System.out.println("Keep organizing? c to continue, m to return to main menu.");
-                chosen = input.next();
-                quit(chosen);
-            }
+            organizeFolders(learned);
+            organizeFolders(toReview);
+            organizePrompt();
+        } else if (chosen.equals("s")) {
+            saveFolders();
+        } else if (chosen.equals("l")) {
+            loadFolders();
         } else if (chosen.equals("q")) {
-            quitMenu();
+            runApp("q");
         } else {
             System.out.println(RED + "Invalid input" + RESET);
             runApp("");
         }
     }
 
-    // EFFECTS: Print learned folder and review folder, prompt user for name of mineral to move
-    public void organizeFolders() {
+
+    // EFFECTS: Print names of minerals in folders or print empty if empty
+    public void organizeFolders(Folder folder) {
         if (learned.mineralListNotEmpty() | toReview.mineralListNotEmpty()) {
-            System.out.println(BLUE + "Learned List:" + RESET);
-            if (!learned.mineralListNotEmpty()) {
+            System.out.println(BLUE + folder.getName() + RESET);
+            if (folder.getMineralList().isEmpty()) {
                 System.out.println("(empty)");
             }
-            learned.printMineralList();
-            System.out.println(BLUE + "Review List:" + RESET);
-            if (!toReview.mineralListNotEmpty()) {
-                System.out.println("(empty)");
-            }
-            toReview.printMineralList();
-            System.out.println("Which mineral would you like to move?");
-            String selection = input.next();
-            if (!selection.equals("q") && !selection.equals("m")) {
-                folderOptionsMenu(selection);
-            } else {
-                quit(selection);
-            }
+            folder.printMineralNames();
         } else {
             System.out.println(RED + "Both lists are empty. Please add at least one mineral.\n" + RESET);
             quit("m");
         }
     }
 
+    // EFFECTS: prompt user for name of mineral to move
+    public void organizePrompt() {
+        System.out.println("Which mineral would you like to move? Enter mineral name or m to return to main menu");
+        String selection = input.next();
+        quit(selection);
+        folderOptionsMenu(selection);
+    }
+
     // EFFECTS: If both lists aren't empty, move minerals chosen by user to other folder, otherwise return to main menu
     public void folderOptionsMenu(String selection) {
-        if (checkInLearned(selection)) {
-            organizeFolders();
-        } else if (checkInReview(selection)) {
-            organizeFolders();
+        if (checkInLearned(selection) | checkInReview(selection)) {
+            organizeFolders(learned);
+            organizeFolders(toReview);
         }
+//        } else if (checkInReview(selection)) {
+//            organizeFolders();
+//        }
         System.out.println("Selected mineral is not in either folder.");
-        organizeFolders();
+        nextActivity("o");
+//        organizeFolders(learned);
+//        organizeFolders(toReview);
     }
 
     // EFFECTS: Check if mineral is in learned list, if true, remove from learn and put in review, else return false
@@ -146,8 +183,7 @@ public class MineralApp {
         return val;
     }
 
-    // EFFECTS: check if mineral is in review list, if true, remove from review and put in learn
-    // else return false
+    // EFFECTS: check if mineral is in review list, if true, remove from review and put in learn else return false
     public boolean checkInReview(String inName) {
         boolean val = false;
         List<Mineral> reviewList = toReview.getMineralList();
@@ -257,6 +293,17 @@ public class MineralApp {
 
     // ADD MINERAL METHODS:
 
+    // EFFECTS: Keep adding minerals until quit
+    public void addMineralsActivity() {
+        String chosen = "";
+        while (!chosen.equals("q")) {
+            toReview.addToMineralList(addMineralPrompts());
+            System.out.println("Enter c to continue or m to return to main menu.");
+            chosen = input.next();
+            quit(chosen);
+        }
+    }
+
     // EFFECTS: Take mineral properties as user inputs and create mineral, add created mineral to the Review list
     public Mineral addMineralPrompts() {
         Mineral nextMin = new Mineral();
@@ -298,7 +345,13 @@ public class MineralApp {
         if (i == 0) {
             m.setLab(inpu.nextInt());
         } else if (i == 1) {
-            m.setName(inpu.next());
+            String in = inpu.next();
+            if (checkName(in)) {
+                m.setName(in);
+            } else {
+                System.out.println("This mineral already exists in your lists. Please enter another name.");
+                setProperties(m, inpu, i);
+            }
         } else if (i == 2) {
             m.setColor(inpu.next());
         } else if (i == 3) {
@@ -308,24 +361,62 @@ public class MineralApp {
         }
     }
 
-    public void checkInt() {
-//        String input;
-//        int inAsInt = -1;
-//        boolean isInt = false;
-//
-//        while (true) {
-//            input = this.input.next();
-//            isInt = input.matches("[0-9]+");
-//            if (isInt) {
-//                inAsInt = Integer.getInteger(input);
-//                if (inAsInt > 10 || inAsInt == 0) {
-//                    continue;
-//                }
-//            }
-//            break;
-//        }
-//    }
+    // EFFECTS: check if mineral of input name already exists in either folder
+    public boolean checkName(String name) {
+        boolean val = true;
+        List<Mineral> reviewList = toReview.getMineralList();
+        List<Mineral> learnedList = learned.getMineralList();
 
+        for (Mineral min : reviewList) {
+            if (name.equals(min.getName())) {
+                val = false;
+            }
+        }
+        for (Mineral min : learnedList) {
+            if (name.equals(min.getName())) {
+                val = false;
+            }
+        }
+        return val;
     }
-}
 
+
+    // Save and load methods:
+
+    // SOURCE: code adapted from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
+
+    // EFFECTS: saves the review and learned folders to file
+    private void saveFolders() {
+        try {
+            jsonWriterRev.open();
+            jsonWriterRev.write(toReview);
+            jsonWriterRev.close();
+
+            System.out.println("Saved review list to " + JSON_FOLDERS_R);
+
+            jsonWriterLearn.open();
+            jsonWriterLearn.write(learned);
+            jsonWriterLearn.close();
+
+            System.out.println("Saved learned list to " + JSON_FOLDERS_L);
+
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_FOLDERS_L);
+        }
+    }
+
+    // SOURCE: code adapted from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
+    // MODIFIES: this
+    // EFFECTS: loads review folder and learned folder
+    private void loadFolders() {
+        try {
+            toReview = jsonReaderRev.read();
+            System.out.println("Loaded review list from " + JSON_FOLDERS_R);
+            learned = jsonReaderLearn.read();
+            System.out.println("Loaded learned list from " + JSON_FOLDERS_L);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_FOLDERS_L);
+        }
+    }
+
+}

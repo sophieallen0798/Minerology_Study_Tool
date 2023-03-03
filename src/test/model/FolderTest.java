@@ -31,8 +31,8 @@ public class FolderTest {
         testMineralB.setHardness(7);
         testMineralB.setCrystalSystem("hexagonal");
 
-        testFolder = new Folder();
-        testFolder2 = new Folder();
+        testFolder = new Folder("test");
+        testFolder2 = new Folder("test2");
     }
 
     // Test get mineral list

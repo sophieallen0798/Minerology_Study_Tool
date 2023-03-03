@@ -2,6 +2,8 @@ package model;
 
 // Class Declaration: Mineral with lab number, name, color, hardness, and crystal system
 
+import org.json.JSONObject;
+
 public class Mineral {
     private int lab;
     private String name;
@@ -104,4 +106,15 @@ public class Mineral {
         }
         return str;
     }
+
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("lab", lab);
+        json.put("name", name);
+        json.put("color", color);
+        json.put("hardness", hardness);
+        json.put("crystalSystem", crystalSystem);
+        return json;
+    }
+
 }

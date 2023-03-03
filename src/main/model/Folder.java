@@ -1,16 +1,25 @@
 package model;
 
-import model.exceptions.EmptyListExcepetion;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+// Class Declaration
 public class Folder {
     protected List<Mineral> mineralList;
+    protected String name;
 
-    public Folder() {
+    // EFFECTS:
+    public Folder(String name) {
+        this.name = name;
         this.mineralList = new ArrayList<>();
+    }
+
+    public String getName() {
+        return name;
     }
 
     public List getMineralList() {
@@ -39,6 +48,12 @@ public class Folder {
         }
     }
 
+    public void printMineralNames() {
+        for (Mineral mineral : mineralList) {
+            System.out.println(mineral.getName());
+        }
+    }
+
     // EFFECTS: Check if mineral is in list
     public boolean checkInMineralList(String minName) {
         boolean value = false;
@@ -62,6 +77,32 @@ public class Folder {
         int randIndex = rand.nextInt(mineralList.size());
         Mineral selectedMineral = mineralList.get(randIndex);
         return selectedMineral;
+    }
+
+//    public JSONArray toJsonA() {
+//        JSONArray jsonFolder = new JSONArray();
+//        jsonFolder.putAll(mineralList);
+//        return jsonFolder;
+//    }
+
+
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("minerals", mineralsToJson());
+        return json;
+    }
+
+    // EFFECTS: returns minerals in this folder as a JSON array
+
+    private JSONArray mineralsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Mineral m : mineralList) {
+            jsonArray.put(m.toJson());
+        }
+
+        return jsonArray;
     }
 
 }
