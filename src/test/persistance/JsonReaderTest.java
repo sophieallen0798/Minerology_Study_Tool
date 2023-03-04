@@ -11,10 +11,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
-// tests adapted from:
+// Class and methods adapted from:
 // SOURCE: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
+
+// Test class for json reader methods
 public class JsonReaderTest {
 
+    // Test attempt to read a file that doesn't exist, IOException expected, fail if not caught
     @Test
     void testReadFileDNE() {
         JsonReader reader = new JsonReader("./data/fileDNE.json");
@@ -26,6 +29,7 @@ public class JsonReaderTest {
         }
     }
 
+    // Test reading a file with an empty folder, IOException not expected, fail if thrown
     @Test
     void testEmptyFolder() {
         JsonReader reader = new JsonReader("./data/testReaderEmptyFolder.json");
@@ -37,6 +41,7 @@ public class JsonReaderTest {
         }
     }
 
+    // Test reading a general folder from a file - fail if exception is thrown
     @Test
     void testReaderNormalFolder() {
         JsonReader reader = new JsonReader("./data/testReaderNormalFolder.json");
@@ -45,9 +50,10 @@ public class JsonReaderTest {
             assertEquals("review", folder.getName());
             List<Mineral> mineralList = folder.getMineralList();
             assertEquals(2, mineralList.size());
-            Mineral min0 = mineralList.get(0);
-            assertEquals("mica", min0.getName());
-            assertEquals("mica", min0.getName());
+            Mineral min1 = mineralList.get(0);
+            Mineral min2 = mineralList.get(1);
+            assertEquals("mica", min1.getName());
+            assertEquals("quartz", min2.getName());
 
         } catch (IOException e) {
             fail("Couldn't read non-empty folder from file");

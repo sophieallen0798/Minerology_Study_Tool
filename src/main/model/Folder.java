@@ -41,18 +41,6 @@ public class Folder {
         }
     }
 
-    // EFFECTS: Print all minerals in list
-    public void printMineralList() {
-        for (Mineral mineral : mineralList) {
-            mineral.printMineral();
-        }
-    }
-
-    public void printMineralNames() {
-        for (Mineral mineral : mineralList) {
-            System.out.println(mineral.getName());
-        }
-    }
 
     // EFFECTS: Check if mineral is in list
     public boolean checkInMineralList(String minName) {
@@ -79,13 +67,7 @@ public class Folder {
         return selectedMineral;
     }
 
-//    public JSONArray toJsonA() {
-//        JSONArray jsonFolder = new JSONArray();
-//        jsonFolder.putAll(mineralList);
-//        return jsonFolder;
-//    }
-
-
+    // EFFECTS: returns this as a jason object
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("name", name);
@@ -94,14 +76,11 @@ public class Folder {
     }
 
     // EFFECTS: returns minerals in this folder as a JSON array
-
     private JSONArray mineralsToJson() {
         JSONArray jsonArray = new JSONArray();
-
         for (Mineral m : mineralList) {
             jsonArray.put(m.toJson());
         }
-
         return jsonArray;
     }
 

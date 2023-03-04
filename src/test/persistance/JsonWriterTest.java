@@ -11,14 +11,16 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.fail;
 
-// tests adapted from:
+// Class and methods adapted from:
 // SOURCE: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
 
+// Test class for jason writer
 public class JsonWriterTest {
     private Folder folder;
     private Mineral testMin1;
     private Mineral testMin2;
 
+    // Create new folder and 2 minerals, specify mineral names
     @BeforeEach
     void runBefore() {
         folder = new Folder("review");
@@ -29,6 +31,7 @@ public class JsonWriterTest {
 
     }
 
+    // Test write to an invalid file, expect IOException, if not caught, fail
     @Test
     void testWriterInvalidFile() {
         try {
@@ -40,6 +43,7 @@ public class JsonWriterTest {
         }
     }
 
+    // Test write to empty folder, expect that exception is not thrown, fail if thrown
     @Test
     void testWriterEmptyFolder() {
         try {
@@ -57,6 +61,7 @@ public class JsonWriterTest {
         }
     }
 
+    // Test write to general folder, folder has 2 minerals, exception not expected, fail if thrown
     @Test
     void testWriterNormalFolder() {
         try {

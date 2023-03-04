@@ -72,15 +72,6 @@ public class Mineral {
         return crystalSystem;
     }
 
-    // EFFECTS: print mineral and it's properties
-    public void printMineral() {
-        System.out.println(PURPLE + "Lab: " + RESET + lab);
-        System.out.println(PURPLE + "Name: " + RESET + name);
-        System.out.println(PURPLE + "Color: " + RESET + color);
-        System.out.println(PURPLE + "Hardness: " + RESET + hardness);
-        System.out.println(PURPLE + "Crystal System: " + RESET + crystalSystem);
-    }
-
     // EFFECTS: returns full name of the crystal system from input abbreviation
     public String crystalSystemName(String letter) {
         String str = letter;
@@ -107,6 +98,7 @@ public class Mineral {
         return str;
     }
 
+    // EFFECTS: returns this as a jason object
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("lab", lab);

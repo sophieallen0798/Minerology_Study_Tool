@@ -85,15 +85,4 @@ public class MineralTest {
         assertEquals("orthorhombic", testMineral.getCrystalSystem());
     }
 
-    // Test print mineral
-    @Test
-    void testPrintMineral() {
-        testMineral.setLab(4);
-        testMineral.setName("Magnatite");
-        testMineral.setColor("black");
-        testMineral.setHardness(7);
-        testMineral.setCrystalSystem("triclinic");
-        testMineral.printMineral();
-    }
-
 }

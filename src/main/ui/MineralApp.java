@@ -36,7 +36,7 @@ public class MineralApp {
     private static final String JSON_FOLDERS_R = "./data/review.json";
     private static final String JSON_FOLDERS_L = "./data/learned.json";
 
-    // Initialize Folders and json writers and readers, start menu
+    // EFFECTS: Initialize Folders and json writers and readers, start menu
     public MineralApp() {
         this.learned = new Folder("Learned");
         this.toReview = new Folder("Review");
@@ -102,6 +102,7 @@ public class MineralApp {
         System.out.println("\tb to begin studying");
         System.out.println("\tm to enter minerals");
         System.out.println("\to to organize folders");
+        System.out.println("\tp to view all minerals");
         System.out.println("\tl to load folders");
         System.out.println("\ts to save folders");
         System.out.println("\tq to quit anytime");
@@ -124,6 +125,11 @@ public class MineralApp {
             loadFolders();
         } else if (chosen.equals("q")) {
             runApp("q");
+        } else if (chosen.equals("p")) {
+            System.out.println("\nReview Folder");
+            printFolders(toReview);
+            System.out.println("\nLearned Folder");
+            printFolders(learned);
         } else {
             System.out.println(RED + "Invalid input" + RESET);
             runApp("");
@@ -131,18 +137,60 @@ public class MineralApp {
     }
 
 
-    // EFFECTS: Print names of minerals in folders or print empty if empty
+    // EFFECTS: Calls method to print names of minerals in folders or print empty if empty
     public void organizeFolders(Folder folder) {
         if (learned.mineralListNotEmpty() | toReview.mineralListNotEmpty()) {
             System.out.println(BLUE + folder.getName() + RESET);
             if (folder.getMineralList().isEmpty()) {
                 System.out.println("(empty)");
             }
-            folder.printMineralNames();
+            printMineralNames(folder);
         } else {
             System.out.println(RED + "Both lists are empty. Please add at least one mineral.\n" + RESET);
             quit("m");
         }
+    }
+
+    // EFFECTS: Prints minerals in folder specified by user
+    public void printFolders(Folder f) {
+        System.out.printf("%13s %6s %10s %10s %18s\n", "Name", "Lab", "Color", "Hardness", "Crystal System");
+        List<Mineral> minList = f.getMineralList();
+        for (Mineral m : minList) {
+            String name = m.getName();
+            int lab = m.getLab();
+            String color = m.getColor();
+            int hardness = m.getHardness();
+            String cs = m.getCrystalSystem();
+
+            System.out.printf("%13s %6s %9s %10s %18s\n", name, lab, color, hardness, cs);
+
+        }
+    }
+
+    // EFFECTS: Print names of minerals
+    // EFFECTS: Print all minerals in list
+    public void printMineralList(Folder folder) {
+        List<Mineral> mineralList = folder.getMineralList();
+        for (Mineral mineral : mineralList) {
+            printMineral(mineral);
+        }
+    }
+
+    // EFFECTS: Print names of all minerals in provided folder
+    public void printMineralNames(Folder folder) {
+        List<Mineral> mineralList = folder.getMineralList();
+        for (Mineral mineral : mineralList) {
+            System.out.println(mineral.getName());
+        }
+    }
+
+    // EFFECTS: Print mineral and it's properties
+    public void printMineral(Mineral m) {
+        System.out.println(PURPLE + "Lab: " + RESET + m.getLab());
+        System.out.println(PURPLE + "Name: " + RESET + m.getName());
+        System.out.println(PURPLE + "Color: " + RESET + m.getColor());
+        System.out.println(PURPLE + "Hardness: " + RESET + m.getHardness());
+        System.out.println(PURPLE + "Crystal System: " + RESET + m.getCrystalSystem());
     }
 
     // EFFECTS: prompt user for name of mineral to move

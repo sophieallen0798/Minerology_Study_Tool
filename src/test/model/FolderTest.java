@@ -2,6 +2,7 @@ package model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.w3c.dom.ls.LSOutput;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -130,14 +131,6 @@ public class FolderTest {
         assertFalse(testFolder.checkInMineralList(testMineralB.getName()));
     }
 
-    // Test that mineral list prints as it should
-    @Test
-    void testPrintMineralList() {
-        testFolder.addToMineralList(testMineralA);
-        testFolder.printMineralList();
-        testFolder.addToMineralList(testMineralB);
-        testFolder.printMineralList();
-    }
 
     // Test check mineral is in list
     @Test
@@ -149,5 +142,6 @@ public class FolderTest {
         assertTrue(testFolder.checkInMineralList(testMineralA.getName()));
         assertTrue(testFolder.checkInMineralList(testMineralB.getName()));
     }
+
 
 }
