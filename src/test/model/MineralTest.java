@@ -2,7 +2,8 @@ package model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 // Test Mineral class methods
 public class MineralTest {
@@ -18,35 +19,35 @@ public class MineralTest {
     @Test
     void testLab() {
         testMineral.setLab(1);
-        assertEquals(1,testMineral.getLab());
+        assertEquals(1, testMineral.getLab());
     }
 
     // Test set, get name
     @Test
     void testName() {
         testMineral.setName("Mica");
-        assertEquals("Mica",testMineral.getName());
+        assertEquals("Mica", testMineral.getName());
     }
 
     // Test set, get color
     @Test
     void testColor() {
         testMineral.setColor("Silver");
-        assertEquals("Silver",testMineral.getColor());
+        assertEquals("Silver", testMineral.getColor());
     }
 
     // Test set, get hardness
     @Test
     void testHardness() {
         testMineral.setHardness(4);
-        assertEquals(4,testMineral.getHardness());
+        assertEquals(4, testMineral.getHardness());
     }
 
     // Test set, get crystal system
     @Test
     void testCrystalSystem() {
         testMineral.setCrystalSystem("isometric");
-        assertEquals("isometric",testMineral.getCrystalSystem());
+        assertEquals("isometric", testMineral.getCrystalSystem());
     }
 
     // Test get crystal system name

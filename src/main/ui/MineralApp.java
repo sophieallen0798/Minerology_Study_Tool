@@ -126,16 +126,12 @@ public class MineralApp {
         } else if (chosen.equals("q")) {
             runApp("q");
         } else if (chosen.equals("p")) {
-            System.out.println("\nReview Folder");
-            printFolders(toReview);
-            System.out.println("\nLearned Folder");
-            printFolders(learned);
+            printFolders();
         } else {
             System.out.println(RED + "Invalid input" + RESET);
             runApp("");
         }
     }
-
 
     // EFFECTS: Calls method to print names of minerals in folders or print empty if empty
     public void organizeFolders(Folder folder) {
@@ -151,8 +147,16 @@ public class MineralApp {
         }
     }
 
+    // Effects: Print labeled review and learned folders
+    public void printFolders() {
+        System.out.println("\nReview Folder");
+        printFoldersInColumns(toReview);
+        System.out.println("\nLearned Folder");
+        printFoldersInColumns(learned);
+    }
+
     // EFFECTS: Prints minerals in folder specified by user
-    public void printFolders(Folder f) {
+    public void printFoldersInColumns(Folder f) {
         System.out.printf("%13s %6s %10s %10s %18s\n", "Name", "Lab", "Color", "Hardness", "Crystal System");
         List<Mineral> minList = f.getMineralList();
         for (Mineral m : minList) {
@@ -163,12 +167,10 @@ public class MineralApp {
             String cs = m.getCrystalSystem();
 
             System.out.printf("%13s %6s %9s %10s %18s\n", name, lab, color, hardness, cs);
-
         }
     }
 
-    // EFFECTS: Print names of minerals
-    // EFFECTS: Print all minerals in list
+    // EFFECTS: Print names of minerals in folder
     public void printMineralList(Folder folder) {
         List<Mineral> mineralList = folder.getMineralList();
         for (Mineral mineral : mineralList) {
@@ -176,7 +178,7 @@ public class MineralApp {
         }
     }
 
-    // EFFECTS: Print names of all minerals in provided folder
+    // EFFECTS: Print names of all minerals in given folder
     public void printMineralNames(Folder folder) {
         List<Mineral> mineralList = folder.getMineralList();
         for (Mineral mineral : mineralList) {
@@ -207,13 +209,8 @@ public class MineralApp {
             organizeFolders(learned);
             organizeFolders(toReview);
         }
-//        } else if (checkInReview(selection)) {
-//            organizeFolders();
-//        }
         System.out.println("Selected mineral is not in either folder.");
         nextActivity("o");
-//        organizeFolders(learned);
-//        organizeFolders(toReview);
     }
 
     // EFFECTS: Check if mineral is in learned list, if true, remove from learn and put in review, else return false
