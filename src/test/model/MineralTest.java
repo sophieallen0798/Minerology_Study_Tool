@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class MineralTest {
     private Mineral testMineral;
 
-
+    // Create new test mineral before each test
     @BeforeEach
     void runBefore() {
         testMineral = new Mineral();
@@ -29,11 +29,25 @@ public class MineralTest {
         assertEquals("Mica", testMineral.getName());
     }
 
+    // Test set, get lustre
+    @Test
+    void testLustre() {
+        testMineral.setLustre("vitreous");
+        assertEquals("vitreous", testMineral.getLustre());
+    }
+
     // Test set, get color
     @Test
     void testColor() {
         testMineral.setColor("Silver");
         assertEquals("Silver", testMineral.getColor());
+    }
+
+    // Test set, get streak
+    @Test
+    void testStreak() {
+        testMineral.setStreak("white");
+        assertEquals("white", testMineral.getStreak());
     }
 
     // Test set, get hardness
@@ -43,11 +57,46 @@ public class MineralTest {
         assertEquals(4, testMineral.getHardness());
     }
 
+    // Test set, get specific gravity
+    @Test
+    void testSpecificGravity() {
+        testMineral.setSpecificGravity(2.43);
+        assertEquals(2.43, testMineral.getSpecificGravity());
+    }
+
+    // Test set, get cleavage
+    @Test
+    void testCleavage() {
+        testMineral.setCleavage("basal");
+        assertEquals("basal", testMineral.getCleavage());
+    }
+
+    // Test set, get fracture
+    @Test
+    void testFracture() {
+        testMineral.setFracture("sheets");
+        assertEquals("sheets", testMineral.getFracture());
+    }
+
+    // Test set, get habit
+    @Test
+    void testHabit() {
+        testMineral.setHabit("flakey");
+        assertEquals("flakey", testMineral.getHabit());
+    }
+
     // Test set, get crystal system
     @Test
     void testCrystalSystem() {
         testMineral.setCrystalSystem("isometric");
         assertEquals("isometric", testMineral.getCrystalSystem());
+    }
+
+    // Test set, get other
+    @Test
+    void testOther() {
+        testMineral.setOther("no acid reaction");
+        assertEquals("no acid reaction", testMineral.getOther());
     }
 
     // Test get crystal system name

@@ -7,12 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-// Class Declaration
+// Folder objects consists of a name and a list of minerals
 public class Folder {
     protected List<Mineral> mineralList;
     protected String name;
 
-    // EFFECTS:
+    // EFFECTS: Constructs a folder with a name and list of minerals
     public Folder(String name) {
         this.name = name;
         this.mineralList = new ArrayList<>();
@@ -22,12 +22,12 @@ public class Folder {
         return name;
     }
 
-    public List getMineralList() {
+    public List<Mineral> getMineralList() {
         return mineralList;
     }
 
     // MODIFIES: this
-    // EFFECTS: Add mineral list
+    // EFFECTS: Add mineral to list
     public void addToMineralList(Mineral mineral) {
         mineralList.add(mineral);
     }
@@ -37,10 +37,9 @@ public class Folder {
     //          If list is empty, throw empty list exception
     public void removeFromMineralList(Mineral min) {
         if (!mineralList.isEmpty()) {
-            mineralList.remove(mineralList.indexOf(min));
+            mineralList.remove(min);
         }
     }
-
 
     // EFFECTS: Check if mineral is in list
     public boolean checkInMineralList(String minName) {
@@ -67,7 +66,7 @@ public class Folder {
         return selectedMineral;
     }
 
-    // EFFECTS: returns this as a jason object
+    // EFFECTS: Returns this as a jason object
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("name", name);
@@ -75,7 +74,7 @@ public class Folder {
         return json;
     }
 
-    // EFFECTS: returns minerals in this folder as a JSON array
+    // EFFECTS: Returns minerals in this folder as a JSON array
     private JSONArray mineralsToJson() {
         JSONArray jsonArray = new JSONArray();
         for (Mineral m : mineralList) {

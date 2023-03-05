@@ -2,7 +2,6 @@ package ui;
 
 import model.Folder;
 import model.Mineral;
-import org.json.JSONArray;
 import persistance.JsonReader;
 import persistance.JsonWriter;
 
@@ -23,25 +22,21 @@ public class MineralApp {
     public static final String RESET = "\u001B[0m";
 
     private int mineralsStudied;
-    private static final int NUM_PROPERTIES = 12;  // number of properties in mineral class
+    private static final int NUM_PROPERTIES = 12;  // number of fields in mineral class
     private Scanner input;
     private Folder toReview;
     private Folder learned;
-    private JsonWriter jsonWriterRev;
-    private JsonReader jsonReaderRev;
-    private JsonWriter jsonWriterLearn;
-    private JsonReader jsonReaderLearn;
-    private JSONArray jsonReview;
-    private JSONArray jsonLearned;
+    private final JsonWriter jsonWriterRev;
+    private final JsonReader jsonReaderRev;
+    private final JsonWriter jsonWriterLearn;
+    private final JsonReader jsonReaderLearn;
     private static final String JSON_FOLDERS_R = "./data/review.json";
     private static final String JSON_FOLDERS_L = "./data/learned.json";
 
-    // EFFECTS: Initialize Folders and json writers and readers, start menu
-    public MineralApp() {
+    // EFFECTS: Initialize Folders and json writers and readers, goes to open menu
+    public MineralApp() throws FileNotFoundException {
         this.learned = new Folder("Learned");
         this.toReview = new Folder("Review");
-        jsonReview = new JSONArray(toReview.getMineralList());
-        jsonLearned = new JSONArray(learned.getMineralList());
         jsonReaderRev = new JsonReader(JSON_FOLDERS_R);
         jsonWriterRev = new JsonWriter(JSON_FOLDERS_R);
         jsonReaderLearn = new JsonReader(JSON_FOLDERS_L);
@@ -49,10 +44,10 @@ public class MineralApp {
         openMenu();
     }
 
-    // EFFECTS: prompt use to load folders, if user input = y, load folders, if n, proceed to main menu, if neither,
+    // EFFECTS: Prompt user to load folders, if user input = y, load folders, if n, proceed to main menu, if neither,
     // ask user again
     public void openMenu() {
-        System.out.println("load folders? y for yes, n to proceed to main menu");
+        System.out.println("Load folders? y for yes, n to proceed to main menu");
         input = new Scanner(System.in);
         String pu = input.next();
         if (pu.equals("y")) {
@@ -66,7 +61,7 @@ public class MineralApp {
         }
     }
 
-    //EFFECTS: Display start menu, get user input and sends to next activity, quit if user input == "q"
+    //EFFECTS: Display start menu, get user input and sends to next activity, if user input == "q" prompt to save, quit
     private void runApp(String str) {
         if (!str.equals("q")) {
             while (true) {
@@ -145,16 +140,6 @@ public class MineralApp {
         }
     }
 
-
-    // EFFECTS: Print mineral and it's properties
-//    public void printMineral(Mineral m) {
-//        System.out.println(PURPLE + "Lab: " + RESET + m.getLab());
-//        System.out.println(PURPLE + "Name: " + RESET + m.getName());
-//        System.out.println(PURPLE + "Color: " + RESET + m.getColor());
-//        System.out.println(PURPLE + "Hardness: " + RESET + m.getHardness());
-//        System.out.println(PURPLE + "Crystal System: " + RESET + m.getCrystalSystem());
-//    }
-
     // EFFECTS: prompt user for name of mineral to move
     public void organizePrompt() {
         organizeFolders(learned);
@@ -177,10 +162,8 @@ public class MineralApp {
         organizePrompt();
     }
 
-
-    // EFFECTS: Check if mineral is in learned list, if true, remove from learned and put in review else return false
-    public boolean checkInLearned(String inName) {
-        boolean val = false;
+    // EFFECTS: Remove mineral from learned and put in review
+    public void checkInLearned(String inName) {
         List<Mineral> reviewList = learned.getMineralList();
         for (int i = 0; i < learned.getMineralList().size(); i++) {
             Mineral inMineral = reviewList.get(i);
@@ -188,15 +171,12 @@ public class MineralApp {
                 learned.removeFromMineralList(inMineral);
                 toReview.addToMineralList(inMineral);
                 System.out.println(GREEN + "\t" + inMineral.getName() + " moved to review list." + RESET);
-                val = true;
             }
         }
-        return val;
     }
 
-    // EFFECTS: check if mineral is in review list, if true, remove from review and put in learn else return false
-    public boolean checkInReview(String inName) {
-        boolean val = false;
+    // EFFECTS: Remove mineral from review and put in learn
+    public void checkInReview(String inName) {
         List<Mineral> reviewList = toReview.getMineralList();
         for (int i = 0; i < toReview.getMineralList().size(); i++) {
             Mineral inMineral = reviewList.get(i);
@@ -204,10 +184,8 @@ public class MineralApp {
                 toReview.removeFromMineralList(inMineral);
                 learned.addToMineralList(inMineral);
                 System.out.println(GREEN + "\t" + inMineral.getName() + " moved to learned list." + RESET);
-                val = true;
             }
         }
-        return val;
     }
 
     // EFFECTS: Check if given mineral is in given folder
@@ -218,12 +196,13 @@ public class MineralApp {
             Mineral inMineral = mineralList.get(i);
             if (inName.equals(inMineral.getName())) {
                 val = true;
+                break;
             }
         }
         return val;
     }
 
-    // PRINT methods:
+    // PRINT METHODS:
 
     // Effects: Print labeled review and learned folders
     public void printFolders() {
@@ -233,9 +212,9 @@ public class MineralApp {
         printFoldersInColumns(learned);
     }
 
-    // EFFECTS: Prints minerals in folder specified by user
+    // EFFECTS: Prints minerals in given folder
     public void printFoldersInColumns(Folder f) {
-        System.out.printf(PURPLE + "%13s %6s %10s %10s %10s %6s %6s %10s %10s %10s %18s %18s\n", "Name", "Lab",
+        System.out.printf(PURPLE + "%13s %6s %10s %10s %10s %8s %16s %10s %10s %10s %18s %18s\n", "Name", "Lab",
                 "Lustre", "Color", "Streak", "Hardness", "Specific Gravity", "Cleavage", "Fracture", "Habit",
                 "Crystal System", "Other" + RESET);
         List<Mineral> minList = f.getMineralList();
@@ -253,18 +232,10 @@ public class MineralApp {
             String cs = m.getCrystalSystem();
             String o = m.getOther();
 
-            System.out.printf("%13s %6d %10s %10s %10s %6d %.2f %10s %10s %10s %18s %18s\n",
+            System.out.printf("%13s %6d %10s %10s %10s %8d %16.2f %10s %10s %10s %18s %18s\n",
                     name, lab, lustre, color, s, hardness, sg, cleavage, fracture, habit, cs, o);
         }
     }
-
-    // EFFECTS: Print names of minerals in folder
-//    public void printMineralList(Folder folder) {
-//        List<Mineral> mineralList = folder.getMineralList();
-//        for (Mineral mineral : mineralList) {
-//            printMineral(mineral);
-//        }
-//    }
 
     // EFFECTS: Print names of all minerals in given folder
     public void printMineralNames(Folder folder) {
@@ -276,7 +247,7 @@ public class MineralApp {
 
     //STUDY METHODS:
 
-    // EFFECTS: Print study options for user
+    // EFFECTS: Print study menu options for user
     private void studyMenu() {
         System.out.println("\nSelect a property to view.");
         System.out.println("l for lustre, " + "co for color, " + "s for streak, " + "har for hardness, "
@@ -314,21 +285,21 @@ public class MineralApp {
                 selection = input.next().toLowerCase();
                 quit(selection);
             } else if (!propertyValid(selection)) {
-                System.out.println(RED + "Please enter a valid letter." + RESET);
+                System.out.println(RED + "Please enter a valid property code." + RESET);
                 selection = input.next().toLowerCase();
                 quit(selection);
             }
         }
     }
 
-    // EFFECTS: Check if letter entered by user is valid
+    // EFFECTS: Check if letter entered by user is valid, valid inputs are ones corresponding to mineral properties
     public boolean propertyValid(String str) {
         return str.equals("g") | str.equals("l") | str.equals("co") | str.equals("s") | str.equals("har")
                 | str.equals("sp") | str.equals("cl") | str.equals("f") | str.equals("hab") | str.equals("cs")
                 | str.equals("o");
     }
 
-    // EFFECTS: Determine if user guessed mineral name correctly, give option to continue playing
+    // EFFECTS: Determine if user guessed mineral name correctly, give option to continue playing or return to menu
     public void guessMineral(Mineral currentMin) {
         System.out.println(YELLOW + "Enter guess:" + RESET);
         String selection = input.next().toLowerCase();
@@ -343,7 +314,7 @@ public class MineralApp {
         startGame();
     }
 
-    // EFFECTS: Display properties specified by user input letter
+    // EFFECTS: Display properties specified by user input
     @SuppressWarnings("methodlength")
     public void continueGame(String selection, Mineral currentMin) {
         if (selection.equals("q") | selection.equals("m")) {
@@ -373,7 +344,7 @@ public class MineralApp {
         }
     }
 
-    // EFFECTS: If selection is q, go to quit menu, if not, do nothing
+    // EFFECTS: If selection is q, go to quit menu, if m, go to main menu, else do nothing
     public void quit(String selection) {
         if (selection.equals("q")) {
             quitMenu();
@@ -381,7 +352,6 @@ public class MineralApp {
             runApp(selection);
         }
     }
-
 
     // ADD MINERAL METHODS:
 
@@ -437,7 +407,6 @@ public class MineralApp {
         return messages.get(i);
     }
 
-
     // MODIFIES: Mineral
     // EFFECTS: Sets specified property of the given mineral
     @SuppressWarnings("methodlength")
@@ -469,6 +438,7 @@ public class MineralApp {
         }
     }
 
+    // EFFECTS: If name is already in the list, prompt user to enter a new name
     public void nameProcess(Mineral m, Scanner inpu, int i) {
         String in = inpu.next();
         if (checkName(in)) {
@@ -479,7 +449,7 @@ public class MineralApp {
         }
     }
 
-    // EFFECTS: check if mineral of input name already exists in either folder
+    // EFFECTS: Check if mineral of input name already exists in either folder, return false if not in either
     public boolean checkName(String name) {
         boolean val = true;
         List<Mineral> reviewList = toReview.getMineralList();
@@ -488,22 +458,22 @@ public class MineralApp {
         for (Mineral min : reviewList) {
             if (name.equals(min.getName())) {
                 val = false;
+                break;
             }
         }
         for (Mineral min : learnedList) {
             if (name.equals(min.getName())) {
                 val = false;
+                break;
             }
         }
         return val;
     }
 
+    // SAVE and LOAD methods:
+    // SOURCE: Code adapted from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
 
-    // Save and load methods:
-
-    // SOURCE: code adapted from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
-
-    // EFFECTS: saves the review and learned folders to file
+    // EFFECTS: Saves the review and learned folders to file
     private void saveFolders() {
         try {
             jsonWriterRev.open();
@@ -523,7 +493,7 @@ public class MineralApp {
         }
     }
 
-    // SOURCE: code adapted from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
+    // SOURCE: Code adapted from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
     // MODIFIES: this
     // EFFECTS: loads review folder and learned folder
     private void loadFolders() {
@@ -536,5 +506,4 @@ public class MineralApp {
             System.out.println("Unable to read from file: " + JSON_FOLDERS_L);
         }
     }
-
 }

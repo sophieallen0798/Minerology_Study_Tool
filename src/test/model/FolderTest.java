@@ -3,7 +3,6 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -15,6 +14,7 @@ public class FolderTest {
     private Folder testFolder;
     private Folder testFolder2;
 
+    // Before each run, make 2 test minerals and 2 test folders
     @BeforeEach
     void runBefore() {
         testMineralA = new Mineral();
@@ -38,7 +38,7 @@ public class FolderTest {
     // Test get mineral list
     @Test
     void testGetMineralList() {
-        List<Mineral> minList = new ArrayList<>();
+        List<Mineral> minList;
         testFolder.addToMineralList(testMineralA);
         testFolder.addToMineralList(testMineralB);
         minList = testFolder.getMineralList();

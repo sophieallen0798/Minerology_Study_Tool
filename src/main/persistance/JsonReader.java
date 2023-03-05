@@ -11,37 +11,36 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
-// SOURCE: code adapted from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
+// SOURCE: Code adapted from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
 
 // Reader that reads folders from JSON data stored in learned and review files
 public class JsonReader {
     private String source;
 
-    // EFFECTS: constructs reader to read from source file
+    // EFFECTS: Constructs reader to read from source file
     public JsonReader(String source) {
         this.source = source;
     }
 
-    // EFFECTS: reads folder from file, returns folder
-    // throws IOException if an error occurs reading data from file
+    // EFFECTS: Reads folder from file, returns folder, throws IOException if an error occurs reading data from file
     public Folder read() throws IOException {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
         return parseFolder(jsonObject);
     }
 
-    // EFFECTS: reads source file as string, returns the string
+    // EFFECTS: Reads source file as string, returns the string
     private String readFile(String source) throws IOException {
         StringBuilder contentBuilder = new StringBuilder();
 
         try (Stream<String> stream = Files.lines(Paths.get(source), StandardCharsets.UTF_8)) {
-            stream.forEach(s -> contentBuilder.append(s));
+            stream.forEach(contentBuilder::append);
         }
 
         return contentBuilder.toString();
     }
 
-    // EFFECTS: parses folder from JSON object and returns the folder
+    // EFFECTS: Parses folder from JSON object and returns the folder
     private Folder parseFolder(JSONObject jsonObject) {
         String folderName = jsonObject.getString("name");
         Folder folder = new Folder(folderName);
@@ -50,7 +49,7 @@ public class JsonReader {
     }
 
     // MODIFIES: folder
-    // EFFECTS: parses minerals from JSON object and adds the minerals to the folder
+    // EFFECTS: Parses minerals from JSON object and adds the minerals to the folder
     private void addFolders(Folder f, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("minerals");
 
@@ -61,17 +60,17 @@ public class JsonReader {
     }
 
     // MODIFIES: folder
-    // EFFECTS: parses mineral from JSON object and adds it to the folder
+    // EFFECTS: Parses mineral from JSON object and adds it to the folder
     @SuppressWarnings("methodlength")
     private void addMineral(Folder folder, JSONObject jsonObject) {
         Mineral m = new Mineral();
-        Integer lab = jsonObject.getInt("lab");
+        int lab = jsonObject.getInt("lab");
         String name = jsonObject.getString("name");
         String lustre = jsonObject.getString("lustre");
         String color = jsonObject.getString("color");
         String streak = jsonObject.getString("streak");
-        Integer hardness = jsonObject.getInt("hardness");
-        Double sp = jsonObject.getDouble("specificGravity");
+        int hardness = jsonObject.getInt("hardness");
+        double sp = jsonObject.getDouble("specificGravity");
         String cleavage = jsonObject.getString("cleavage");
         String fracture = jsonObject.getString("fracture");
         String habit = jsonObject.getString("habit");

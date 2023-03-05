@@ -1,6 +1,7 @@
 package model;
 
-// Class Declaration: Mineral with lab number, name, color, hardness, and crystal system
+// Class Declaration: Mineral with lab number lab, name, lustre, color, streak, hardness, specific gravity, cleavage,
+// fracture, habit, crystal system, other (for additional notes)
 
 import org.json.JSONObject;
 
@@ -148,7 +149,7 @@ public class Mineral {
     }
 
 
-    // EFFECTS: returns full name of the crystal system from input abbreviation
+    // EFFECTS: Returns full name of the crystal system from input abbreviation
     public String crystalSystemName(String letter) {
         String str = letter;
         switch (letter) {
@@ -174,7 +175,9 @@ public class Mineral {
         return str;
     }
 
-    // EFFECTS: returns this as a jason object
+    // SOURCE: Code adapted from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
+
+    // EFFECTS: Returns this as a jason object
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("lab", lab);
