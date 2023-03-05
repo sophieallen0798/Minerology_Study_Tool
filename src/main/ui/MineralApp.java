@@ -344,6 +344,7 @@ public class MineralApp {
     }
 
     // EFFECTS: Display properties specified by user input letter
+    @SuppressWarnings("methodlength")
     public void continueGame(String selection, Mineral currentMin) {
         if (selection.equals("q") | selection.equals("m")) {
             quit(selection);
@@ -439,6 +440,7 @@ public class MineralApp {
 
     // MODIFIES: Mineral
     // EFFECTS: Sets specified property of the given mineral
+    @SuppressWarnings("methodlength")
     public void setProperties(Mineral m, Scanner inpu, int i) {
         if (i == 0) {
             m.setLab(inpu.nextInt());
