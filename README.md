@@ -10,9 +10,16 @@ minerals on the review list that they created.
 **The properties each mineral will have associated with it are:**
 - lab number (int)
 - name (String)
+- lustre (String)
 - color (String)
+- streak (String)
 - hardness (int)
+- specific gravity (double)
+- cleavage (String)
+- fracture (String)
+- habit (String)
 - crystal system (String, 6 categories)
+- other (String)
 
 **User Stories:**
 - As a user, I want to be able to add a mineral with a name, lab number, and the properties above to a list of minerals
