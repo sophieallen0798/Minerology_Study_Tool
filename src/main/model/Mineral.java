@@ -7,46 +7,93 @@ import org.json.JSONObject;
 public class Mineral {
     private int lab;
     private String name;
+    private String lustre;
     private String color;
+    private String streak;
     private int hardness;
+    private double specificGravity;
+    private String cleavage;
+    private String fracture;
+    private String habit;
     private String crystalSystem;
-    public static final String PURPLE = "\u001B[35m";
-    public static final String RESET = "\u001B[0m";
+    private String other;
 
     public Mineral() {
         lab = 0;
         name = "";
+        lustre = "";
         color = "";
+        streak = "";
         hardness = 0;
+        specificGravity = 0;
+        cleavage = "";
+        fracture = "";
+        habit = "";
         crystalSystem = "";
+        other = "";
     }
 
     //SET methods:
 
     //MODIFIES: this
-    public void setLab(int inputLab) {
-        lab = inputLab;
+    public void setLab(int lab) {
+        this.lab = lab;
     }
 
     //MODIFIES: this
-    public void setName(String inputName) {
-        name = inputName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     //MODIFIES: this
-    public void setColor(String inputColor) {
-        color = inputColor;
+    public void setLustre(String lustre) {
+        this.lustre = lustre;
     }
 
     //MODIFIES: this
-    public void setHardness(int inputHardness) {
-        hardness = inputHardness;
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    //MODIFIES: this
+    public void setStreak(String streak) {
+        this.streak = streak;
+    }
+
+    //MODIFIES: this
+    public void setHardness(int hardness) {
+        this.hardness = hardness;
+    }
+
+    //MODIFIES: this
+    public void setSpecificGravity(double specificGravity) {
+        this.specificGravity = specificGravity;
+    }
+
+    //MODIFIES: this
+    public void setCleavage(String cleavage) {
+        this.cleavage = cleavage;
+    }
+
+    //MODIFIES: this
+    public void setFracture(String fracture) {
+        this.fracture = fracture;
+    }
+
+    //MODIFIES: this
+    public void setHabit(String habit) {
+        this.habit = habit;
     }
 
     // MODIFIES: this
     // EFFECTS: sets crystal system as full name from input abbreviation
-    public void setCrystalSystem(String inputCrystalSystem) {
-        crystalSystem = crystalSystemName(inputCrystalSystem);
+    public void setCrystalSystem(String crystalSystem) {
+        this.crystalSystem = crystalSystemName(crystalSystem);
+    }
+
+    //MODIFIES: this
+    public void setOther(String other) {
+        this.other = other;
     }
 
 
@@ -60,17 +107,46 @@ public class Mineral {
         return name;
     }
 
+    public String getLustre() {
+        return lustre;
+    }
+
     public String getColor() {
         return color;
+    }
+
+    public String getStreak() {
+        return streak;
     }
 
     public int getHardness() {
         return hardness;
     }
 
+    public double getSpecificGravity() {
+        return specificGravity;
+    }
+
+    public String getCleavage() {
+        return cleavage;
+    }
+
+    public String getFracture() {
+        return fracture;
+    }
+
+    public String getHabit() {
+        return habit;
+    }
+
     public String getCrystalSystem() {
         return crystalSystem;
     }
+
+    public String getOther() {
+        return other;
+    }
+
 
     // EFFECTS: returns full name of the crystal system from input abbreviation
     public String crystalSystemName(String letter) {
@@ -103,9 +179,16 @@ public class Mineral {
         JSONObject json = new JSONObject();
         json.put("lab", lab);
         json.put("name", name);
+        json.put("lustre", lustre);
         json.put("color", color);
+        json.put("streak", streak);
         json.put("hardness", hardness);
+        json.put("specificGravity", specificGravity);
+        json.put("cleavage", cleavage);
+        json.put("fracture", fracture);
+        json.put("habit", habit);
         json.put("crystalSystem", crystalSystem);
+        json.put("other", other);
         return json;
     }
 

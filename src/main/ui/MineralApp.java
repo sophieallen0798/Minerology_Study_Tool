@@ -23,7 +23,7 @@ public class MineralApp {
     public static final String RESET = "\u001B[0m";
 
     private int mineralsStudied;
-    private static final int NUM_PROPERTIES = 5;  // number of properties in mineral class
+    private static final int NUM_PROPERTIES = 12;  // number of properties in mineral class
     private Scanner input;
     private Folder toReview;
     private Folder learned;
@@ -157,16 +157,26 @@ public class MineralApp {
 
     // EFFECTS: Prints minerals in folder specified by user
     public void printFoldersInColumns(Folder f) {
-        System.out.printf("%13s %6s %10s %10s %18s\n", "Name", "Lab", "Color", "Hardness", "Crystal System");
+        System.out.printf(PURPLE + "%13s %6s %10s %10s %10s %6s %6s %10s %10s %10s %18s %18s\n", "Name", "Lab",
+                "Lustre", "Color", "Streak", "Hardness", "Specfic Gravity", "Cleavage", "Fracture", "Habit", "Crystal System",
+                "Other" + RESET);
         List<Mineral> minList = f.getMineralList();
         for (Mineral m : minList) {
             String name = m.getName();
             int lab = m.getLab();
+            String lustre = m.getLustre();
             String color = m.getColor();
+            String s = m.getStreak();
             int hardness = m.getHardness();
+            double sg = m.getSpecificGravity();
+            String cleavage = m.getCleavage();
+            String fracture = m.getFracture();
+            String habit = m.getHabit();
             String cs = m.getCrystalSystem();
+            String o = m.getOther();
 
-            System.out.printf("%13s %6s %9s %10s %18s\n", name, lab, color, hardness, cs);
+            System.out.printf("%13s %6d %10s %10s %10s %6d %.2f %10s %10s %10s %18s %18s\n",
+                    name, lab, lustre, color, s, hardness, sg, cleavage, fracture, habit, cs, o);
         }
     }
 
@@ -250,8 +260,9 @@ public class MineralApp {
     // EFFECTS: Print study options for user
     private void studyMenu() {
         System.out.println("\nSelect a property to view.");
-        System.out.println("\tc for color, " + "h for hardness, "
-                + "cs for crystal system, " + "or g to guess mineral name");
+        System.out.println("l for lustre, " + "co for color, " + "s for streak, " + "h for hardness, "
+                + "sp for specific gravity, " + "cl for cleavage, " + " f for fracture, " + "hab for habit, "
+                + "cs for crystal system, " + "o for other properties, " + "or g to guess mineral name");
     }
 
     // EFFECTS: Get new random mineral, start study game, continue game while user does not input "q"
@@ -293,7 +304,9 @@ public class MineralApp {
 
     // EFFECTS: Check if letter entered by user is valid
     public boolean propertyValid(String str) {
-        return str.equals("g") | str.equals("c") | str.equals("h") | str.equals("cs");
+        return str.equals("g") | str.equals("l") | str.equals("co") | str.equals("s") | str.equals("har")
+                | str.equals("sp") | str.equals("cl") | str.equals("f") | str.equals("hab") | str.equals("cs")
+                | str.equals("o");
     }
 
     // EFFECTS: Determine if user guessed mineral name correctly, give option to continue playing
@@ -315,12 +328,26 @@ public class MineralApp {
     public void continueGame(String selection, Mineral currentMin) {
         if (selection.equals("q") | selection.equals("m")) {
             quit(selection);
-        } else if (selection.equals("h")) {
+        } else if (selection.equals("l")) {
+            System.out.println(PURPLE + "\nLustre: " + RESET + currentMin.getLustre());
+        } else if (selection.equals("co")) {
+            System.out.println(PURPLE + "\nColor: " + RESET + currentMin.getColor());
+        } else if (selection.equals("s")) {
+            System.out.println(PURPLE + "\nStreak: " + RESET + currentMin.getStreak());
+        } else if (selection.equals("har")) {
             System.out.println(PURPLE + "\nHardness: " + RESET + currentMin.getHardness());
+        } else if (selection.equals("sp")) {
+            System.out.println(PURPLE + "\nSpecific Gravity: " + RESET + currentMin.getSpecificGravity());
+        } else if (selection.equals("cl")) {
+            System.out.println(PURPLE + "\nCleavage: " + RESET + currentMin.getCleavage());
+        } else if (selection.equals("f")) {
+            System.out.println(PURPLE + "\nFracture: " + RESET + currentMin.getFracture());
+        } else if (selection.equals("hab")) {
+            System.out.println(PURPLE + "\nHabit: " + RESET + currentMin.getHabit());
         } else if (selection.equals("cs")) {
             System.out.println(PURPLE + "\nCrystal System: " + RESET + currentMin.getCrystalSystem());
-        } else if (selection.equals("c")) {
-            System.out.println(PURPLE + "\nColor: " + RESET + currentMin.getColor());
+        } else if (selection.equals("o")) {
+            System.out.println(PURPLE + "\nOther: " + RESET + currentMin.getOther());
         } else if (selection.equals("g")) {
             guessMineral(currentMin);
         }
@@ -371,8 +398,14 @@ public class MineralApp {
         List<String> messages = new ArrayList<>();
         messages.add(PURPLE + "\nLab Number:" + RESET);
         messages.add(PURPLE + "\nMineral Name:" + RESET);
+        messages.add(PURPLE + "\nLustre:" + RESET);
         messages.add(PURPLE + "\nColor:" + RESET);
+        messages.add(PURPLE + "\nStreak:" + RESET);
         messages.add(PURPLE + "\nHardness:" + RESET);
+        messages.add(PURPLE + "\nSpecific Gravity:" + RESET);
+        messages.add(PURPLE + "\nCleavage:" + RESET);
+        messages.add(PURPLE + "\nFracture:" + RESET);
+        messages.add(PURPLE + "\nHabit:" + RESET);
         messages.add(PURPLE + "\nCrystal System: "
                 + "\n" + "\ti for isometric, "
                 + "tetra for tetragonal, "
@@ -380,6 +413,7 @@ public class MineralApp {
                 + "h for hexagonal, "
                 + "m for monoclinic,  "
                 + "o for orthorhombic" + RESET);
+        messages.add(PURPLE + "\nOther:" + RESET);
         return messages.get(i);
     }
 
@@ -398,11 +432,25 @@ public class MineralApp {
                 setProperties(m, inpu, i);
             }
         } else if (i == 2) {
-            m.setColor(inpu.next());
+            m.setLustre(inpu.next());
         } else if (i == 3) {
-            m.setHardness(inpu.nextInt());
+            m.setColor(inpu.next());
         } else if (i == 4) {
+            m.setStreak(inpu.next());
+        } else if (i == 5) {
+            m.setHardness(inpu.nextInt());
+        } else if (i == 6) {
+            m.setSpecificGravity(inpu.nextDouble());
+        } else if (i == 7) {
+            m.setCleavage(inpu.next());
+        } else if (i == 8) {
+            m.setFracture(inpu.next());
+        } else if (i == 9) {
+            m.setHabit(inpu.next());
+        } else if (i == 10) {
             m.setCrystalSystem(inpu.next().toLowerCase());
+        } else if (i == 11) {
+            m.setOther(inpu.next());
         }
     }
 

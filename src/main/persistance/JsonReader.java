@@ -63,20 +63,32 @@ public class JsonReader {
     // MODIFIES: folder
     // EFFECTS: parses mineral from JSON object and adds it to the folder
     private void addMineral(Folder folder, JSONObject jsonObject) {
-        Mineral mineral = new Mineral();
+        Mineral m = new Mineral();
         Integer lab = jsonObject.getInt("lab");
         String name = jsonObject.getString("name");
+        String lustre = jsonObject.getString("lustre");
         String color = jsonObject.getString("color");
+        String streak = jsonObject.getString("streak");
         Integer hardness = jsonObject.getInt("hardness");
-        String crystalSystem = jsonObject.getString("crystalSystem");
-
-        mineral.setLab(lab);
-        mineral.setName(name);
-        mineral.setColor(color);
-        mineral.setHardness(hardness);
-        mineral.setCrystalSystem(crystalSystem);
-
-        folder.addToMineralList(mineral);
+        Double sp = jsonObject.getDouble("specificGravity");
+        String cleavage = jsonObject.getString("cleavage");
+        String fracture = jsonObject.getString("fracture");
+        String habit = jsonObject.getString("habit");
+        String cs = jsonObject.getString("crystalSystem");
+        String other = jsonObject.getString("other");
+        m.setLab(lab);
+        m.setName(name);
+        m.setLustre(lustre);
+        m.setColor(color);
+        m.setStreak(streak);
+        m.setHardness(hardness);
+        m.setSpecificGravity(sp);
+        m.setCleavage(cleavage);
+        m.setFracture(fracture);
+        m.setHabit(habit);
+        m.setCrystalSystem(cs);
+        m.setOther(other);
+        folder.addToMineralList(m);
     }
 
 }
