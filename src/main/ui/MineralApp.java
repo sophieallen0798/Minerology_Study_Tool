@@ -116,8 +116,6 @@ public class MineralApp {
         } else if (chosen.equals("m")) {
             addMineralsActivity();
         } else if (chosen.equals("o")) {
-            organizeFolders(learned);
-            organizeFolders(toReview);
             organizePrompt();
         } else if (chosen.equals("s")) {
             saveFolders();
@@ -147,66 +145,20 @@ public class MineralApp {
         }
     }
 
-    // Effects: Print labeled review and learned folders
-    public void printFolders() {
-        System.out.println("\nReview Folder");
-        printFoldersInColumns(toReview);
-        System.out.println("\nLearned Folder");
-        printFoldersInColumns(learned);
-    }
-
-    // EFFECTS: Prints minerals in folder specified by user
-    public void printFoldersInColumns(Folder f) {
-        System.out.printf(PURPLE + "%13s %6s %10s %10s %10s %6s %6s %10s %10s %10s %18s %18s\n", "Name", "Lab",
-                "Lustre", "Color", "Streak", "Hardness", "Specfic Gravity", "Cleavage", "Fracture", "Habit", "Crystal System",
-                "Other" + RESET);
-        List<Mineral> minList = f.getMineralList();
-        for (Mineral m : minList) {
-            String name = m.getName();
-            int lab = m.getLab();
-            String lustre = m.getLustre();
-            String color = m.getColor();
-            String s = m.getStreak();
-            int hardness = m.getHardness();
-            double sg = m.getSpecificGravity();
-            String cleavage = m.getCleavage();
-            String fracture = m.getFracture();
-            String habit = m.getHabit();
-            String cs = m.getCrystalSystem();
-            String o = m.getOther();
-
-            System.out.printf("%13s %6d %10s %10s %10s %6d %.2f %10s %10s %10s %18s %18s\n",
-                    name, lab, lustre, color, s, hardness, sg, cleavage, fracture, habit, cs, o);
-        }
-    }
-
-    // EFFECTS: Print names of minerals in folder
-    public void printMineralList(Folder folder) {
-        List<Mineral> mineralList = folder.getMineralList();
-        for (Mineral mineral : mineralList) {
-            printMineral(mineral);
-        }
-    }
-
-    // EFFECTS: Print names of all minerals in given folder
-    public void printMineralNames(Folder folder) {
-        List<Mineral> mineralList = folder.getMineralList();
-        for (Mineral mineral : mineralList) {
-            System.out.println(mineral.getName());
-        }
-    }
 
     // EFFECTS: Print mineral and it's properties
-    public void printMineral(Mineral m) {
-        System.out.println(PURPLE + "Lab: " + RESET + m.getLab());
-        System.out.println(PURPLE + "Name: " + RESET + m.getName());
-        System.out.println(PURPLE + "Color: " + RESET + m.getColor());
-        System.out.println(PURPLE + "Hardness: " + RESET + m.getHardness());
-        System.out.println(PURPLE + "Crystal System: " + RESET + m.getCrystalSystem());
-    }
+//    public void printMineral(Mineral m) {
+//        System.out.println(PURPLE + "Lab: " + RESET + m.getLab());
+//        System.out.println(PURPLE + "Name: " + RESET + m.getName());
+//        System.out.println(PURPLE + "Color: " + RESET + m.getColor());
+//        System.out.println(PURPLE + "Hardness: " + RESET + m.getHardness());
+//        System.out.println(PURPLE + "Crystal System: " + RESET + m.getCrystalSystem());
+//    }
 
     // EFFECTS: prompt user for name of mineral to move
     public void organizePrompt() {
+        organizeFolders(learned);
+        organizeFolders(toReview);
         System.out.println("Which mineral would you like to move? Enter mineral name or m to return to main menu");
         String selection = input.next();
         quit(selection);
@@ -215,19 +167,23 @@ public class MineralApp {
 
     // EFFECTS: If both lists aren't empty, move minerals chosen by user to other folder, otherwise return to main menu
     public void folderOptionsMenu(String selection) {
-        if (checkInLearned(selection) | checkInReview(selection)) {
-            organizeFolders(learned);
-            organizeFolders(toReview);
+        if (mineralInFolder(selection, toReview)) {
+            checkInReview(selection);
+        } else if (mineralInFolder(selection, learned)) {
+            checkInLearned(selection);
+        } else {
+            System.out.println("Selected mineral is not in either folder.");
         }
-        System.out.println("Selected mineral is not in either folder.");
-        nextActivity("o");
+        organizePrompt();
     }
 
-    // EFFECTS: Check if mineral is in learned list, if true, remove from learn and put in review, else return false
+
+    // EFFECTS: Check if mineral is in learned list, if true, remove from learned and put in review else return false
     public boolean checkInLearned(String inName) {
         boolean val = false;
-        List<Mineral> learnedList = learned.getMineralList();
-        for (Mineral inMineral : learnedList) {
+        List<Mineral> reviewList = learned.getMineralList();
+        for (int i = 0; i < learned.getMineralList().size(); i++) {
+            Mineral inMineral = reviewList.get(i);
             if (inName.equals(inMineral.getName())) {
                 learned.removeFromMineralList(inMineral);
                 toReview.addToMineralList(inMineral);
@@ -254,13 +210,76 @@ public class MineralApp {
         return val;
     }
 
+    // EFFECTS: Check if given mineral is in given folder
+    public boolean mineralInFolder(String inName, Folder f) {
+        boolean val = false;
+        List<Mineral> mineralList = f.getMineralList();
+        for (int i = 0; i < f.getMineralList().size(); i++) {
+            Mineral inMineral = mineralList.get(i);
+            if (inName.equals(inMineral.getName())) {
+                val = true;
+            }
+        }
+        return val;
+    }
+
+    // PRINT methods:
+
+    // Effects: Print labeled review and learned folders
+    public void printFolders() {
+        System.out.println(BLUE + "\nReview Folder" + RESET);
+        printFoldersInColumns(toReview);
+        System.out.println(BLUE + "\nLearned Folder" + RESET);
+        printFoldersInColumns(learned);
+    }
+
+    // EFFECTS: Prints minerals in folder specified by user
+    public void printFoldersInColumns(Folder f) {
+        System.out.printf(PURPLE + "%13s %6s %10s %10s %10s %6s %6s %10s %10s %10s %18s %18s\n", "Name", "Lab",
+                "Lustre", "Color", "Streak", "Hardness", "Specific Gravity", "Cleavage", "Fracture", "Habit",
+                "Crystal System", "Other" + RESET);
+        List<Mineral> minList = f.getMineralList();
+        for (Mineral m : minList) {
+            String name = m.getName();
+            int lab = m.getLab();
+            String lustre = m.getLustre();
+            String color = m.getColor();
+            String s = m.getStreak();
+            int hardness = m.getHardness();
+            double sg = m.getSpecificGravity();
+            String cleavage = m.getCleavage();
+            String fracture = m.getFracture();
+            String habit = m.getHabit();
+            String cs = m.getCrystalSystem();
+            String o = m.getOther();
+
+            System.out.printf("%13s %6d %10s %10s %10s %6d %.2f %10s %10s %10s %18s %18s\n",
+                    name, lab, lustre, color, s, hardness, sg, cleavage, fracture, habit, cs, o);
+        }
+    }
+
+    // EFFECTS: Print names of minerals in folder
+//    public void printMineralList(Folder folder) {
+//        List<Mineral> mineralList = folder.getMineralList();
+//        for (Mineral mineral : mineralList) {
+//            printMineral(mineral);
+//        }
+//    }
+
+    // EFFECTS: Print names of all minerals in given folder
+    public void printMineralNames(Folder folder) {
+        List<Mineral> mineralList = folder.getMineralList();
+        for (Mineral mineral : mineralList) {
+            System.out.println(mineral.getName());
+        }
+    }
 
     //STUDY METHODS:
 
     // EFFECTS: Print study options for user
     private void studyMenu() {
         System.out.println("\nSelect a property to view.");
-        System.out.println("l for lustre, " + "co for color, " + "s for streak, " + "h for hardness, "
+        System.out.println("l for lustre, " + "co for color, " + "s for streak, " + "har for hardness, "
                 + "sp for specific gravity, " + "cl for cleavage, " + " f for fracture, " + "hab for habit, "
                 + "cs for crystal system, " + "o for other properties, " + "or g to guess mineral name");
     }
@@ -424,13 +443,7 @@ public class MineralApp {
         if (i == 0) {
             m.setLab(inpu.nextInt());
         } else if (i == 1) {
-            String in = inpu.next();
-            if (checkName(in)) {
-                m.setName(in);
-            } else {
-                System.out.println("This mineral already exists in your lists. Please enter another name.");
-                setProperties(m, inpu, i);
-            }
+            nameProcess(m, inpu, i);
         } else if (i == 2) {
             m.setLustre(inpu.next());
         } else if (i == 3) {
@@ -451,6 +464,16 @@ public class MineralApp {
             m.setCrystalSystem(inpu.next().toLowerCase());
         } else if (i == 11) {
             m.setOther(inpu.next());
+        }
+    }
+
+    public void nameProcess(Mineral m, Scanner inpu, int i) {
+        String in = inpu.next();
+        if (checkName(in)) {
+            m.setName(in);
+        } else {
+            System.out.println("This mineral already exists in your lists. Please enter another name.");
+            setProperties(m, inpu, i);
         }
     }
 
