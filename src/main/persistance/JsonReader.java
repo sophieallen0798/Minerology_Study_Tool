@@ -62,6 +62,7 @@ public class JsonReader {
 
     // MODIFIES: folder
     // EFFECTS: parses mineral from JSON object and adds it to the folder
+    @SuppressWarnings("methodlength")
     private void addMineral(Folder folder, JSONObject jsonObject) {
         Mineral m = new Mineral();
         Integer lab = jsonObject.getInt("lab");
