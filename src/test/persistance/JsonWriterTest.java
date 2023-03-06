@@ -26,6 +26,11 @@ public class JsonWriterTest {
         testMin1 = new Mineral();
         testMin2 = new Mineral();
         testMin1.setName("mica");
+        testMin1.setLab(1);
+        testMin1.setLustre("shiny");
+        testMin1.setColor("green");
+        testMin1.setHardness(4);
+        testMin1.setCrystalSystem("isometric");
         testMin2.setName("quartz");
     }
 
