@@ -17,7 +17,7 @@ import java.util.Scanner;
 
 
 // Application to study and keep a list of minerals
-public class MineralApp extends JFrame {
+public class MineralApp extends JPanel {
     // sout colors
     public static final String BLUE = "\u001B[34m";
     public static final String PURPLE = "\u001B[35m";
@@ -54,7 +54,7 @@ public class MineralApp extends JFrame {
         jsonWriterRev = new JsonWriter(JSON_FOLDERS_R);
         jsonReaderLearn = new JsonReader(JSON_FOLDERS_L);
         jsonWriterLearn = new JsonWriter(JSON_FOLDERS_L);
-        openMenu();
+        //openMenu();
 
     }
 

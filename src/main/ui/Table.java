@@ -35,7 +35,7 @@ public class Table extends JPanel {
                 data[i][j] = createObject(i, j);
             }
         }
-        columnNames = new String[]{"Lab", "Name", "Lustre", "Color", "Streak", "Hardness", "Specific Gravity",
+        columnNames = new String[]{"Name", "Lab", "Lustre", "Color", "Streak", "Hardness", "Specific Gravity",
                 "Cleavage", "Fracture", "Habit", "Crystal System", "Other"};
         final JTable table = new JTable(data, columnNames);
         table.setPreferredScrollableViewportSize(new Dimension(1000, 70));

@@ -14,10 +14,12 @@ public class Label2 extends JFrame implements ActionListener {
     private MineralApp mineralApp;
     private JLabel label;
     private Table table;
+    public static final String GREEN = "\u001B[32m";
 
     private Mineral mineral;
     private JTextField field;
     private Folder folder;
+    private Color green1;
 
     private JLabel nameLabel;
     private JLabel colorLabel;
@@ -35,7 +37,7 @@ public class Label2 extends JFrame implements ActionListener {
         setPreferredSize(new Dimension(400, 300));
         ((JPanel) getContentPane()).setBorder(new EmptyBorder(13, 13, 13, 13));
         setLayout(new GridLayout(4,2));
-        JButton btn = new JButton("Change");
+        JButton btn = new JButton("Add");
         btn.setActionCommand("myButton");
         btn.addActionListener(this); // Sets "this" object as an action listener for btn
         // so that when the btn is clicked,
@@ -44,7 +46,8 @@ public class Label2 extends JFrame implements ActionListener {
         // a different object to respond to the button click
         mineralApp = new MineralApp();
 
-        label = new JLabel("flag");
+        label = new JLabel("");
+        green1 = new Color(90, 180,  90);
 
         labLabel = new JLabel("Lab Number:");
         nameLabel = new JLabel("Name:");
@@ -80,7 +83,8 @@ public class Label2 extends JFrame implements ActionListener {
             mineral.setColor(colorBox.getText());
             folder.addToMineralList(mineral);
             mineralApp.printFoldersInColumns(folder);
-            label.setText(folder.getMineralList().get(0).getName());
+            label.setForeground(green1);
+            label.setText("   " + folder.getMineralList().get(0).getName() + " added to review list.");
             table = new Table(folder);
             table.fun("a");
 

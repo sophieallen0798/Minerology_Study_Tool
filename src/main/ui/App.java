@@ -66,6 +66,7 @@ public class App {
             public void actionPerformed(ActionEvent e) {
                 minApp.runApp("q");
             }
+
         });
     }
 
