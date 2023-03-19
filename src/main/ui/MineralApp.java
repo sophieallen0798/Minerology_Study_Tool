@@ -5,14 +5,19 @@ import model.Mineral;
 import persistance.JsonReader;
 import persistance.JsonWriter;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+
 // Application to study and keep a list of minerals
-public class MineralApp {
+public class MineralApp extends JFrame {
     // sout colors
     public static final String BLUE = "\u001B[34m";
     public static final String PURPLE = "\u001B[35m";
@@ -33,6 +38,14 @@ public class MineralApp {
     private static final String JSON_FOLDERS_R = "./data/review.json";
     private static final String JSON_FOLDERS_L = "./data/learned.json";
 
+    private Table tableR;
+    private Table tableL;
+
+    private JInternalFrame controlPanel;
+
+
+    protected JButton button;
+
     // EFFECTS: Initialize Folders and json writers and readers, goes to open menu
     public MineralApp() throws FileNotFoundException {
         this.learned = new Folder("Learned");
@@ -42,7 +55,27 @@ public class MineralApp {
         jsonReaderLearn = new JsonReader(JSON_FOLDERS_L);
         jsonWriterLearn = new JsonWriter(JSON_FOLDERS_L);
         openMenu();
+
     }
+
+    // MODIFIES: this
+    // EFFECTS:  a helper method which declares and instantiates all tools
+
+
+//
+//    public void startGUI() {
+//        setDefaultCloseOperation(EXIT_ON_CLOSE);
+//        JButton btn = new JButton("m");
+//        ActionListener actionListener = new ActionListener() {
+//            public void actionPerformed(ActionEvent event) {
+//                String str = event.getActionCommand();
+//                runApp(str);
+//            }
+//        };
+//        btn.setActionCommand("m");
+//        btn.addActionListener(actionListener);
+//        JOptionPane.showMessageDialog(null, btn);
+//    }
 
     // EFFECTS: Prompt user to load folders, if user input = y, load folders, if n, proceed to main menu, if neither,
     // ask user again
@@ -62,7 +95,7 @@ public class MineralApp {
     }
 
     //EFFECTS: Display start menu, get user input and sends to next activity, if user input == "q" prompt to save, quit
-    private void runApp(String str) {
+    public void runApp(String str) {
         if (!str.equals("q")) {
             while (true) {
                 startMenu();
@@ -206,6 +239,10 @@ public class MineralApp {
 
     // Effects: Print labeled review and learned folders
     public void printFolders() {
+        tableL = new Table(learned);
+        tableR = new Table(toReview);
+        tableL.fun("a");
+        tableR.fun("a");
         System.out.println(BLUE + "\nReview Folder" + RESET);
         printFoldersInColumns(toReview);
         System.out.println(BLUE + "\nLearned Folder" + RESET);
@@ -474,7 +511,7 @@ public class MineralApp {
     // SOURCE: Code adapted from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
 
     // EFFECTS: Saves the review and learned folders to file
-    private void saveFolders() {
+    public void saveFolders() {
         try {
             jsonWriterRev.open();
             jsonWriterRev.write(toReview);
@@ -496,7 +533,7 @@ public class MineralApp {
     // SOURCE: Code adapted from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
     // MODIFIES: this
     // EFFECTS: loads review folder and learned folder
-    private void loadFolders() {
+    public void loadFolders() {
         try {
             toReview = jsonReaderRev.read();
             System.out.println("Loaded review list from " + JSON_FOLDERS_R);
@@ -506,4 +543,14 @@ public class MineralApp {
             System.out.println("Unable to read from file: " + JSON_FOLDERS_L);
         }
     }
+
+    // GUI METHODS:
+
+    // Effects: displays table of mineral class and review class
+    public void displayTable() {
+        //tableR = new Table(toReview);
+        //tableL = new Table(learned);
+    }
+
+
 }
