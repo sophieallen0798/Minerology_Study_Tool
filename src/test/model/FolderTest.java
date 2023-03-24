@@ -21,14 +21,14 @@ public class FolderTest {
         testMineralA.setLab(1);
         testMineralA.setName("A");
         testMineralA.setColor("green");
-        testMineralA.setHardness(4);
+        testMineralA.setHardness("4");
         testMineralA.setCrystalSystem("isometric");
 
         testMineralB = new Mineral();
         testMineralB.setLab(2);
         testMineralB.setName("B");
         testMineralB.setColor("blue");
-        testMineralB.setHardness(7);
+        testMineralB.setHardness("7");
         testMineralB.setCrystalSystem("hexagonal");
 
         testFolder = new Folder("test");

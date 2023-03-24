@@ -8,6 +8,7 @@ import persistance.JsonReader;
 import persistance.JsonWriter;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,7 +20,7 @@ import java.util.Scanner;
 
 
 // Application to study and keep a list of minerals
-public class MineralApp extends JPanel {
+public class Ui2 extends JFrame implements ActionListener {
     // sout colors
     public static final String BLUE = "\u001B[34m";
     public static final String PURPLE = "\u001B[35m";
@@ -28,11 +29,47 @@ public class MineralApp extends JPanel {
     public static final String RED = "\u001B[31m";
     public static final String RESET = "\u001B[0m";
 
+    private JLabel label;
+    private Table table;
+    private AddMineralGUI addMinGUI;
+
+    private Mineral mineral;
+    private JTextField field;
+    private Color green1;
+
+    private JLabel labLabel;
+    private JLabel nameLabel;
+    private JLabel lustreLabel;
+    private JLabel colorLabel;
+    private JLabel streakLabel;
+    private JLabel hardnessLabel;
+    private JLabel specificGravityLabel;
+    private JLabel cleavageLabel;
+    private JLabel fractureLabel;
+    private JLabel habitLabel;
+    private JLabel crystalSystemLabel;
+    private JLabel otherLabel;
+
+    private JLabel menuLabel;
+
+    private JTextField labBox;
+    private JTextField nameBox;
+    private JTextField lustreBox;
+    private JTextField colorBox;
+    private JTextField streakBox;
+    private JTextField hardnessBox;
+    private JTextField specificGravityBox;
+    private JTextField cleavageBox;
+    private JTextField fractureBox;
+    private JTextField habitBox;
+    private JTextField crystalSystemBox;
+    private JTextField otherBox;
+
     private int mineralsStudied;
     private static final int NUM_PROPERTIES = 12;  // number of fields in mineral class
     private Scanner input;
-    private Folder toReview;
-    private Folder learned;
+    private ReviewFolder toReview;
+    private LearnedFolder learned;
     private final JsonWriter jsonWriterRev;
     private final JsonReader jsonReaderRev;
     private final JsonWriter jsonWriterLearn;
@@ -45,11 +82,19 @@ public class MineralApp extends JPanel {
 
     private JInternalFrame controlPanel;
 
+    private JButton studyButton;
+    private JPanel panel1;
+    private JButton organizeFoldersButton;
+    private JButton addMineralsButton;
+    private JButton viewFoldersButton;
+    private JButton loadFoldersButton;
+    private JButton saveFoldersButton;
+    private JButton quitButton;
 
     protected JButton button;
 
     // EFFECTS: Initialize Folders and json writers and readers, goes to open menu
-    public MineralApp() throws FileNotFoundException {
+    public Ui2() throws FileNotFoundException {
         this.learned = new LearnedFolder("Learned");
         this.toReview = new ReviewFolder("Review");
         jsonReaderRev = new JsonReader(JSON_FOLDERS_R);
@@ -57,27 +102,116 @@ public class MineralApp extends JPanel {
         jsonReaderLearn = new JsonReader(JSON_FOLDERS_L);
         jsonWriterLearn = new JsonWriter(JSON_FOLDERS_L);
         //openMenu();
-
+        guiMenu();
     }
 
-    // MODIFIES: this
-    // EFFECTS:  a helper method which declares and instantiates all tools
+    public void guiMenu() {
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setPreferredSize(new Dimension(400, 400));
+        ((JPanel) getContentPane()).setBorder(new EmptyBorder(13, 13, 13, 13));
+        setLayout(new GridLayout(14,2));
+        menuLabel = new JLabel("lab");
+        JButton addMinBtn = new JButton("Add Minerals");
+        JButton studyBtn = new JButton("Study");
+        JButton viewBtn = new JButton("View Folders");
+        JButton organizeBtn = new JButton("Organize Folders");
+        JButton loadBtn = new JButton("Load Folders");
+        JButton saveBtn = new JButton("Save Folders");
+        addMinBtn.setActionCommand("addMin");
+        studyBtn.setActionCommand("addMin");
+        viewBtn.setActionCommand("view");
+        organizeBtn.setActionCommand("organize");
+        loadBtn.setActionCommand("load");
+        saveBtn.setActionCommand("saveButton");
+        addMinBtn.addActionListener(this);
+        studyBtn.addActionListener(this);
+        viewBtn.addActionListener(this);
+        organizeBtn.addActionListener(this);
+        loadBtn.addActionListener(this);
+        saveBtn.addActionListener(this);
+        // Sets "this" object as an action listener for btn so that when the btn is
+        //saveBtn.setActionCommand("saveButton");
+        //saveBtn.addActionListener(this);
+        field = new JTextField(5);
+        add(addMinBtn);
+        add(studyBtn);
+        add(viewBtn);
+        add(organizeBtn);
+        add(loadBtn);
+        add(saveBtn);
+        add(menuLabel);
+        pack();
+        setLocationRelativeTo(null);
+        setVisible(true);
+        setResizable(true);
+    }
 
+    //This is the method that is called when the JButton btn is clicked
+    public void actionPerformed(ActionEvent e) {
+        if (e.getActionCommand().equals("load")) {
+            loadFolders();
+            menuLabel.setForeground(green1);
+            menuLabel.setText("Folders Loaded");
+        }
+        if (e.getActionCommand().equals("addMin")) {
+            addMinGUI = new AddMineralGUI(toReview);
+        }
+        if (e.getActionCommand().equals("save") | e.getActionCommand().equals("saveButton")) {
+            toReview = addMinGUI.getFolder();
+            saveFolders();
+            menuLabel.setForeground(green1);
+            menuLabel.setText("Folders Saved");
+        }
+        if (e.getActionCommand().equals("view")) {
+            table = new Table(toReview);
+            table.fun("a");
+        }
+        if (e.getActionCommand().equals("organize")) {
+            organizeFolders(toReview);
+            organizeFolders(learned);
+        }
+    }
 
-//
-//    public void startGUI() {
-//        setDefaultCloseOperation(EXIT_ON_CLOSE);
-//        JButton btn = new JButton("m");
-//        ActionListener actionListener = new ActionListener() {
-//            public void actionPerformed(ActionEvent event) {
-//                String str = event.getActionCommand();
-//                runApp(str);
+//    public ActionListener globalActions() {
+//        ActionListener globalAction = new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                if (e.getActionCommand().equals("save")) {
+//                    toReview = addMinGUI.getFolder();
+//                    saveFolders();
+//                    menuLabel.setForeground(green1);
+//                    menuLabel.setText("Folders Saved");
+//                }
 //            }
 //        };
-//        btn.setActionCommand("m");
-//        btn.addActionListener(actionListener);
-//        JOptionPane.showMessageDialog(null, btn);
+//        return globalAction;
 //    }
+
+//    public void actionPerformed(ActionEvent e) {
+//        if (e.getActionCommand().equals("myButton")) {
+//            Mineral min = getMineral();
+//            toReview.addToMineralList(min);
+//            printFoldersInColumns(toReview);
+//            label.setForeground(green1);
+//            label.setText("   " + min.getName() + " added to review list.");
+//            resetBoxesEmpty();
+//
+//        }
+//        if (e.getActionCommand().equals("saveButton")) {
+//            saveFolders();
+//        }
+//        if (e.getActionCommand().equals("addMin")) {
+//            addMineralMenu();
+//        }
+//    }
+
+//    private void printTable(ActionEvent e) {
+//        if (e.getActionCommand().equals("printTable")) {
+//            table = new Table(toReview);
+//            table.fun("a");
+//        }
+//    }
+
 
     // EFFECTS: Prompt user to load folders, if user input = y, load folders, if n, proceed to main menu, if neither,
     // ask user again
@@ -535,6 +669,20 @@ public class MineralApp extends JPanel {
     // SOURCE: Code adapted from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
     // MODIFIES: this
     // EFFECTS: loads review folder and learned folder
+//    public void loadFolders() {
+//        try {
+//            toReview = (ReviewFolder) jsonReaderRev.revRead();
+//            System.out.println("Loaded review list from " + JSON_FOLDERS_R);
+//            learned = jsonReaderLearn.lerRead();
+//            System.out.println("Loaded learned list from " + JSON_FOLDERS_L);
+//        } catch (IOException e) {
+//            System.out.println("Unable to read from file: " + JSON_FOLDERS_L);
+//        }
+//    }
+
+    // SOURCE: Code adapted from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
+    // MODIFIES: this
+    // EFFECTS: loads review folder and learned folder
     public void loadFolders() {
         try {
             toReview = jsonReaderRev.revRead();
@@ -542,7 +690,7 @@ public class MineralApp extends JPanel {
             learned = jsonReaderLearn.lerRead();
             System.out.println("Loaded learned list from " + JSON_FOLDERS_L);
         } catch (IOException e) {
-            System.out.println("Unable to read from file: " + JSON_FOLDERS_L);
+            System.out.println("Unable to read from file: " + JSON_FOLDERS_R);
         }
     }
 
@@ -550,8 +698,8 @@ public class MineralApp extends JPanel {
 
     // Effects: displays table of mineral class and review class
     public void displayTable() {
-        //tableR = new Table(toReview);
-        //tableL = new Table(learned);
+        tableR = new Table(toReview);
+        tableL = new Table(learned);
     }
 
 

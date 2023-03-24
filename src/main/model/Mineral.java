@@ -11,8 +11,8 @@ public class Mineral {
     private String lustre;
     private String color;
     private String streak;
-    private int hardness;
-    private double specificGravity;
+    private String hardness;
+    private String specificGravity;
     private String cleavage;
     private String fracture;
     private String habit;
@@ -25,8 +25,8 @@ public class Mineral {
         lustre = "";
         color = "";
         streak = "";
-        hardness = 0;
-        specificGravity = 0;
+        hardness = "";
+        specificGravity = "";
         cleavage = "";
         fracture = "";
         habit = "";
@@ -62,12 +62,12 @@ public class Mineral {
     }
 
     //MODIFIES: this
-    public void setHardness(int hardness) {
+    public void setHardness(String hardness) {
         this.hardness = hardness;
     }
 
     //MODIFIES: this
-    public void setSpecificGravity(double specificGravity) {
+    public void setSpecificGravity(String specificGravity) {
         this.specificGravity = specificGravity;
     }
 
@@ -120,11 +120,11 @@ public class Mineral {
         return streak;
     }
 
-    public int getHardness() {
+    public String getHardness() {
         return hardness;
     }
 
-    public double getSpecificGravity() {
+    public String getSpecificGravity() {
         return specificGravity;
     }
 

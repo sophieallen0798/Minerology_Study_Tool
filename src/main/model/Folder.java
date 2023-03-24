@@ -8,79 +8,36 @@ import java.util.List;
 import java.util.Random;
 
 // Folder objects consists of a name and a list of minerals
-public class Folder {
-    protected List<Mineral> mineralList;
-    protected String name;
+public interface Folder {
 
     // EFFECTS: Constructs a folder with a name and list of minerals
-    public Folder(String name) {
-        this.name = name;
-        this.mineralList = new ArrayList<>();
-    }
 
-    public String getName() {
-        return name;
-    }
+    public String getName();
 
-    public List<Mineral> getMineralList() {
-        return mineralList;
-    }
+    public List<Mineral> getMineralList();
 
     // MODIFIES: this
     // EFFECTS: Add mineral to list
-    public void addToMineralList(Mineral mineral) {
-        mineralList.add(mineral);
-    }
+    public void addToMineralList(Mineral mineral);
 
     // MODIFIES: this
     // EFFECTS: If list is not empty, remove specified mineral
     //          If list is empty, throw empty list exception
-    public void removeFromMineralList(Mineral min) {
-        if (!mineralList.isEmpty()) {
-            mineralList.remove(min);
-        }
-    }
+    public void removeFromMineralList(Mineral min);
 
     // EFFECTS: Check if mineral is in list
-    public boolean checkInMineralList(String minName) {
-        boolean value = false;
-        for (int i = 0; i < mineralList.size(); i++) {
-            Mineral inMineral = mineralList.get(i);
-            if (minName.equals(inMineral.getName())) {
-                value = true;
-            }
-        }
-        return value;
-    }
+    public boolean checkInMineralList(String minName);
 
     // EFFECTS: Return true if list is not empty
-    public boolean mineralListNotEmpty() {
-        return !mineralList.isEmpty();
-    }
+    public boolean mineralListNotEmpty();
 
     // EFFECTS: Randomly select next mineral to study
-    public Mineral nextStudyMineral() {
-        Random rand = new Random();
-        int randIndex = rand.nextInt(mineralList.size());
-        Mineral selectedMineral = mineralList.get(randIndex);
-        return selectedMineral;
-    }
+    public Mineral nextStudyMineral();
 
     // EFFECTS: Returns this as a jason object
-    public JSONObject toJson() {
-        JSONObject json = new JSONObject();
-        json.put("name", name);
-        json.put("minerals", mineralsToJson());
-        return json;
-    }
+    public JSONObject toJson();
 
     // EFFECTS: Returns minerals in this folder as a JSON array
-    private JSONArray mineralsToJson() {
-        JSONArray jsonArray = new JSONArray();
-        for (Mineral m : mineralList) {
-            jsonArray.put(m.toJson());
-        }
-        return jsonArray;
-    }
+    public JSONArray mineralsToJson();
 
 }

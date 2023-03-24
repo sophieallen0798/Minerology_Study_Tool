@@ -29,7 +29,7 @@ public class JsonWriterTest {
         testMin1.setLab(1);
         testMin1.setLustre("shiny");
         testMin1.setColor("green");
-        testMin1.setHardness(4);
+        testMin1.setHardness("4");
         testMin1.setCrystalSystem("isometric");
         testMin2.setName("quartz");
     }

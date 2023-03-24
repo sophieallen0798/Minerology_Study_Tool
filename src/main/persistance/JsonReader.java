@@ -1,7 +1,9 @@
 package persistance;
 
 import model.Folder;
+import model.LearnedFolder;
 import model.Mineral;
+import model.ReviewFolder;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -23,10 +25,16 @@ public class JsonReader {
     }
 
     // EFFECTS: Reads folder from file, returns folder, throws IOException if an error occurs reading data from file
-    public Folder read() throws IOException {
+    public ReviewFolder revRead() throws IOException {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
-        return parseFolder(jsonObject);
+        return parseRevFolder(jsonObject);
+    }
+
+    public LearnedFolder lerRead() throws IOException {
+        String jsonData = readFile(source);
+        JSONObject jsonObject = new JSONObject(jsonData);
+        return parseLerFolder(jsonObject);
     }
 
     // EFFECTS: Reads source file as string, returns the string
@@ -41,11 +49,18 @@ public class JsonReader {
     }
 
     // EFFECTS: Parses folder from JSON object and returns the folder
-    private Folder parseFolder(JSONObject jsonObject) {
+    private ReviewFolder parseRevFolder(JSONObject jsonObject) {
         String folderName = jsonObject.getString("name");
-        Folder folder = new Folder(folderName);
-        addFolders(folder, jsonObject);
-        return folder;
+        ReviewFolder reFolder = new ReviewFolder(folderName);
+        addFolders(reFolder, jsonObject);
+        return reFolder;
+    }
+
+    private LearnedFolder parseLerFolder(JSONObject jsonObject) {
+        String folderName = jsonObject.getString("name");
+        LearnedFolder leFolder = new LearnedFolder(folderName);
+        addFolders(leFolder, jsonObject);
+        return leFolder;
     }
 
     // MODIFIES: folder
@@ -68,8 +83,8 @@ public class JsonReader {
         String lustre = jsonObject.getString("lustre");
         String color = jsonObject.getString("color");
         String streak = jsonObject.getString("streak");
-        int hardness = jsonObject.getInt("hardness");
-        double sp = jsonObject.getDouble("specificGravity");
+        String hardness = jsonObject.getString("hardness");
+        String sp = jsonObject.getString("specificGravity");
         String cleavage = jsonObject.getString("cleavage");
         String fracture = jsonObject.getString("fracture");
         String habit = jsonObject.getString("habit");
@@ -81,8 +96,8 @@ public class JsonReader {
 
     // EFFECTS: set mineral properties
     private void addMineralProperties(Folder folder, Mineral m, int lab, String name, String lustre, String color,
-                                      String streak, int hardness, double sp, String cleavage, String fracture, String
-                                              habit, String cs, String other) {
+                                      String streak, String hardness, String sp, String cleavage, String fracture,
+                                      String habit, String cs, String other) {
         m.setLab(lab);
         m.setName(name);
         m.setLustre(lustre);

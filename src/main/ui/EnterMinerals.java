@@ -2,6 +2,7 @@ package ui;
 
 import model.Folder;
 import model.Mineral;
+import model.ReviewFolder;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -36,7 +37,7 @@ public class EnterMinerals extends JFrame implements ActionListener {
 //        btn.addActionListener(this);
         mineral = new Mineral();
         minApp = new MineralApp();
-        folder = new Folder("R");
+        folder = new ReviewFolder("R");
         printMineral = new JLabel("flag");
         name = new JTextField(5);
         color = new JTextField(5);

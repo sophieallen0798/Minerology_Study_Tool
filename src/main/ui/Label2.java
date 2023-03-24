@@ -2,6 +2,7 @@ package ui;
 
 import model.Folder;
 import model.Mineral;
+import model.ReviewFolder;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -14,7 +15,6 @@ public class Label2 extends JFrame implements ActionListener {
     private MineralApp mineralApp;
     private JLabel label;
     private Table table;
-    public static final String GREEN = "\u001B[32m";
 
     private Mineral mineral;
     private JTextField field;
@@ -54,7 +54,7 @@ public class Label2 extends JFrame implements ActionListener {
         colorLabel = new JLabel("Color:");
 
         mineral = new Mineral();
-        folder = new Folder("folderName");
+        folder = new ReviewFolder("folderName");
 
         labBox = new JTextField(5);
         nameBox = new JTextField(5);

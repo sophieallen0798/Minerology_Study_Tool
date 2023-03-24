@@ -53,15 +53,15 @@ public class MineralTest {
     // Test set, get hardness
     @Test
     void testHardness() {
-        testMineral.setHardness(4);
-        assertEquals(4, testMineral.getHardness());
+        testMineral.setHardness("4");
+        assertEquals("4", testMineral.getHardness());
     }
 
     // Test set, get specific gravity
     @Test
     void testSpecificGravity() {
-        testMineral.setSpecificGravity(2.43);
-        assertEquals(2.43, testMineral.getSpecificGravity());
+        testMineral.setSpecificGravity("2.43");
+        assertEquals("2.43", testMineral.getSpecificGravity());
     }
 
     // Test set, get cleavage

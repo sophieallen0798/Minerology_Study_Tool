@@ -14,7 +14,7 @@ public class Main {
 
             public void run() {
                 try {
-                    new MineralApp();
+                    new Ui2();
                 } catch (FileNotFoundException e) {
                     throw new RuntimeException(e);
                 }
