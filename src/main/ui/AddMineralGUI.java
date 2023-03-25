@@ -9,12 +9,15 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+
+import static ui.Ui2.actions;
+import static ui.Ui2.toReview;
 
 
-public class AddMineralGUI extends JFrame implements ActionListener {
+public class AddMineralGUI extends JFrame {
 
-
-    private Mineral mineral;
+    private Mineral min;
     private JTextField field;
     private Color green1;
 
@@ -32,6 +35,9 @@ public class AddMineralGUI extends JFrame implements ActionListener {
     private JLabel otherLabel;
     private JLabel label;
 
+    private JFrame jframe;
+    private JPanel jpanel;
+
     private JTextField labBox;
     private JTextField nameBox;
     private JTextField lustreBox;
@@ -48,24 +54,25 @@ public class AddMineralGUI extends JFrame implements ActionListener {
     private ReviewFolder revFolder;
     private Ui2 ui2;
 
-    public AddMineralGUI(ReviewFolder folder) {
+    public AddMineralGUI(ReviewFolder folder) throws FileNotFoundException {
+        super();
+        jframe = new JFrame();
         addMineralMenu();
-        this.revFolder = folder;
     }
 
     public void addMineralMenu() {
         //super("The title");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         //add(controlPanel);
-        JPanel panel = new JPanel();
         ((JPanel) getContentPane()).setBorder(new EmptyBorder(13, 13, 13, 13));
         setLayout(new GridLayout(14,2));
         JButton addBtn = new JButton("Add");
         JButton saveBtn = new JButton("Save");
         addBtn.setActionCommand("add");
-        addBtn.addActionListener(this);
+        //addBtn.addActionListener(actions());
+        addBtn.addActionListener(myActions());
         saveBtn.setActionCommand("save");
-        saveBtn.addActionListener(this);
+        saveBtn.addActionListener(actions());
 
         label = new JLabel("");
         green1 = new Color(90, 180,  90);
@@ -85,28 +92,46 @@ public class AddMineralGUI extends JFrame implements ActionListener {
         setResizable(true);
     }
 
-
-    //This is the method that is called when the JButton btn is clicked
-    public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("add")) {
-            Mineral min = getMineral();
-            addMineralToFolder(min);
-            label.setForeground(green1);
-            label.setText("   " + min.getName() + " added to review list.");
-            resetBoxesEmpty();
-        }
-        if (e.getActionCommand().equals("save")) {
-            revFolder.saveFolders();
-            label.setText("Minerals saved");
-        }
+    public ActionListener myActions() {
+        ActionListener myListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Mineral min = new Mineral();
+                min = getMineral();
+                toReview.addToMineralList(min);
+                label.setForeground(green1);
+                System.out.println(toReview);
+                System.out.println(min.getName());
+                label.setText("   " + min.getName() + " added to review list.");
+                resetBoxesEmpty();
+            }
+        };
+        return myListener;
     }
 
+
+
+    //This is the method that is called when the JButton btn is clicked
+//    public void actionPerformed(ActionEvent e) {
+//        if (e.getActionCommand().equals("add")) {
+//            Mineral min = getMineral();
+//            addMineralToFolder(min);
+//            label.setForeground(green1);
+//            label.setText("   " + min.getName() + " added to review list.");
+//            resetBoxesEmpty();
+//        }
+//        if (e.getActionCommand().equals("save")) {
+//            revFolder.saveFolders();
+//            label.setText("Minerals saved");
+//        }
+//    }
+
     private void addMineralToFolder(Mineral min) {
-        revFolder.addToMineralList(min);
+        toReview.addToMineralList(min);
     }
 
     public ReviewFolder getFolder() {
-        return revFolder;
+        return toReview;
     }
 
     private void makeMineralLabels() {
@@ -183,7 +208,7 @@ public class AddMineralGUI extends JFrame implements ActionListener {
     }
 
     private Mineral getMineral() {
-        Mineral min = new Mineral();
+        this.min = new Mineral();
         min.setLab(Integer.parseInt(labBox.getText()));
         min.setName(nameBox.getText());
         min.setLustre(lustreBox.getText());
@@ -198,4 +223,9 @@ public class AddMineralGUI extends JFrame implements ActionListener {
         min.setOther(otherBox.getText());
         return min;
     }
+
+//    static Mineral getMin() {
+//        return min;
+//    }
+
 }

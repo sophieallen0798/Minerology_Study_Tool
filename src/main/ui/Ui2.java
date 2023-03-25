@@ -20,7 +20,7 @@ import java.util.Scanner;
 
 
 // Application to study and keep a list of minerals
-public class Ui2 extends JFrame implements ActionListener {
+public class Ui2 extends JFrame {
     // sout colors
     public static final String BLUE = "\u001B[34m";
     public static final String PURPLE = "\u001B[35m";
@@ -35,7 +35,7 @@ public class Ui2 extends JFrame implements ActionListener {
 
     private Mineral mineral;
     private JTextField field;
-    private Color green1;
+    static Color green1;
 
     private JLabel labLabel;
     private JLabel nameLabel;
@@ -50,7 +50,7 @@ public class Ui2 extends JFrame implements ActionListener {
     private JLabel crystalSystemLabel;
     private JLabel otherLabel;
 
-    private JLabel menuLabel;
+    static JLabel menuLabel;
 
     private JTextField labBox;
     private JTextField nameBox;
@@ -68,11 +68,11 @@ public class Ui2 extends JFrame implements ActionListener {
     private int mineralsStudied;
     private static final int NUM_PROPERTIES = 12;  // number of fields in mineral class
     private Scanner input;
-    private ReviewFolder toReview;
-    private LearnedFolder learned;
-    private final JsonWriter jsonWriterRev;
-    private final JsonReader jsonReaderRev;
-    private final JsonWriter jsonWriterLearn;
+    static ReviewFolder toReview;
+    static LearnedFolder learned;
+    static JsonWriter jsonWriterRev;
+    static JsonReader jsonReaderRev;
+    static JsonWriter jsonWriterLearn;
     private final JsonReader jsonReaderLearn;
     private static final String JSON_FOLDERS_R = "./data/review.json";
     private static final String JSON_FOLDERS_L = "./data/learned.json";
@@ -109,7 +109,7 @@ public class Ui2 extends JFrame implements ActionListener {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(400, 400));
         ((JPanel) getContentPane()).setBorder(new EmptyBorder(13, 13, 13, 13));
-        setLayout(new GridLayout(14,2));
+        setLayout(new GridLayout(14, 2));
         menuLabel = new JLabel("lab");
         JButton addMinBtn = new JButton("Add Minerals");
         JButton studyBtn = new JButton("Study");
@@ -118,21 +118,22 @@ public class Ui2 extends JFrame implements ActionListener {
         JButton loadBtn = new JButton("Load Folders");
         JButton saveBtn = new JButton("Save Folders");
         addMinBtn.setActionCommand("addMin");
-        studyBtn.setActionCommand("addMin");
+        studyBtn.setActionCommand("study");
         viewBtn.setActionCommand("view");
         organizeBtn.setActionCommand("organize");
         loadBtn.setActionCommand("load");
         saveBtn.setActionCommand("saveButton");
-        addMinBtn.addActionListener(this);
-        studyBtn.addActionListener(this);
-        viewBtn.addActionListener(this);
-        organizeBtn.addActionListener(this);
-        loadBtn.addActionListener(this);
-        saveBtn.addActionListener(this);
+        addMinBtn.addActionListener(actions());
+        studyBtn.addActionListener(actionHappening());
+        viewBtn.addActionListener(actionHappening());
+        organizeBtn.addActionListener(actions());
+        loadBtn.addActionListener(actionHappening());
+//        saveBtn.addActionListener(this);
         // Sets "this" object as an action listener for btn so that when the btn is
         //saveBtn.setActionCommand("saveButton");
         //saveBtn.addActionListener(this);
         field = new JTextField(5);
+        //add(makeButton());
         add(addMinBtn);
         add(studyBtn);
         add(viewBtn);
@@ -146,30 +147,73 @@ public class Ui2 extends JFrame implements ActionListener {
         setResizable(true);
     }
 
+    static ActionListener actions() {
+        ActionListener actionListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //addMinGUI = new AddMineralGUI(toReview);
+                if (e.getActionCommand().equals("addMin")) {
+                    try {
+                        new AddMineralGUI(toReview);
+                    } catch (FileNotFoundException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+                if (e.getActionCommand().equals("save") | e.getActionCommand().equals("saveButton")) {
+                    saveFolders();
+                    menuLabel.setForeground(green1);
+                    menuLabel.setText("Folders Saved");
+                }
+
+//                if (e.getActionCommand().equals("add")) {
+//                    Mineral min = getMin();
+//                    toReview.addToMineralList(min);
+////                    label.setForeground(green1);
+////                    label.setText("   " + min.getName() + " added to review list.");
+//                    //resetBoxesEmpty();
+//                }
+            }
+        };
+        return actionListener;
+    }
+
     //This is the method that is called when the JButton btn is clicked
-    public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("load")) {
-            loadFolders();
-            menuLabel.setForeground(green1);
-            menuLabel.setText("Folders Loaded");
-        }
-        if (e.getActionCommand().equals("addMin")) {
-            addMinGUI = new AddMineralGUI(toReview);
-        }
-        if (e.getActionCommand().equals("save") | e.getActionCommand().equals("saveButton")) {
-            toReview = addMinGUI.getFolder();
-            saveFolders();
-            menuLabel.setForeground(green1);
-            menuLabel.setText("Folders Saved");
-        }
-        if (e.getActionCommand().equals("view")) {
-            table = new Table(toReview);
-            table.fun("a");
-        }
-        if (e.getActionCommand().equals("organize")) {
-            organizeFolders(toReview);
-            organizeFolders(learned);
-        }
+    public ActionListener actionHappening() {
+        ActionListener actListen = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getActionCommand().equals("load")) {
+                    loadFolders();
+                    menuLabel.setForeground(green1);
+                    menuLabel.setText("Folders Loaded");
+                }
+//        if (e.getActionCommand().equals("addMin")) {
+//            addMinGUI = new AddMineralGUI(toReview);
+//        }
+                if (e.getActionCommand().equals("save") | e.getActionCommand().equals("saveButton")) {
+                    toReview = addMinGUI.getFolder();
+                    saveFolders();
+                    menuLabel.setForeground(green1);
+                    menuLabel.setText("Folders Saved");
+                }
+                if (e.getActionCommand().equals("view")) {
+                    table = new Table(toReview);
+                    table.fun("a");
+                }
+                if (e.getActionCommand().equals("organize")) {
+                    organizeFolders(toReview);
+                    organizeFolders(learned);
+                }
+                if (e.getActionCommand().equals("study")) {
+                    studyMenu();
+                }
+//                if (e.getActionCommand().equals("load")) {
+//                    loadFolders();
+//                }
+            }
+        };
+        return actListen;
+
     }
 
 //    public ActionListener globalActions() {
@@ -647,7 +691,7 @@ public class Ui2 extends JFrame implements ActionListener {
     // SOURCE: Code adapted from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
 
     // EFFECTS: Saves the review and learned folders to file
-    public void saveFolders() {
+    static void saveFolders() {
         try {
             jsonWriterRev.open();
             jsonWriterRev.write(toReview);

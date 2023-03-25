@@ -8,9 +8,12 @@ import javax.swing.SwingUtilities;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Graphical extends JFrame {
     private final JButton button = new JButton();
+    private List<String> strList = new ArrayList<>();
 
     public Graphical() {
         super();
@@ -28,6 +31,8 @@ public class Graphical extends JFrame {
         button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 JOptionPane.showMessageDialog(button, "Hello World!");
+                strList.add("hello");
+                System.out.println(strList);
             }
         });
         return button;
