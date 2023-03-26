@@ -147,6 +147,7 @@ public class FolderTest {
     }
 
     // Test mineral in folder
+    @Test
     void testMineralInList() {
         assertFalse(testFolder.checkInMineralList(testMineralA.getName()));
         testFolder.addToMineralList(testMineralA);

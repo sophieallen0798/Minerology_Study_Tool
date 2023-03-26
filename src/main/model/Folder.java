@@ -11,9 +11,7 @@ public abstract class Folder {
     protected List<Mineral> mineralList;
 
 
-    public String getName() {
-        return this.name;
-    }
+    public abstract String getName();
 
     public abstract List<Mineral> getMineralList();
 
