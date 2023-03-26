@@ -1,0 +1,33 @@
+{
+    "minerals": [
+        {
+            "hardness": "nkl",
+            "crystalSystem": "",
+            "cleavage": "kjn",
+            "other": "",
+            "habit": "",
+            "color": "nklj",
+            "name": "lkjn",
+            "specificGravity": "jnl",
+            "streak": "nlkj",
+            "lab": 1,
+            "lustre": "lkj",
+            "fracture": "kln"
+        },
+        {
+            "hardness": "w",
+            "crystalSystem": "1",
+            "cleavage": "z",
+            "other": "b",
+            "habit": "j",
+            "color": "k",
+            "name": "k",
+            "specificGravity": "l",
+            "streak": "o",
+            "lab": 3,
+            "lustre": "n",
+            "fracture": "p"
+        }
+    ],
+    "name": "Review Folder"
+}

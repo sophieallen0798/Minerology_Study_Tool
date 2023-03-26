@@ -1,0 +1,100 @@
+<html>
+<head>
+<title>AddMinerals.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6897bb;}
+.s3 { color: #808080;}
+.s4 { color: #6a8759;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+AddMinerals.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">model.activities</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">model.Mineral</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">model.Review</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ui.MinApp</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">java.util.ArrayList</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.List</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.Scanner</span><span class="s0">;</span>
+
+<span class="s0">public class </span><span class="s1">AddMinerals </span><span class="s0">extends </span><span class="s1">MinApp {</span>
+    <span class="s0">private </span><span class="s1">Scanner input</span><span class="s0">;</span>
+    <span class="s0">private static int </span><span class="s1">NUM_PROPERTIES = </span><span class="s2">5</span><span class="s0">;</span>
+
+    <span class="s0">public </span><span class="s1">AddMinerals() {</span>
+        <span class="s1">addMineralPrompts()</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s3">// EFFECTS: take mineral properties as inputs and create mineral</span>
+    <span class="s3">// add mineral to the Review list</span>
+    <span class="s0">private </span><span class="s1">Mineral addMineralPrompts() {</span>
+        <span class="s1">Mineral nextMin = </span><span class="s0">new </span><span class="s1">Mineral()</span><span class="s0">;</span>
+        <span class="s3">//System.out.println(&quot;What would you like to do?&quot;);</span>
+        <span class="s0">int </span><span class="s1">i = </span><span class="s2">0</span><span class="s0">;</span>
+        <span class="s0">while </span><span class="s1">(i &lt; NUM_PROPERTIES) {</span>
+            <span class="s1">System.out.println(messagesList(i))</span><span class="s0">;</span>
+            <span class="s1">input = </span><span class="s0">new </span><span class="s1">Scanner(System.in)</span><span class="s0">;</span>
+            <span class="s1">setProperties(nextMin</span><span class="s0">, </span><span class="s1">input</span><span class="s0">, </span><span class="s1">i)</span><span class="s0">;</span>
+            <span class="s1">i += </span><span class="s2">1</span><span class="s0">;</span>
+        <span class="s1">}</span>
+        <span class="s1">printMineral(nextMin)</span><span class="s0">;</span>
+        <span class="s1">toReview.addToReview(nextMin)</span><span class="s0">;</span>
+        <span class="s0">return </span><span class="s1">(nextMin)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s3">// EFFECTS: return requested prompt message by index int</span>
+    <span class="s0">public </span><span class="s1">String messagesList(</span><span class="s0">int </span><span class="s1">i) {</span>
+        <span class="s1">List&lt;String&gt; messages = </span><span class="s0">new </span><span class="s1">ArrayList&lt;&gt;()</span><span class="s0">;</span>
+        <span class="s1">messages.add(</span><span class="s4">&quot;</span><span class="s0">\n</span><span class="s4">Lab Number:&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">messages.add(</span><span class="s4">&quot;</span><span class="s0">\n</span><span class="s4">Mineral Name:&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">messages.add(</span><span class="s4">&quot;</span><span class="s0">\n</span><span class="s4">Color:&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">messages.add(</span><span class="s4">&quot;</span><span class="s0">\n</span><span class="s4">Hardness:&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">messages.add(</span><span class="s4">&quot;</span><span class="s0">\n</span><span class="s4">Crystal System: &quot;</span>
+                <span class="s1">+ </span><span class="s4">&quot;</span><span class="s0">\n</span><span class="s4">i for isometric, &quot;</span>
+                <span class="s1">+ </span><span class="s4">&quot;tetra for tetragonal, &quot;</span>
+                <span class="s1">+ </span><span class="s4">&quot;tri for triclinic, &quot;</span>
+                <span class="s1">+ </span><span class="s4">&quot;h for hexagonal, &quot;</span>
+                <span class="s1">+ </span><span class="s4">&quot;m for monoclinic,  &quot;</span>
+                <span class="s1">+ </span><span class="s4">&quot;o for orthorhombic&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s0">return </span><span class="s1">messages.get(i)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s3">// EFFECTS: print mineral and it's properties</span>
+    <span class="s0">public void </span><span class="s1">printMineral(Mineral mineralToPrint) {</span>
+        <span class="s1">System.out.println(</span><span class="s4">&quot;Lab: &quot; </span><span class="s1">+ mineralToPrint.getLab())</span><span class="s0">;</span>
+        <span class="s1">System.out.println(</span><span class="s4">&quot;Name: &quot; </span><span class="s1">+ mineralToPrint.getName())</span><span class="s0">;</span>
+        <span class="s1">System.out.println(</span><span class="s4">&quot;Color: &quot; </span><span class="s1">+ mineralToPrint.getColor())</span><span class="s0">;</span>
+        <span class="s1">System.out.println(</span><span class="s4">&quot;Hardness: &quot; </span><span class="s1">+ mineralToPrint.getHardness())</span><span class="s0">;</span>
+        <span class="s1">System.out.println(</span><span class="s4">&quot;Crystal System: &quot; </span><span class="s1">+ mineralToPrint.getCrystalSystem())</span><span class="s0">;</span>
+        <span class="s3">// get it to print full name</span>
+        <span class="s3">//System.out.println(&quot;Crystal System: &quot; + crystalSystemName(mineralToPrint.getCrystalSystem()));</span>
+    <span class="s1">}</span>
+
+    <span class="s3">// MODIFIES: this</span>
+    <span class="s3">// EFFECTS: modifies specified field of the given mineral</span>
+    <span class="s0">public void </span><span class="s1">setProperties(Mineral m</span><span class="s0">, </span><span class="s1">Scanner inpu</span><span class="s0">, int </span><span class="s1">i) {</span>
+        <span class="s0">if </span><span class="s1">(i == </span><span class="s2">0</span><span class="s1">) {</span>
+            <span class="s1">m.setLab(inpu.nextInt())</span><span class="s0">;</span>
+        <span class="s1">} </span><span class="s0">else if </span><span class="s1">(i == </span><span class="s2">1</span><span class="s1">) {</span>
+            <span class="s1">m.setName(inpu.next())</span><span class="s0">;</span>
+        <span class="s1">} </span><span class="s0">else if </span><span class="s1">(i == </span><span class="s2">2</span><span class="s1">) {</span>
+            <span class="s1">m.setColor(inpu.next())</span><span class="s0">;</span>
+        <span class="s1">} </span><span class="s0">else if </span><span class="s1">(i == </span><span class="s2">3</span><span class="s1">) {</span>
+            <span class="s1">m.setHardness(inpu.nextInt())</span><span class="s0">;</span>
+        <span class="s1">} </span><span class="s0">else if </span><span class="s1">(i == </span><span class="s2">4</span><span class="s1">) {</span>
+            <span class="s1">m.setCrystalSystem(inpu.next().toLowerCase())</span><span class="s0">;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

@@ -1,0 +1,33 @@
+{
+    "minerals": [
+        {
+            "hardness": 4,
+            "crystalSystem": "isometric",
+            "cleavage": "",
+            "other": "",
+            "habit": "",
+            "color": "green",
+            "name": "mica",
+            "specificGravity": 0,
+            "streak": "",
+            "lab": 1,
+            "lustre": "shiny",
+            "fracture": ""
+        },
+        {
+            "hardness": 0,
+            "crystalSystem": "",
+            "cleavage": "",
+            "other": "",
+            "habit": "",
+            "color": "",
+            "name": "quartz",
+            "specificGravity": 0,
+            "streak": "",
+            "lab": 0,
+            "lustre": "",
+            "fracture": ""
+        }
+    ],
+    "name": "review"
+}
