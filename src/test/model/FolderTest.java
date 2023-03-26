@@ -151,9 +151,10 @@ public class FolderTest {
     void testMineralInList() {
         assertFalse(testFolder.checkInMineralList(testMineralA.getName()));
         testFolder.addToMineralList(testMineralA);
-        assertFalse(testFolder.mineralInFolder(testMineralA.getName()));
-        testFolder.addToMineralList(testMineralB);
         assertTrue(testFolder.mineralInFolder(testMineralA.getName()));
         assertFalse(testFolder.mineralInFolder(testMineralB.getName()));
+        testFolder.addToMineralList(testMineralB);
+        assertTrue(testFolder.mineralInFolder(testMineralA.getName()));
+        assertTrue(testFolder.mineralInFolder(testMineralB.getName()));
     }
 }
