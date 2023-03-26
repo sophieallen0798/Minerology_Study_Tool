@@ -4,7 +4,6 @@ import model.Folder;
 import model.LearnedFolder;
 import model.Mineral;
 import model.ReviewFolder;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;

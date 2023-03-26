@@ -53,7 +53,7 @@ public class Ui2 extends JFrame {
         guiMenu();
     }
 
-    // Photo souce: https://fairdinkumseeds.com/products-page/ethnobotanical-or-medicinal-plants/smiley-rock-massive-
+    // Photo source: https://fairdinkumseeds.com/products-page/ethnobotanical-or-medicinal-plants/smiley-rock-massive-
     // 175-00-discount/?fbclid=IwAR1XmPqBKLMuIK8tOwgKQQafO2VtkG1bsvwyIeuNHPc-m2CEmev6nEiTmIg
 
     // EFFECTS: Display start menu with buttons
@@ -102,7 +102,6 @@ public class Ui2 extends JFrame {
         add(loadBtn);
         add(saveBtn);
         add(menuLabel);
-        //add(pic);
     }
 
     // EFFECTS: Sets Action Listener for buttons
@@ -131,7 +130,6 @@ public class Ui2 extends JFrame {
     // EFFECTS: Creates action listener for add and organize buttons, accessed from AddMineralGUI
     static ActionListener actions() {
         return e -> {
-            //addMinGUI = new AddMineralGUI(toReview);
             if (e.getActionCommand().equals("addMin")) {
                 try {
                     new AddMineralGUI();
@@ -152,7 +150,6 @@ public class Ui2 extends JFrame {
             if (e.getActionCommand().equals("load")) {
                 loadFolders();
             } else if (e.getActionCommand().equals("save") | e.getActionCommand().equals("save")) {
-                //toReview = addMinGUI.getFolder();
                 saveFolders();
             } else if (e.getActionCommand().equals("viewRev")) {
                 table = new Table(toReview);
@@ -165,9 +162,6 @@ public class Ui2 extends JFrame {
             } else if (e.getActionCommand().equals("viewCS")) {
                 csImage();
             }
-//                } else if (e.getActionCommand().equals("clear")) {
-//                    clearFolders();
-//                }
         };
     }
 

@@ -5,8 +5,6 @@ import org.json.JSONObject;
 import persistance.JsonReader;
 import persistance.JsonWriter;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -109,29 +107,5 @@ public class ReviewFolder extends Folder {
         }
         return val;
     }
-
-//    // SAVE and LOAD methods:
-//    // SOURCE: Code adapted from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
-//
-//    // EFFECTS: Saves the review and learned folders to file
-//    public void saveFolders() {
-//        try {
-//            jsonWriterRev.open();
-//            jsonWriterRev.write(this);
-//            jsonWriterRev.close();
-//
-//            System.out.println("Saved review list to " + JSON_FOLDERS_R);
-////
-////            jsonWriterLearn.open();
-////            jsonWriterLearn.write(learned);
-////            jsonWriterLearn.close();
-////
-////            System.out.println("Saved learned list to " + JSON_FOLDERS_L);
-//
-//        } catch (FileNotFoundException e) {
-//            System.out.println("Unable to write to file: " + JSON_FOLDERS_R);
-//        }
-//    }
-
 
 }

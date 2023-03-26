@@ -3,9 +3,7 @@ package model;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 // Folder objects consists of a name and a list of minerals
 public abstract class Folder {
@@ -24,11 +22,11 @@ public abstract class Folder {
 
     // MODIFIES: this
     // EFFECTS: Add mineral to list
-    public void addToMineralList(Mineral mineral)  {
+    public void addToMineralList(Mineral mineral) {
         mineralList.add(mineral);
     }
 
-// MODIFIES: this
+    // MODIFIES: this
     // EFFECTS: If list is not empty, remove specified mineral
     //          If list is empty, throw empty list exception
     public void removeFromMineralList(Mineral min) {
