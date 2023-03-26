@@ -54,7 +54,7 @@ public class Label2 extends JFrame implements ActionListener {
         colorLabel = new JLabel("Color:");
 
         mineral = new Mineral();
-        folder = new ReviewFolder("folderName");
+        folder = new ReviewFolder();
 
         labBox = new JTextField(5);
         nameBox = new JTextField(5);

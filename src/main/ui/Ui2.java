@@ -95,8 +95,8 @@ public class Ui2 extends JFrame {
 
     // EFFECTS: Initialize Folders and json writers and readers, goes to open menu
     public Ui2() throws FileNotFoundException {
-        this.learned = new LearnedFolder("Learned");
-        this.toReview = new ReviewFolder("Review");
+        this.learned = new LearnedFolder();
+        this.toReview = new ReviewFolder();
         jsonReaderRev = new JsonReader(JSON_FOLDERS_R);
         jsonWriterRev = new JsonWriter(JSON_FOLDERS_R);
         jsonReaderLearn = new JsonReader(JSON_FOLDERS_L);
@@ -108,8 +108,7 @@ public class Ui2 extends JFrame {
     public void guiMenu() {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(400, 400));
-        ((JPanel) getContentPane()).setBorder(new EmptyBorder(13, 13, 13, 13));
-        setLayout(new GridLayout(14, 2));
+        setLayout(new GridLayout(14, 2,2,2));
         menuLabel = new JLabel("lab");
         JButton addMinBtn = new JButton("Add Minerals");
         JButton studyBtn = new JButton("Study");
@@ -117,21 +116,24 @@ public class Ui2 extends JFrame {
         JButton organizeBtn = new JButton("Organize Folders");
         JButton loadBtn = new JButton("Load Folders");
         JButton saveBtn = new JButton("Save Folders");
+        JButton sortButton = new JButton("Sort By Lab");
+        JButton clearButton = new JButton("Clear All Folders");
         addMinBtn.setActionCommand("addMin");
         studyBtn.setActionCommand("study");
         viewBtn.setActionCommand("view");
         organizeBtn.setActionCommand("organize");
         loadBtn.setActionCommand("load");
         saveBtn.setActionCommand("saveButton");
+        clearButton.setActionCommand("clear");
+        sortButton.setActionCommand("sort");
+
         addMinBtn.addActionListener(actions());
         studyBtn.addActionListener(actionHappening());
         viewBtn.addActionListener(actionHappening());
         organizeBtn.addActionListener(actions());
         loadBtn.addActionListener(actionHappening());
-//        saveBtn.addActionListener(this);
-        // Sets "this" object as an action listener for btn so that when the btn is
-        //saveBtn.setActionCommand("saveButton");
-        //saveBtn.addActionListener(this);
+        sortButton.addActionListener(actionHappening());
+        clearButton.addActionListener(actionHappening());
         field = new JTextField(5);
         //add(makeButton());
         add(addMinBtn);
@@ -140,6 +142,8 @@ public class Ui2 extends JFrame {
         add(organizeBtn);
         add(loadBtn);
         add(saveBtn);
+        add(sortButton);
+        add(clearButton);
         add(menuLabel);
         pack();
         setLocationRelativeTo(null);
@@ -205,14 +209,28 @@ public class Ui2 extends JFrame {
                     organizeFolders(learned);
                 }
                 if (e.getActionCommand().equals("study")) {
-                    studyMenu();
+                    studyGUI();
                 }
-//                if (e.getActionCommand().equals("load")) {
-//                    loadFolders();
-//                }
+                if (e.getActionCommand().equals("sort")) {
+                    sortLab();
+                }
+                if (e.getActionCommand().equals("clear")) {
+                    toReview = new ReviewFolder();
+                    learned = new LearnedFolder();
+                }
             }
         };
         return actListen;
+
+    }
+
+    public static void studyGUI() {
+        Study frame = new Study();
+        frame.setSize(500, 500);
+        frame.setVisible(true);
+    }
+
+    public void sortLab() {
 
     }
 

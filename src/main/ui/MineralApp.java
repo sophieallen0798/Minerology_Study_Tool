@@ -50,8 +50,8 @@ public class MineralApp extends JPanel {
 
     // EFFECTS: Initialize Folders and json writers and readers, goes to open menu
     public MineralApp() throws FileNotFoundException {
-        this.learned = new LearnedFolder("Learned");
-        this.toReview = new ReviewFolder("Review");
+        this.learned = new LearnedFolder();
+        this.toReview = new ReviewFolder();
         jsonReaderRev = new JsonReader(JSON_FOLDERS_R);
         jsonWriterRev = new JsonWriter(JSON_FOLDERS_R);
         jsonReaderLearn = new JsonReader(JSON_FOLDERS_L);

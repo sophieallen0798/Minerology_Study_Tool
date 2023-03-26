@@ -22,8 +22,8 @@ public class ReviewFolder implements Folder {
     private static final String JSON_FOLDERS_L = "./data/learned.json";
 
     // EFFECTS: Constructs a folder with a name and list of minerals
-    public ReviewFolder(String name) {
-        this.name = name;
+    public ReviewFolder() {
+        this.name = "Review Folder";
         this.mineralList = new ArrayList<>();
         jsonReaderRev = new JsonReader(JSON_FOLDERS_R);
         jsonWriterRev = new JsonWriter(JSON_FOLDERS_R);

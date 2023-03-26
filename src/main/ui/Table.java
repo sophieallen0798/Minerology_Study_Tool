@@ -1,12 +1,10 @@
 package ui;
 
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import javax.swing.*;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.util.List;
 
@@ -38,8 +36,11 @@ public class Table extends JPanel {
         columnNames = new String[]{"Name", "Lab", "Lustre", "Color", "Streak", "Hardness", "Specific Gravity",
                 "Cleavage", "Fracture", "Habit", "Crystal System", "Other"};
         final JTable table = new JTable(data, columnNames);
+        JButton deleteBtn = new JButton("Delete Selected");
+        deleteBtn.setActionCommand("delete");
         table.setPreferredScrollableViewportSize(new Dimension(1000, 70));
         table.setFillsViewportHeight(true);
+        table.setAutoCreateRowSorter(true);
 //        if (DEBUG) {
 //            table.addMouseListener(new MouseAdapter() {
 //                public void mouseClicked(MouseEvent e) {
@@ -58,6 +59,11 @@ public class Table extends JPanel {
 //            }
 //        });
     }
+
+//    public ActionListener tableListener() {
+//        int i = table.getSelectedRow();
+//        table.removeRow(i);
+//    }
 
 //    private void printDebugData(JTable table) {
 //        int numRows = table.getRowCount();

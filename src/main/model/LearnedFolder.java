@@ -20,8 +20,8 @@ public class LearnedFolder implements Folder {
     private static final String JSON_FOLDERS_L = "./data/learned.json";
 
     // EFFECTS: Constructs a folder with a name and list of minerals
-    public LearnedFolder(String name) {
-        this.name = name;
+    public LearnedFolder() {
+        this.name = "Learned Folder";
         this.mineralList = new ArrayList<>();
         jsonReaderRev = new JsonReader(JSON_FOLDERS_R);
         jsonWriterRev = new JsonWriter(JSON_FOLDERS_R);
