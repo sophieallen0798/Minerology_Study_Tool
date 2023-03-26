@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class LearnedFolder implements Folder {
+public class LearnedFolder extends Folder {
     protected List<Mineral> mineralList;
     protected String name;
     private JsonWriter jsonWriterRev;
@@ -92,6 +92,20 @@ public class LearnedFolder implements Folder {
             jsonArray.put(m.toJson());
         }
         return jsonArray;
+    }
+
+    // EFFECTS: Check if given mineral is in given folder, return false if mineral not in folder
+    public boolean mineralInFolder(String inName) {
+        boolean val = false;
+        List<Mineral> mineralList = this.getMineralList();
+        for (int i = 0; i < this.getMineralList().size(); i++) {
+            Mineral inMineral = mineralList.get(i);
+            if (inName.equals(inMineral.getName())) {
+                val = true;
+                break;
+            }
+        }
+        return val;
     }
 
 }

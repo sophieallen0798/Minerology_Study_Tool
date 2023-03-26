@@ -11,8 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 
-import static ui.Ui2.actions;
-import static ui.Ui2.toReview;
+import static ui.Ui2.*;
 
 
 public class AddMineralGUI extends JFrame {
@@ -33,7 +32,7 @@ public class AddMineralGUI extends JFrame {
     private JLabel habitLabel;
     private JLabel crystalSystemLabel;
     private JLabel otherLabel;
-    private JLabel label;
+    static JLabel label;
 
     private JFrame jframe;
     private JPanel jpanel;
@@ -62,7 +61,6 @@ public class AddMineralGUI extends JFrame {
 
     public void addMineralMenu() {
         //super("The title");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
         //add(controlPanel);
         ((JPanel) getContentPane()).setBorder(new EmptyBorder(13, 13, 13, 13));
         setLayout(new GridLayout(14,2));
@@ -98,40 +96,22 @@ public class AddMineralGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 Mineral min = new Mineral();
                 min = getMineral();
-                toReview.addToMineralList(min);
-                label.setForeground(green1);
-                System.out.println(toReview);
                 System.out.println(min.getName());
-                label.setText("   " + min.getName() + " added to review list.");
-                resetBoxesEmpty();
+                if (toReview.mineralInFolder(min.getName())) {
+                    label.setForeground(red1);
+                    label.setText("   Mineral " + min.getName() + " already exists in review folder.");
+                } else if (learned.mineralInFolder(min.getName())) {
+                    label.setForeground(red1);
+                    label.setText("   Mineral " + min.getName() + " already exists in learned folder.");
+                } else {
+                    toReview.addToMineralList(min);
+                    label.setForeground(green1);
+                    label.setText("   " + min.getName() + " added to review list.");
+                    resetBoxesEmpty();
+                }
             }
         };
         return myListener;
-    }
-
-
-
-    //This is the method that is called when the JButton btn is clicked
-//    public void actionPerformed(ActionEvent e) {
-//        if (e.getActionCommand().equals("add")) {
-//            Mineral min = getMineral();
-//            addMineralToFolder(min);
-//            label.setForeground(green1);
-//            label.setText("   " + min.getName() + " added to review list.");
-//            resetBoxesEmpty();
-//        }
-//        if (e.getActionCommand().equals("save")) {
-//            revFolder.saveFolders();
-//            label.setText("Minerals saved");
-//        }
-//    }
-
-    private void addMineralToFolder(Mineral min) {
-        toReview.addToMineralList(min);
-    }
-
-    public ReviewFolder getFolder() {
-        return toReview;
     }
 
     private void makeMineralLabels() {
@@ -209,7 +189,7 @@ public class AddMineralGUI extends JFrame {
 
     private Mineral getMineral() {
         this.min = new Mineral();
-        min.setLab(Integer.parseInt(labBox.getText()));
+        min.setLab(labBox.getText());
         min.setName(nameBox.getText());
         min.setLustre(lustreBox.getText());
         min.setColor(colorBox.getText());
@@ -223,9 +203,5 @@ public class AddMineralGUI extends JFrame {
         min.setOther(otherBox.getText());
         return min;
     }
-
-//    static Mineral getMin() {
-//        return min;
-//    }
 
 }

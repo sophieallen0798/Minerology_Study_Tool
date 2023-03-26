@@ -259,7 +259,7 @@ public class MineralApp extends JPanel {
         List<Mineral> minList = f.getMineralList();
         for (Mineral m : minList) {
             String name = m.getName();
-            int lab = m.getLab();
+            String lab = m.getLab();
             String lustre = m.getLustre();
             String color = m.getColor();
             String s = m.getStreak();
@@ -451,7 +451,7 @@ public class MineralApp extends JPanel {
     @SuppressWarnings("methodlength")
     public void setProperties(Mineral m, Scanner inpu, int i) {
         if (i == 0) {
-            m.setLab(inpu.nextInt());
+            m.setLab(inpu.next());
         } else if (i == 1) {
             nameProcess(m, inpu, i);
         } else if (i == 2) {

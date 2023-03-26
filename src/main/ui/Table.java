@@ -1,6 +1,9 @@
 package ui;
 
 
+import model.Folder;
+import model.Mineral;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -9,8 +12,7 @@ import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.util.List;
 
-import model.Mineral;
-import model.Folder;
+import static ui.Ui2.*;
 
 // Source: modified from https://docs.oracle.com/javase/tutorial/uiswing/components/table.html
 public class Table extends JPanel {
@@ -19,50 +21,93 @@ public class Table extends JPanel {
     private Object[][] data;
     private static Folder folder;
     private List<Mineral> mineralList;
+    private JLabel tableMessage;
 
     public Table(Folder folder) {
         super(new GridLayout(0, 1));
-        setPreferredSize(new Dimension(500, 400));
-        //super(new FlowLayout());
+        setPreferredSize(new Dimension(700, 400));
+        tableMessage = new JLabel("");
+        //this.folder = toReview;
         this.folder = folder;
         mineralList = folder.getMineralList();
+        fillTable();
+        columnNames = new String[]{"Name", "Lab", "Lustre", "Color", "Streak", "Hardness", "Specific Gravity",
+                "Cleavage", "Fracture", "Habit", "Crystal System", "Other"};
+        table = new JTable(data, columnNames);
+        //ImageIcon photo = new ImageIcon("data/learnedHeading.png");
+        //JLabel pic = new JLabel(photo);
+        JButton deleteBtn = new JButton("Delete Selected");
+        JButton moveBtn = new JButton("Move Selected to Other Folder");
+        moveBtn.setActionCommand("move");
+        moveBtn.addActionListener(moveMineral());
+        deleteBtn.setActionCommand("delete");
+        deleteBtn.addActionListener(deleteAction());
+        table.setPreferredScrollableViewportSize(new Dimension(700, 70));
+        table.setFillsViewportHeight(true);
+        table.setAutoCreateRowSorter(true);
+        //Create the scroll pane and add the table to it.
+        JScrollPane scrollPane = new JScrollPane(table);
+        //Add the scroll pane to this panel.
+        //add(pic);
+        add(scrollPane);
+
+        add(deleteBtn);
+        add(moveBtn);
+    }
+
+    private void fillTable() {
         data = new Object[mineralList.size()][12];
         for (int i = 0; i < mineralList.size(); i++) {
             for (int j = 0; j < 12; j++) {
                 data[i][j] = createObject(i, j);
             }
         }
-        columnNames = new String[]{"Name", "Lab", "Lustre", "Color", "Streak", "Hardness", "Specific Gravity",
-                "Cleavage", "Fracture", "Habit", "Crystal System", "Other"};
-        table = new JTable(data, columnNames);
-        ImageIcon photo = new ImageIcon("data/rock.jpg");
-        JLabel pic = new JLabel(photo);
-        //JButton deleteBtn = new JButton("Delete Selected");
-        //deleteBtn.setActionCommand("delete");
-        //deleteBtn.addActionListener(deleteAction());
-        table.setPreferredScrollableViewportSize(new Dimension(500, 70));
-        table.setFillsViewportHeight(true);
-        table.setAutoCreateRowSorter(true);
-        //Create the scroll pane and add the table to it.
-        JScrollPane scrollPane = new JScrollPane(table);
-        //Add the scroll pane to this panel.
-        add(pic);
-        add(scrollPane);
-
-        //add(deleteBtn);
     }
 
-//    public ActionListener deleteAction() {
-//        ActionListener deleteAction = new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                int i = table.getSelectedRow();
-//                ((DefaultTableModel)table.getModel()).removeRow(i);
-//                //table.removeRow(i);
-//            }
-//        };
-//        return deleteAction;
-//    }
+    public ActionListener moveMineral() {
+        ActionListener moveMineral = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int i = table.getSelectedRow();
+                String minToMove = String.valueOf(table.getValueAt(i,0));
+                for (Mineral m : folder.getMineralList()) {
+                    if (m.getName().equals(minToMove)) {
+                        tableMessage.setForeground(green1);
+                        if (folder.getName().equals("Review Folder")) {
+                            toReview.removeFromMineralList(m);
+                            learned.addToMineralList(m);
+                            tableMessage.setText(m.getName() + " moved to learned list.Reload table to show changes.");
+                        } else if (folder.getName().equals("Learned Folder")) {
+                            toReview.removeFromMineralList(m);
+                            learned.addToMineralList(m);
+                            tableMessage.setText(m.getName() + " moved to learned list.Reload table to show changes.");
+                        }
+                    }
+                }
+
+            }
+        };
+        return moveMineral;
+    }
+
+    public ActionListener deleteAction() {
+        ActionListener deleteAction = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int i = table.getSelectedRow();
+                String minNameToDelete = String.valueOf(table.getValueAt(i,0));
+                for (Mineral m : toReview.getMineralList()) {
+                    if (m.getName().equals(minNameToDelete)) {
+                        toReview.removeFromMineralList(m);
+                        tableMessage.setForeground(red1);
+                        tableMessage.setText(m.getName() + " removed. Reload table to show changes.");
+                    }
+                }
+
+            }
+        };
+        return deleteAction;
+    }
 
 //    private void printDebugData(JTable table) {
 //        int numRows = table.getRowCount();
@@ -84,7 +129,7 @@ public class Table extends JPanel {
     private static void createAndShowGUI() {
         //Create and set up the window.
         JFrame frame = new JFrame("Table");
-        frame.setPreferredSize(new Dimension(500, 400));
+        frame.setPreferredSize(new Dimension(700, 400));
         frame.setLayout(new GridLayout(14, 2, 2, 2));
 
         //Create and set up the content pane.

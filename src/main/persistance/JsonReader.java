@@ -78,7 +78,7 @@ public class JsonReader {
     // EFFECTS: Parses mineral from JSON object and adds it to the folder
     private void addMineral(Folder folder, JSONObject jsonObject) {
         Mineral m = new Mineral();
-        int lab = jsonObject.getInt("lab");
+        String lab = jsonObject.getString("lab");
         String name = jsonObject.getString("name");
         String lustre = jsonObject.getString("lustre");
         String color = jsonObject.getString("color");
@@ -95,7 +95,7 @@ public class JsonReader {
     }
 
     // EFFECTS: set mineral properties
-    private void addMineralProperties(Folder folder, Mineral m, int lab, String name, String lustre, String color,
+    private void addMineralProperties(Folder folder, Mineral m, String lab, String name, String lustre, String color,
                                       String streak, String hardness, String sp, String cleavage, String fracture,
                                       String habit, String cs, String other) {
         m.setLab(lab);

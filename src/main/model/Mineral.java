@@ -6,7 +6,7 @@ package model;
 import org.json.JSONObject;
 
 public class Mineral {
-    private int lab;
+    private String lab;
     private String name;
     private String lustre;
     private String color;
@@ -20,7 +20,7 @@ public class Mineral {
     private String other;
 
     public Mineral() {
-        lab = 0;
+        lab = "";
         name = "";
         lustre = "";
         color = "";
@@ -37,7 +37,7 @@ public class Mineral {
     //SET methods:
 
     //MODIFIES: this
-    public void setLab(int lab) {
+    public void setLab(String lab) {
         this.lab = lab;
     }
 
@@ -100,7 +100,7 @@ public class Mineral {
 
     // GET methods:
 
-    public int getLab() {
+    public String getLab() {
         return lab;
     }
 

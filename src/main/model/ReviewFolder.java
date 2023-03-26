@@ -11,9 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class ReviewFolder implements Folder {
+public class ReviewFolder extends Folder {
     protected List<Mineral> mineralList;
     protected String name;
+    private Folder reviewFolder;
     private JsonWriter jsonWriterRev;
     private JsonReader jsonReaderRev;
     private JsonWriter jsonWriterLearn;
@@ -25,6 +26,7 @@ public class ReviewFolder implements Folder {
     public ReviewFolder() {
         this.name = "Review Folder";
         this.mineralList = new ArrayList<>();
+        reviewFolder = this;
         jsonReaderRev = new JsonReader(JSON_FOLDERS_R);
         jsonWriterRev = new JsonWriter(JSON_FOLDERS_R);
         jsonReaderLearn = new JsonReader(JSON_FOLDERS_L);
@@ -96,28 +98,40 @@ public class ReviewFolder implements Folder {
         return jsonArray;
     }
 
-    // SAVE and LOAD methods:
-    // SOURCE: Code adapted from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
-
-    // EFFECTS: Saves the review and learned folders to file
-    public void saveFolders() {
-        try {
-            jsonWriterRev.open();
-            jsonWriterRev.write(this);
-            jsonWriterRev.close();
-
-            System.out.println("Saved review list to " + JSON_FOLDERS_R);
-//
-//            jsonWriterLearn.open();
-//            jsonWriterLearn.write(learned);
-//            jsonWriterLearn.close();
-//
-//            System.out.println("Saved learned list to " + JSON_FOLDERS_L);
-
-        } catch (FileNotFoundException e) {
-            System.out.println("Unable to write to file: " + JSON_FOLDERS_R);
+    // EFFECTS: Check if given mineral is in given folder, return false if mineral not in folder
+    public boolean mineralInFolder(String inName) {
+        boolean val = false;
+        for (Mineral m : this.mineralList) {
+            if (inName.equals(m.getName())) {
+                val = true;
+                break;
+            }
         }
+        return val;
     }
+
+//    // SAVE and LOAD methods:
+//    // SOURCE: Code adapted from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
+//
+//    // EFFECTS: Saves the review and learned folders to file
+//    public void saveFolders() {
+//        try {
+//            jsonWriterRev.open();
+//            jsonWriterRev.write(this);
+//            jsonWriterRev.close();
+//
+//            System.out.println("Saved review list to " + JSON_FOLDERS_R);
+////
+////            jsonWriterLearn.open();
+////            jsonWriterLearn.write(learned);
+////            jsonWriterLearn.close();
+////
+////            System.out.println("Saved learned list to " + JSON_FOLDERS_L);
+//
+//        } catch (FileNotFoundException e) {
+//            System.out.println("Unable to write to file: " + JSON_FOLDERS_R);
+//        }
+//    }
 
 
 }

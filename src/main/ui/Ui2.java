@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
+import static ui.AddMineralGUI.label;
+
 
 // Application to study and keep a list of minerals
 public class Ui2 extends JFrame {
@@ -28,14 +30,17 @@ public class Ui2 extends JFrame {
     public static final String RED = "\u001B[31m";
     public static final String RESET = "\u001B[0m";
 
-    private JLabel label;
+    //private static JLabel label;
     private Table table;
     private AddMineralGUI addMinGUI;
 
     private Mineral mineral;
     private JTextField field;
     static Color green1;
+    static Color green2;
     static Color red1;
+    static Color purple1;
+    static Color blueish;
 
     private JLabel labLabel;
     private JLabel nameLabel;
@@ -108,59 +113,88 @@ public class Ui2 extends JFrame {
         guiMenu();
     }
 
+    // Photo souce: https://fairdinkumseeds.com/products-page/ethnobotanical-or-medicinal-plants/smiley-rock-massive-
+    // 175-00-discount/?fbclid=IwAR1XmPqBKLMuIK8tOwgKQQafO2VtkG1bsvwyIeuNHPc-m2CEmev6nEiTmIg
+
+    // EFFECTS: Display start menu with buttons
     public void guiMenu() {
-        green1 = new Color(90, 180, 90);
-        red1 = new Color(230, 20, 20);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setPreferredSize(new Dimension(500, 400));
-        setLayout(new GridLayout(14, 2, 2, 2));
-        ((JPanel) getContentPane()).setBorder(new EmptyBorder(13, 13, 13, 13));
-        menuLabel = new JLabel("");
-        photo = new ImageIcon("data/rock.jpg");
-        pic = new JLabel(photo);
+        jframeDesign();
         JButton addMinBtn = new JButton("Add Minerals");
         JButton studyBtn = new JButton("Study");
-        JButton viewBtn = new JButton("View Folders");
-        JButton organizeBtn = new JButton("Organize Folders");
+        JButton viewRev = new JButton("View Review Folder");
+        JButton viewLer = new JButton("View Learned Folder");
         JButton loadBtn = new JButton("Load Folders");
         JButton saveBtn = new JButton("Save Folders");
-        JButton viewCsImageBtn = new JButton("View Crystal Systems");
-        JButton clearButton = new JButton("Clear All Folders");
-        clearButton.setForeground(red1);
-        addMinBtn.setActionCommand("addMin");
-        studyBtn.setActionCommand("study");
-        viewBtn.setActionCommand("view");
-        organizeBtn.setActionCommand("organize");
-        loadBtn.setActionCommand("load");
-        saveBtn.setActionCommand("saveButton");
-        clearButton.setActionCommand("clear");
-        viewCsImageBtn.setActionCommand("viewCS");
-
-        addMinBtn.addActionListener(actions());
-        studyBtn.addActionListener(actionHappening());
-        viewBtn.addActionListener(actionHappening());
-        organizeBtn.addActionListener(actions());
-        loadBtn.addActionListener(actionHappening());
-        viewCsImageBtn.addActionListener(actionHappening());
-        clearButton.addActionListener(actionHappening());
+        JButton viewCsImageBtn = new JButton("Display Photo");
+        //addMinBtn.setForeground(purple1);
+//        addMinBtn.setBackground(blueish);
+//        saveBtn.setBackground(green2);
+//        loadBtn.setBackground(green2);
+        setButtons(addMinBtn, studyBtn, viewRev, viewLer, loadBtn, saveBtn, viewCsImageBtn);
+        setButtonActions(addMinBtn, studyBtn, viewRev, viewLer, loadBtn, viewCsImageBtn);
         field = new JTextField(5);
         //add(makeButton());
-        add(viewCsImageBtn);
-        add(addMinBtn);
-        add(studyBtn);
-        add(viewBtn);
-        add(organizeBtn);
-        add(loadBtn);
-        add(saveBtn);
-        add(clearButton);
-        add(menuLabel);
-        add(pic);
+        addButtons(addMinBtn, studyBtn, viewRev, viewLer, loadBtn, saveBtn, viewCsImageBtn);
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
         setResizable(true);
     }
 
+    // EFFECTS: Sets JFrame specifications, creates new label, photo, and colors
+    private void jframeDesign() {
+        green1 = new Color(90, 180, 90);
+        green2 = new Color(150, 210, 150);
+        red1 = new Color(230, 20, 20);
+        purple1 = new Color(170, 20, 100);
+        blueish = new Color(200,200,250);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setPreferredSize(new Dimension(400, 500));
+        setLayout(new GridLayout(14, 2, 2, 2));
+        ((JPanel) getContentPane()).setBorder(new EmptyBorder(13, 13, 13, 13));
+        menuLabel = new JLabel("");
+        photo = new ImageIcon("data/rock.jpg");
+        pic = new JLabel(photo);
+    }
+
+    // EFFECTS: Add buttons, photo, and label to JFrame
+    private void addButtons(JButton addMinBtn, JButton studyBtn, JButton viewRev, JButton viewLer,
+                            JButton loadBtn, JButton saveBtn, JButton viewCsImageBtn) {
+        add(viewCsImageBtn);
+        add(addMinBtn);
+        add(studyBtn);
+        add(viewRev);
+        add(viewLer);
+        add(loadBtn);
+        add(saveBtn);
+        add(menuLabel);
+        //add(pic);
+    }
+
+    // EFFECTS: Sets Action Listener for buttons
+    private void setButtonActions(JButton addMinBtn, JButton studyBtn, JButton viewRev, JButton viewLer,
+                                  JButton loadBtn, JButton viewCsImageBtn) {
+        addMinBtn.addActionListener(actions());
+        studyBtn.addActionListener(actionHappening());
+        viewRev.addActionListener(actionHappening());
+        viewLer.addActionListener(actionHappening());
+        loadBtn.addActionListener(actionHappening());
+        viewCsImageBtn.addActionListener(actionHappening());
+    }
+
+    // EFFECTS: Sets action commands for buttons
+    private void setButtons(JButton addMinBtn, JButton studyBtn, JButton viewRev, JButton viewLer, JButton loadBtn,
+                            JButton saveBtn, JButton viewCsImageBtn) {
+        addMinBtn.setActionCommand("addMin");
+        studyBtn.setActionCommand("study");
+        viewRev.setActionCommand("viewRev");
+        viewLer.setActionCommand("viewLer");
+        loadBtn.setActionCommand("load");
+        saveBtn.setActionCommand("save");
+        viewCsImageBtn.setActionCommand("viewCS");
+    }
+
+    // EFFECTS: Creates action listener for add and organize buttons, accessed from AddMineralGUI
     static ActionListener actions() {
         ActionListener actionListener = new ActionListener() {
             @Override
@@ -173,77 +207,76 @@ public class Ui2 extends JFrame {
                         throw new RuntimeException(ex);
                     }
                 }
-                if (e.getActionCommand().equals("save") | e.getActionCommand().equals("saveButton")) {
+                if (e.getActionCommand().equals("save")) {
                     saveFolders();
-                    menuLabel.setForeground(green1);
-                    menuLabel.setText("Folders Saved");
+                    label.setForeground(green1);
                 }
             }
         };
         return actionListener;
     }
 
-    //This is the method that is called when the JButton btn is clicked
+    // EFFECTS: Creates action listener for other menu buttons
     public ActionListener actionHappening() {
         ActionListener actListen = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getActionCommand().equals("load")) {
                     loadFolders();
-                    menuLabel.setForeground(green1);
-                    menuLabel.setText("Folders Loaded");
-                }
-                if (e.getActionCommand().equals("save") | e.getActionCommand().equals("saveButton")) {
-                    toReview = addMinGUI.getFolder();
+                } else if (e.getActionCommand().equals("save") | e.getActionCommand().equals("save")) {
+                    //toReview = addMinGUI.getFolder();
                     saveFolders();
-                    menuLabel.setForeground(green1);
-                    menuLabel.setText("Folders Saved");
-                }
-                if (e.getActionCommand().equals("view")) {
+                } else if (e.getActionCommand().equals("viewRev")) {
                     table = new Table(toReview);
                     table.fun("a");
-                }
-                if (e.getActionCommand().equals("organize")) {
-                    organizeFolders(toReview);
-                    organizeFolders(learned);
-                }
-                if (e.getActionCommand().equals("study")) {
-                    try {
-                        studyGUI();
-                    } catch (IllegalArgumentException k) {
-                        System.out.println("hi");
-                        emptyWarning();
-                    }
-                }
-                if (e.getActionCommand().equals("viewCS")) {
+                } else if (e.getActionCommand().equals("viewLer")) {
+                    table = new Table(learned);
+                    table.fun("a");
+                } else if (e.getActionCommand().equals("study")) {
+                    tryStudy();
+                } else if (e.getActionCommand().equals("viewCS")) {
                     csImage();
                 }
-                if (e.getActionCommand().equals("clear")) {
-                    toReview = new ReviewFolder();
-                    learned = new LearnedFolder();
-                    label.setForeground(red1);
-                    label.setText("Folders cleared");
-                }
+//                } else if (e.getActionCommand().equals("clear")) {
+//                    clearFolders();
+//                }
             }
         };
         return actListen;
+    }
 
+    private void tryStudy() {
+        try {
+            studyGUI();
+        } catch (IllegalArgumentException k) {
+            System.out.println("hi");
+            emptyWarning();
+        }
+    }
+
+    // MODIFIES: Learned folder and Review folder
+    // EFFECTS: Reset both learned and review folders
+    private void clearFolders() {
+        toReview = new ReviewFolder();
+        learned = new LearnedFolder();
+        menuLabel.setForeground(red1);
+        menuLabel.setText("Folders cleared");
     }
 
     // EFFECTS: Starts studyGUI
     public static void studyGUI() {
         Study frame = new Study();
-        frame.setSize(500, 500);
+        frame.setSize(400, 500);
         frame.setVisible(true);
     }
 
-    // EFFECTS: opens image of a rock in a new panel
+    // EFFECTS: Opens image of a rock in a new frame
     public void csImage() {
         JPanel pan = new JPanel();
         JFrame frame1 = new JFrame();
         frame1.setVisible(true);
         frame1.add(pan);
-        frame1.setSize(500, 500);
+        frame1.setSize(400, 500);
         frame1.add(pic);
     }
 
@@ -254,39 +287,7 @@ public class Ui2 extends JFrame {
         JOptionPane.showMessageDialog(button, warningLabel);
     }
 
-    // EFFECTS: Calls method to print names of minerals in folders or print empty if empty
-    public void organizeFolders(Folder folder) {
-        if (learned.mineralListNotEmpty() | toReview.mineralListNotEmpty()) {
-            System.out.println(BLUE + folder.getName() + RESET);
-            if (folder.getMineralList().isEmpty()) {
-                System.out.println("(empty)");
-            }
-            printMineralNames(folder);
-        } else {
-            System.out.println(RED + "Both lists are empty. Please add at least one mineral.\n" + RESET);
-        }
-    }
 
-    // EFFECTS: prompt user for name of mineral to move
-    public void organizePrompt() {
-        organizeFolders(learned);
-        organizeFolders(toReview);
-        System.out.println("Which mineral would you like to move? Enter mineral name or m to return to main menu");
-        String selection = input.next();
-        folderOptionsMenu(selection);
-    }
-
-    // EFFECTS: If both lists aren't empty, move minerals chosen by user to other folder, otherwise return to main menu
-    public void folderOptionsMenu(String selection) {
-        if (mineralInFolder(selection, toReview)) {
-            checkInReview(selection);
-        } else if (mineralInFolder(selection, learned)) {
-            checkInLearned(selection);
-        } else {
-            System.out.println("Selected mineral is not in either folder.");
-        }
-        organizePrompt();
-    }
 
     // EFFECTS: Remove mineral from learned and put in review
     public void checkInLearned(String inName) {
@@ -314,61 +315,6 @@ public class Ui2 extends JFrame {
         }
     }
 
-    // EFFECTS: Check if given mineral is in given folder
-    public boolean mineralInFolder(String inName, Folder f) {
-        boolean val = false;
-        List<Mineral> mineralList = f.getMineralList();
-        for (int i = 0; i < f.getMineralList().size(); i++) {
-            Mineral inMineral = mineralList.get(i);
-            if (inName.equals(inMineral.getName())) {
-                val = true;
-                break;
-            }
-        }
-        return val;
-    }
-
-    // PRINT METHODS:
-
-    // EFFECTS: Print names of all minerals in given folder
-    public void printMineralNames(Folder folder) {
-        List<Mineral> mineralList = folder.getMineralList();
-        for (Mineral mineral : mineralList) {
-            System.out.println(mineral.getName());
-        }
-    }
-
-    // EFFECTS: If name is already in the list, prompt user to enter a new name
-    public void nameProcess(Mineral m, Scanner inpu, int i) {
-        String in = inpu.next();
-        if (checkName(in)) {
-            m.setName(in);
-        } else {
-            System.out.println("This mineral already exists in your lists. Please enter another name.");
-        }
-    }
-
-    // EFFECTS: Check if mineral of input name already exists in either folder, return false if not in either
-    public boolean checkName(String name) {
-        boolean val = true;
-        List<Mineral> reviewList = toReview.getMineralList();
-        List<Mineral> learnedList = learned.getMineralList();
-
-        for (Mineral min : reviewList) {
-            if (name.equals(min.getName())) {
-                val = false;
-                break;
-            }
-        }
-        for (Mineral min : learnedList) {
-            if (name.equals(min.getName())) {
-                val = false;
-                break;
-            }
-        }
-        return val;
-    }
-
     // SAVE and LOAD methods:
     // SOURCE: Code adapted from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
 
@@ -378,14 +324,13 @@ public class Ui2 extends JFrame {
             jsonWriterRev.open();
             jsonWriterRev.write(toReview);
             jsonWriterRev.close();
-
-            System.out.println("Saved review list to " + JSON_FOLDERS_R);
-
+            //System.out.println("Saved review list to " + JSON_FOLDERS_R);
             jsonWriterLearn.open();
             jsonWriterLearn.write(learned);
             jsonWriterLearn.close();
-
-            System.out.println("Saved learned list to " + JSON_FOLDERS_L);
+            //System.out.println("Saved learned list to " + JSON_FOLDERS_L);
+            menuLabel.setForeground(green1);
+            menuLabel.setText("Folders Saved");
 
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file: " + JSON_FOLDERS_L);
@@ -398,11 +343,15 @@ public class Ui2 extends JFrame {
     public void loadFolders() {
         try {
             toReview = jsonReaderRev.revRead();
-            System.out.println("Loaded review list from " + JSON_FOLDERS_R);
+            //System.out.println("Loaded review list from " + JSON_FOLDERS_R);
             learned = jsonReaderLearn.lerRead();
-            System.out.println("Loaded learned list from " + JSON_FOLDERS_L);
+            //System.out.println("Loaded learned list from " + JSON_FOLDERS_L);
+            menuLabel.setForeground(green1);
+            menuLabel.setText("Folders Loaded");
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_FOLDERS_R);
+            menuLabel.setForeground(red1);
+            menuLabel.setText("Unable to read from file: " + JSON_FOLDERS_R + JSON_FOLDERS_L);
         }
     }
 

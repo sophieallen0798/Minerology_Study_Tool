@@ -10,7 +10,7 @@
             "name": "lkjn",
             "specificGravity": "jnl",
             "streak": "nlkj",
-            "lab": 1,
+            "lab": "1",
             "lustre": "lkj",
             "fracture": "kln"
         },
@@ -24,7 +24,7 @@
             "name": "k",
             "specificGravity": "l",
             "streak": "o",
-            "lab": 3,
+            "lab": "3",
             "lustre": "n",
             "fracture": "p"
         }

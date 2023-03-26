@@ -78,7 +78,7 @@ public class Label2 extends JFrame implements ActionListener {
     //This is the method that is called when the the JButton btn is clicked
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("myButton")) {
-            mineral.setLab(Integer.parseInt(labBox.getText()));
+            mineral.setLab(labBox.getText());
             mineral.setName(nameBox.getText());
             mineral.setColor(colorBox.getText());
             folder.addToMineralList(mineral);
