@@ -13,6 +13,8 @@ public class FolderTest {
     private Mineral testMineralB;
     private Folder testFolder;
     private Folder testFolder2;
+    private Folder testFolderFolder;
+    private List<Mineral> mineralList;
 
     // Before each run, make 2 test minerals and 2 test folders
     @BeforeEach
@@ -44,7 +46,9 @@ public class FolderTest {
         minList = testFolder.getMineralList();
         assertEquals(testMineralA, minList.get(0));
         assertEquals(testMineralB, minList.get(1));
+        assertEquals(minList, testFolder.getMineralList());
         assertEquals(2, minList.size());
+        assertEquals("Review Folder", testFolder.getName());
     }
 
     // Test add mineral to list

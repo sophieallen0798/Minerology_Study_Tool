@@ -8,16 +8,14 @@ import java.util.List;
 // Folder objects consists of a name and a list of minerals
 public abstract class Folder {
     protected String name;
-    protected List<Mineral> mineralList = this.getMineralList();
+    protected List<Mineral> mineralList;
 
 
     public String getName() {
         return this.name;
     }
 
-    public List<Mineral> getMineralList() {
-        return this.mineralList;
-    }
+    public abstract List<Mineral> getMineralList();
 
     // MODIFIES: this
     // EFFECTS: Add mineral to list

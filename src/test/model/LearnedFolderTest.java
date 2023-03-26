@@ -45,6 +45,7 @@ public class LearnedFolderTest {
         assertEquals(testMineralA, minList.get(0));
         assertEquals(testMineralB, minList.get(1));
         assertEquals(2, minList.size());
+
     }
 
     // Test add mineral to list
