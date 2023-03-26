@@ -8,18 +8,18 @@ entering minerals into their list, and studying minerals. The minerals that they
 minerals on the review list that they created. 
 
 **The properties each mineral will have associated with it are:**
-- lab number (int)
-- name (String)
-- lustre (String)
-- color (String)
-- streak (String)
-- hardness (int)
-- specific gravity (double)
-- cleavage (String)
-- fracture (String)
-- habit (String)
-- crystal system (String, 6 categories)
-- other (String)
+- lab number
+- name
+- lustre
+- color
+- streak
+- hardness
+- specific gravity
+- cleavage
+- fracture
+- habit
+- crystal system
+- other
 
 **User Stories:**
 - As a user, I want to be able to add a mineral with a name, lab number, and the properties above to a list of minerals
@@ -27,8 +27,20 @@ minerals on the review list that they created.
 - As a user, I want to be able to guess the name of a mineral based on revealed properties
 - As a user, I want to be able to move minerals from a list of minerals to review to a list of learned minerals (and 
   back).
-- As a user, when entering the crystal system of a mineral, I want the option to enter a letter code to a corresponding 
-  crystal system instead of the full name
-- As a user, when I select quit from the main menu, I want to be prompted to save my review folder and learned folder
-  as they are, or the option not to save them
+- As a user, I want to be able to save and load my folders from the main menu
 - As a user, when I open my application, I want to have the option to load the folders I have created previously
+
+
+# Instructions for Grader
+
+- You can generate the first required action related to adding Xs to a Y by selecting the menu option "Add Minerals" to
+  add Minerals to the Review Folder. Fill out the text fields and press the "Add" button at the bottom. This will add
+  the mineral to the Review Folder. Pressing save from this window will current state of the folders.
+- You can generate the second required action related to adding Xs to a Y by selecting the "View Review Folder" button 
+  or the "View Learned Folder" button from the main menu. Then select the mineral you would like to move, and press the
+  "Move Selected to Other Folder" button. You can also delete minerals using the same method but pressing 
+  "Delete Selected" instead.
+- You can locate my visual component by pressing the "Display Photo" button from the main menu.
+- You can save the state of my application by either saving from the add minerals frame as mentioned above, or by
+  selecting the "Save Folders" button from the main menu. 
+- You can reload the state of my application by selecting the "Load Folders" button from the main menu.
