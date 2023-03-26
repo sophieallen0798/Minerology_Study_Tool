@@ -36,38 +36,38 @@ public class LearnedFolder extends Folder {
     public List<Mineral> getMineralList() {
         return mineralList;
     }
-
-    // MODIFIES: this
-    // EFFECTS: Add mineral to list
-    public void addToMineralList(Mineral mineral) {
-        mineralList.add(mineral);
-    }
+//
+//    // MODIFIES: this
+//    // EFFECTS: Add mineral to list
+//    public void addToMineralList(Mineral mineral) {
+//        mineralList.add(mineral);
+//    }
 
     // MODIFIES: this
     // EFFECTS: If list is not empty, remove specified mineral
     //          If list is empty, throw empty list exception
-    public void removeFromMineralList(Mineral min) {
-        if (!mineralList.isEmpty()) {
-            mineralList.remove(min);
-        }
-    }
+//    public void removeFromMineralList(Mineral min) {
+//        if (!mineralList.isEmpty()) {
+//            mineralList.remove(min);
+//        }
+//    }
 
     // EFFECTS: Check if mineral is in list
-    public boolean checkInMineralList(String minName) {
-        boolean value = false;
-        for (int i = 0; i < mineralList.size(); i++) {
-            Mineral inMineral = mineralList.get(i);
-            if (minName.equals(inMineral.getName())) {
-                value = true;
-            }
-        }
-        return value;
-    }
+//    public boolean checkInMineralList(String minName) {
+//        boolean value = false;
+//        for (int i = 0; i < mineralList.size(); i++) {
+//            Mineral inMineral = mineralList.get(i);
+//            if (minName.equals(inMineral.getName())) {
+//                value = true;
+//            }
+//        }
+//        return value;
+//    }
 
     // EFFECTS: Return true if list is not empty
-    public boolean mineralListNotEmpty() {
-        return !mineralList.isEmpty();
-    }
+//    public boolean mineralListNotEmpty() {
+//        return !mineralList.isEmpty();
+//    }
 
     // EFFECTS: Randomly select next mineral to study
     public Mineral nextStudyMineral() {
@@ -78,34 +78,20 @@ public class LearnedFolder extends Folder {
     }
 
     // EFFECTS: Returns this as a jason object
-    public JSONObject toJson() {
-        JSONObject json = new JSONObject();
-        json.put("name", name);
-        json.put("minerals", mineralsToJson());
-        return json;
-    }
+//    public JSONObject toJson() {
+//        JSONObject json = new JSONObject();
+//        json.put("name", name);
+//        json.put("minerals", mineralsToJson());
+//        return json;
+//    }
 
     // EFFECTS: Returns minerals in this folder as a JSON array
-    public JSONArray mineralsToJson() {
-        JSONArray jsonArray = new JSONArray();
-        for (Mineral m : mineralList) {
-            jsonArray.put(m.toJson());
-        }
-        return jsonArray;
-    }
-
-    // EFFECTS: Check if given mineral is in given folder, return false if mineral not in folder
-    public boolean mineralInFolder(String inName) {
-        boolean val = false;
-        List<Mineral> mineralList = this.getMineralList();
-        for (int i = 0; i < this.getMineralList().size(); i++) {
-            Mineral inMineral = mineralList.get(i);
-            if (inName.equals(inMineral.getName())) {
-                val = true;
-                break;
-            }
-        }
-        return val;
-    }
+//    public JSONArray mineralsToJson() {
+//        JSONArray jsonArray = new JSONArray();
+//        for (Mineral m : mineralList) {
+//            jsonArray.put(m.toJson());
+//        }
+//        return jsonArray;
+//    }
 
 }

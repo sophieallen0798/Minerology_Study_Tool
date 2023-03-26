@@ -6,7 +6,6 @@ import model.Mineral;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.util.List;
@@ -61,90 +60,74 @@ public class Table extends JPanel {
     }
 
     public ActionListener moveMineral() {
-        return new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        return e -> {
+            if (table.getSelectedRowCount() == 0) {
+                tableMessage.setForeground(red1);
+                tableMessage.setText("Please select a row.");
+            } else {
+                removeAdd();
+            }
+        };
+    }
+
+    private void removeAdd() {
+        int i = table.getSelectedRow();
+        String minToMove = String.valueOf(table.getValueAt(i, 0));
+        for (Mineral m : folder.getMineralList()) {
+            if (m.getName().equals(minToMove)) {
+                tableMessage.setForeground(green1);
+                if (folder.getName().equals("Review Folder")) {
+                    toReview.removeFromMineralList(m);
+                    learned.addToMineralList(m);
+                    tableMessage.setText(m.getName() + " moved to learned list. Reload table to show "
+                            + "changes.");
+                    break;
+                } else if (folder.getName().equals("Learned Folder")) {
+                    toReview.removeFromMineralList(m);
+                    learned.addToMineralList(m);
+                    tableMessage.setText(m.getName() + " moved to learned list. Reload table to show "
+                            + "changes.");
+                    break;
+                }
+            }
+        }
+    }
+
+    public ActionListener deleteAction() {
+        return e -> {
+            if (table.getSelectedRowCount() == 0) {
+                tableMessage.setForeground(red1);
+                tableMessage.setText("Please select a row.");
+            } else {
                 int i = table.getSelectedRow();
-                String minToMove = String.valueOf(table.getValueAt(i, 0));
+                String minNameToDelete = String.valueOf(table.getValueAt(i, 0));
                 for (Mineral m : folder.getMineralList()) {
-                    if (m.getName().equals(minToMove)) {
-                        tableMessage.setForeground(green1);
-                        if (folder.getName().equals("Review Folder")) {
-                            toReview.removeFromMineralList(m);
-                            learned.addToMineralList(m);
-                            tableMessage.setText(m.getName() + " moved to learned list. Reload table to show changes.");
-                        } else if (folder.getName().equals("Learned Folder")) {
-                            toReview.removeFromMineralList(m);
-                            learned.addToMineralList(m);
-                            tableMessage.setText(m.getName() + " moved to learned list. Reload table to show changes.");
-                        }
+                    if (m.getName().equals(minNameToDelete)) {
+                        folder.removeFromMineralList(m);
+                        tableMessage.setForeground(red1);
+                        tableMessage.setText(m.getName() + " removed. Reload table to show changes.");
+                        break;
                     }
                 }
             }
         };
     }
 
-    public ActionListener deleteAction() {
-        ActionListener deleteAction = e -> {
-            int i = table.getSelectedRow();
-            String minNameToDelete = String.valueOf(table.getValueAt(i, 0));
-            for (Mineral m : toReview.getMineralList()) {
-                if (m.getName().equals(minNameToDelete)) {
-                    toReview.removeFromMineralList(m);
-                    tableMessage.setForeground(red1);
-                    tableMessage.setText(m.getName() + " removed. Reload table to show changes.");
-                    break;
-                }
-            }
-
-        };
-        return deleteAction;
-    }
-
-//    private void printDebugData(JTable table) {
-//        int numRows = table.getRowCount();
-//        int numCols = table.getColumnCount();
-//        javax.swing.table.TableModel model = table.getModel();
-//
-//        System.out.println("Value of data: ");
-//        for (int i = 0; i < numRows; i++) {
-//            System.out.print("    row " + i + ":");
-//            for (int j = 0; j < numCols; j++) {
-//                System.out.print("  " + model.getValueAt(i, j));
-//            }
-//            System.out.println();
-//        }
-//        System.out.println("--------------------------");
-//    }
-
-
     private static void createAndShowGUI() {
-        //Create and set up the window.
         JFrame frame = new JFrame("Table");
         frame.setPreferredSize(new Dimension(700, 400));
         frame.setLayout(new GridLayout(14, 2, 2, 2));
 
-        //Create and set up the content pane.
         Table newContentPane = new Table(folder);
-        newContentPane.setOpaque(true); //content panes must be opaque
+        newContentPane.setOpaque(true);
         frame.setContentPane(newContentPane);
-
-        //Display the window.
         frame.pack();
         frame.setVisible(true);
     }
 
     public void fun() {
-        //Schedule a job for the event-dispatching thread:
-        //creating and showing this application's GUI.
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                createAndShowGUI();
-            }
-        });
+        javax.swing.SwingUtilities.invokeLater(Table::createAndShowGUI);
     }
-
-    //double[][] matrix = new double[20][4];
 
     // EFFECTS: Get mineral property for table entry
     public String getMin(int i, Mineral m) {

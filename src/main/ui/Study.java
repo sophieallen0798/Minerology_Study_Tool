@@ -5,10 +5,9 @@ import model.Mineral;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import static ui.Ui2.toReview;
+import static ui.Ui2.*;
 
 public class Study extends JFrame {
 
@@ -53,13 +52,14 @@ public class Study extends JFrame {
     }
 
     public void studyButtons() {
-        makeMineralLabels();
-        message = new JLabel();
         JPanel panel = new JPanel(new GridLayout(14, 2, 8, 8));
         ((JPanel) getContentPane()).setBorder(new EmptyBorder(13, 13, 13, 13));
         if (!toReview.mineralListNotEmpty()) {
             message.setText("Review list is empty. Please add at least one mineral.");
         }
+        makeMineralLabels();
+        guessDisplay();
+        message = new JLabel();
         JLabel titleLabel = new JLabel("Study Minerals");
         panel.setSize(500, 500);
         pack();
@@ -68,24 +68,41 @@ public class Study extends JFrame {
         setResizable(true);
         makeButtons();
         setButtonCommands();
-        guessSubmit.setActionCommand("guessBtn");
-        guessSubmit.addActionListener(guessButton());
         setActionListeners();
         panel.add(titleLabel);
         addPropertyLabels(panel);
-        guessDisplay(panel);
+        addGuesses(panel);
         add(panel, BorderLayout.CENTER);
     }
 
-    private void guessDisplay(JPanel panel) {
-        guessBox = new JTextField(5);
-        guessLabel = new JLabel("Guess Mineral Name:");
-        guessSubmit = new JButton("Submit Guess");
-        currentMineral = new JLabel("Mineral Number " + mineralsStudied);
+    private void addGuesses(JPanel panel) {
         panel.add(guessLabel);
         panel.add(guessBox);
         panel.add(guessSubmit);
         panel.add(message);
+    }
+
+    // EFFECTS: make labels used to display mineral property requested by user
+    private void makeMineralLabels() {
+        lustreLabel = new JLabel("");
+        colorLabel = new JLabel("");
+        streakLabel = new JLabel("");
+        hardnessLabel = new JLabel("");
+        specificGravityLabel = new JLabel("");
+        cleavageLabel = new JLabel("");
+        fractureLabel = new JLabel("");
+        habitLabel = new JLabel("");
+        crystalSystemLabel = new JLabel("");
+        otherLabel = new JLabel("");
+    }
+
+    private void guessDisplay() {
+        guessBox = new JTextField(5);
+        guessLabel = new JLabel("Guess Mineral Name:");
+        guessSubmit = new JButton("Submit Guess");
+        guessSubmit.setActionCommand("guessBtn");
+        guessSubmit.addActionListener(guessButton());
+        currentMineral = new JLabel("Mineral Number " + mineralsStudied);
     }
 
     private void setActionListeners() {
@@ -155,8 +172,10 @@ public class Study extends JFrame {
     private ActionListener guessButton() {
         ActionListener guessAction = e -> {
             if (guessBox.getText().equals(mineral.getName())) {
+                message.setForeground(green1);
                 message.setText("Correct!");
             } else {
+                message.setForeground(red1);
                 message.setText("Incorrect, the mineral was " + mineral.getName());
             }
             resetLabels();
@@ -192,20 +211,6 @@ public class Study extends JFrame {
                 otherLabel.setText(mineral.getOther());
             }
         };
-    }
-
-    // EFFECTS: make labels used to display mineral property requested by user
-    private void makeMineralLabels() {
-        lustreLabel = new JLabel("");
-        colorLabel = new JLabel("");
-        streakLabel = new JLabel("");
-        hardnessLabel = new JLabel("");
-        specificGravityLabel = new JLabel("");
-        cleavageLabel = new JLabel("");
-        fractureLabel = new JLabel("");
-        habitLabel = new JLabel("");
-        crystalSystemLabel = new JLabel("");
-        otherLabel = new JLabel("");
     }
 
 

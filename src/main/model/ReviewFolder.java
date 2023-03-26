@@ -38,38 +38,38 @@ public class ReviewFolder extends Folder {
     public List<Mineral> getMineralList() {
         return mineralList;
     }
-
-    // MODIFIES: this
-    // EFFECTS: Add mineral to list
-    public void addToMineralList(Mineral mineral) {
-        mineralList.add(mineral);
-    }
-
-    // MODIFIES: this
-    // EFFECTS: If list is not empty, remove specified mineral
-    //          If list is empty, throw empty list exception
-    public void removeFromMineralList(Mineral min) {
-        if (!mineralList.isEmpty()) {
-            mineralList.remove(min);
-        }
-    }
-
-    // EFFECTS: Check if mineral is in list
-    public boolean checkInMineralList(String minName) {
-        boolean value = false;
-        for (int i = 0; i < mineralList.size(); i++) {
-            Mineral inMineral = mineralList.get(i);
-            if (minName.equals(inMineral.getName())) {
-                value = true;
-            }
-        }
-        return value;
-    }
-
-    // EFFECTS: Return true if list is not empty
-    public boolean mineralListNotEmpty() {
-        return !mineralList.isEmpty();
-    }
+//
+//    // MODIFIES: this
+//    // EFFECTS: Add mineral to list
+//    public void addToMineralList(Mineral mineral) {
+//        mineralList.add(mineral);
+//    }
+//
+//    // MODIFIES: this
+//    // EFFECTS: If list is not empty, remove specified mineral
+//    //          If list is empty, throw empty list exception
+//    public void removeFromMineralList(Mineral min) {
+//        if (!mineralList.isEmpty()) {
+//            mineralList.remove(min);
+//        }
+//    }
+//
+//    // EFFECTS: Check if mineral is in list
+//    public boolean checkInMineralList(String minName) {
+//        boolean value = false;
+//        for (int i = 0; i < mineralList.size(); i++) {
+//            Mineral inMineral = mineralList.get(i);
+//            if (minName.equals(inMineral.getName())) {
+//                value = true;
+//            }
+//        }
+//        return value;
+//    }
+//
+//    // EFFECTS: Return true if list is not empty
+//    public boolean mineralListNotEmpty() {
+//        return !mineralList.isEmpty();
+//    }
 
     // EFFECTS: Randomly select next mineral to study
     public Mineral nextStudyMineral() {
@@ -79,33 +79,33 @@ public class ReviewFolder extends Folder {
         return selectedMineral;
     }
 
-    // EFFECTS: Returns this as a jason object
-    public JSONObject toJson() {
-        JSONObject json = new JSONObject();
-        json.put("name", name);
-        json.put("minerals", mineralsToJson());
-        return json;
-    }
+//    // EFFECTS: Returns this as a jason object
+//    public JSONObject toJson() {
+//        JSONObject json = new JSONObject();
+//        json.put("name", name);
+//        json.put("minerals", mineralsToJson());
+//        return json;
+//    }
 
     // EFFECTS: Returns minerals in this folder as a JSON array
-    public JSONArray mineralsToJson() {
-        JSONArray jsonArray = new JSONArray();
-        for (Mineral m : mineralList) {
-            jsonArray.put(m.toJson());
-        }
-        return jsonArray;
-    }
+//    public JSONArray mineralsToJson() {
+//        JSONArray jsonArray = new JSONArray();
+//        for (Mineral m : mineralList) {
+//            jsonArray.put(m.toJson());
+//        }
+//        return jsonArray;
+//    }
 
     // EFFECTS: Check if given mineral is in given folder, return false if mineral not in folder
-    public boolean mineralInFolder(String inName) {
-        boolean val = false;
-        for (Mineral m : this.mineralList) {
-            if (inName.equals(m.getName())) {
-                val = true;
-                break;
-            }
-        }
-        return val;
-    }
+//    public boolean mineralInFolder(String inName) {
+//        boolean val = false;
+//        for (Mineral m : this.mineralList) {
+//            if (inName.equals(m.getName())) {
+//                val = true;
+//                break;
+//            }
+//        }
+//        return val;
+//    }
 
 }

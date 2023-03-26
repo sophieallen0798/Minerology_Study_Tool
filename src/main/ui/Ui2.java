@@ -33,7 +33,7 @@ public class Ui2 extends JFrame {
     static JsonWriter jsonWriterRev;
     static JsonReader jsonReaderRev;
     static JsonWriter jsonWriterLearn;
-    private final JsonReader jsonReaderLearn;
+    static JsonReader jsonReaderLearn;
     private static final String JSON_FOLDERS_R = "./data/review.json";
     private static final String JSON_FOLDERS_L = "./data/learned.json";
 
@@ -149,7 +149,7 @@ public class Ui2 extends JFrame {
         return e -> {
             if (e.getActionCommand().equals("load")) {
                 loadFolders();
-            } else if (e.getActionCommand().equals("save") | e.getActionCommand().equals("save")) {
+            } else if (e.getActionCommand().equals("save")) {
                 saveFolders();
             } else if (e.getActionCommand().equals("viewRev")) {
                 table = new Table(toReview);
@@ -207,11 +207,9 @@ public class Ui2 extends JFrame {
             jsonWriterRev.open();
             jsonWriterRev.write(toReview);
             jsonWriterRev.close();
-            //System.out.println("Saved review list to " + JSON_FOLDERS_R);
             jsonWriterLearn.open();
             jsonWriterLearn.write(learned);
             jsonWriterLearn.close();
-            //System.out.println("Saved learned list to " + JSON_FOLDERS_L);
             menuLabel.setForeground(green1);
             menuLabel.setText("Folders Saved");
 
@@ -226,13 +224,10 @@ public class Ui2 extends JFrame {
     public void loadFolders() {
         try {
             toReview = jsonReaderRev.revRead();
-            //System.out.println("Loaded review list from " + JSON_FOLDERS_R);
             learned = jsonReaderLearn.lerRead();
-            //System.out.println("Loaded learned list from " + JSON_FOLDERS_L);
             menuLabel.setForeground(green1);
             menuLabel.setText("Folders Loaded");
         } catch (IOException e) {
-            System.out.println("Unable to read from file: " + JSON_FOLDERS_R);
             menuLabel.setForeground(red1);
             menuLabel.setText("Unable to read from file: " + JSON_FOLDERS_R + JSON_FOLDERS_L);
         }

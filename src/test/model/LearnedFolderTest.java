@@ -8,7 +8,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 // Test Folder Class
-public class FolderTest {
+public class LearnedFolderTest {
     private Mineral testMineralA;
     private Mineral testMineralB;
     private Folder testFolder;
@@ -31,7 +31,7 @@ public class FolderTest {
         testMineralB.setHardness("7");
         testMineralB.setCrystalSystem("hexagonal");
 
-        testFolder = new ReviewFolder();
+        testFolder = new LearnedFolder();
         testFolder2 = new LearnedFolder();
     }
 

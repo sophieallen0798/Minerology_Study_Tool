@@ -1,33 +1,44 @@
-{
-    "minerals": [
-        {
-            "hardness": "nkl",
-            "crystalSystem": "",
-            "cleavage": "kjn",
-            "other": "",
-            "habit": "",
-            "color": "nklj",
-            "name": "lkjn",
-            "specificGravity": "jnl",
-            "streak": "nlkj",
-            "lab": "1",
-            "lustre": "lkj",
-            "fracture": "kln"
-        },
-        {
-            "hardness": "w",
-            "crystalSystem": "1",
-            "cleavage": "z",
-            "other": "b",
-            "habit": "j",
-            "color": "k",
-            "name": "k",
-            "specificGravity": "l",
-            "streak": "o",
-            "lab": "3",
-            "lustre": "n",
-            "fracture": "p"
-        }
-    ],
-    "name": "Review Folder"
-}
+{"minerals": [
+    {
+        "hardness": "w",
+        "crystalSystem": "1",
+        "cleavage": "z",
+        "other": "b",
+        "habit": "j",
+        "color": "k",
+        "name": "k",
+        "specificGravity": "l",
+        "streak": "o",
+        "lab": "3",
+        "lustre": "n",
+        "fracture": "p"
+    },
+    {
+        "hardness": "lm",
+        "crystalSystem": "kj",
+        "cleavage": "nk",
+        "other": "b",
+        "habit": "bbj",
+        "color": "lmkl",
+        "name": "km",
+        "specificGravity": "lkm",
+        "streak": "mk",
+        "lab": "1",
+        "lustre": "mklkm",
+        "fracture": "jk"
+    },
+    {
+        "hardness": "j",
+        "crystalSystem": "km",
+        "cleavage": "m",
+        "other": "k",
+        "habit": "km",
+        "color": "lkj",
+        "name": "lkj",
+        "specificGravity": "mm",
+        "streak": "kl",
+        "lab": "1",
+        "lustre": "klj",
+        "fracture": "m"
+    }
+]}

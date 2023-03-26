@@ -50,14 +50,14 @@ public class JsonReader {
 
     // EFFECTS: Parses folder from JSON object and returns the folder
     private ReviewFolder parseRevFolder(JSONObject jsonObject) {
-        String folderName = jsonObject.getString("name");
+        //String folderName = jsonObject.getString("name");
         ReviewFolder reFolder = new ReviewFolder();
         addFolders(reFolder, jsonObject);
         return reFolder;
     }
 
     private LearnedFolder parseLerFolder(JSONObject jsonObject) {
-        String folderName = jsonObject.getString("name");
+        //String folderName = jsonObject.getString("name");
         LearnedFolder leFolder = new LearnedFolder();
         addFolders(leFolder, jsonObject);
         return leFolder;

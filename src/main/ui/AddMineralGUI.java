@@ -58,7 +58,6 @@ public class AddMineralGUI extends JFrame {
         JButton addBtn = new JButton("Add");
         JButton saveBtn = new JButton("Save");
         addBtn.setActionCommand("add");
-        //addBtn.addActionListener(actions());
         addBtn.addActionListener(myActions());
         saveBtn.setActionCommand("save");
         saveBtn.addActionListener(actions());
@@ -67,10 +66,8 @@ public class AddMineralGUI extends JFrame {
         green1 = new Color(90, 180, 90);
 
         makeMineralLabels();
-        //mineral = new Mineral();
         makeMineralBoxes();
         resetBoxesEmpty();
-        //field = new JTextField(5);
         labelsBoxes();
         add(saveBtn);
         add(addBtn);
@@ -82,7 +79,7 @@ public class AddMineralGUI extends JFrame {
     }
 
     public ActionListener myActions() {
-        ActionListener myListener = e -> {
+        return e -> {
             min = getMineral();
             System.out.println(min.getName());
             if (toReview.mineralInFolder(min.getName())) {
@@ -98,7 +95,6 @@ public class AddMineralGUI extends JFrame {
                 resetBoxesEmpty();
             }
         };
-        return myListener;
     }
 
     private void makeMineralLabels() {

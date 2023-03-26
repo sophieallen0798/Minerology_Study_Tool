@@ -8,9 +8,8 @@ import java.util.List;
 // Folder objects consists of a name and a list of minerals
 public abstract class Folder {
     protected String name;
-    protected List<Mineral> mineralList;
+    protected List<Mineral> mineralList = this.getMineralList();
 
-    // EFFECTS: Constructs a folder with a name and list of minerals
 
     public String getName() {
         return this.name;
@@ -23,23 +22,23 @@ public abstract class Folder {
     // MODIFIES: this
     // EFFECTS: Add mineral to list
     public void addToMineralList(Mineral mineral) {
-        mineralList.add(mineral);
+        this.getMineralList().add(mineral);
     }
 
     // MODIFIES: this
     // EFFECTS: If list is not empty, remove specified mineral
     //          If list is empty, throw empty list exception
     public void removeFromMineralList(Mineral min) {
-        if (!mineralList.isEmpty()) {
-            mineralList.remove(min);
+        if (!this.getMineralList().isEmpty()) {
+            this.getMineralList().remove(min);
         }
     }
 
     // EFFECTS: Check if mineral is in list
     public boolean checkInMineralList(String minName) {
         boolean value = false;
-        for (int i = 0; i < mineralList.size(); i++) {
-            Mineral inMineral = mineralList.get(i);
+        for (int i = 0; i < this.getMineralList().size(); i++) {
+            Mineral inMineral = this.getMineralList().get(i);
             if (minName.equals(inMineral.getName())) {
                 value = true;
             }
@@ -49,7 +48,7 @@ public abstract class Folder {
 
     // EFFECTS: Return true if list is not empty
     public boolean mineralListNotEmpty() {
-        return !mineralList.isEmpty();
+        return !getMineralList().isEmpty();
     }
 
     // EFFECTS: Returns this as a jason object
@@ -63,7 +62,7 @@ public abstract class Folder {
     // EFFECTS: Returns minerals in this folder as a JSON array
     public JSONArray mineralsToJson() {
         JSONArray jsonArray = new JSONArray();
-        for (Mineral m : mineralList) {
+        for (Mineral m : this.getMineralList()) {
             jsonArray.put(m.toJson());
         }
         return jsonArray;
@@ -74,10 +73,8 @@ public abstract class Folder {
     // EFFECTS: Check if given mineral is in given folder, return false if mineral not in folder
     public boolean mineralInFolder(String inName) {
         boolean val = false;
-        List<Mineral> mineralList = this.getMineralList();
-        for (int i = 0; i < this.getMineralList().size(); i++) {
-            Mineral inMineral = mineralList.get(i);
-            if (inName.equals(inMineral.getName())) {
+        for (Mineral m : this.getMineralList()) {
+            if (inName.equals(m.getName())) {
                 val = true;
                 break;
             }
