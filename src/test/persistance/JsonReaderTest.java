@@ -1,7 +1,10 @@
 package persistance;
 
 import model.Folder;
+import model.LearnedFolder;
 import model.Mineral;
+import model.ReviewFolder;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -15,12 +18,15 @@ import static org.junit.jupiter.api.Assertions.fail;
 // Test class for json reader methods
 public class JsonReaderTest {
 
+    Folder rev = new ReviewFolder();
+    Folder ler = new LearnedFolder();
+
     // Test attempt to read a file that doesn't exist, IOException expected, fail if not caught
     @Test
     void testReadFileDNE() {
         JsonReader reader = new JsonReader("./data/fileDNE.json");
         try {
-            Folder folder = reader.read();
+            Folder rev = reader.revRead();
             fail("IO exception not caught");
         } catch (IOException e) {
             // test passes
@@ -32,8 +38,8 @@ public class JsonReaderTest {
     void testEmptyFolder() {
         JsonReader reader = new JsonReader("./data/testReaderEmptyFolder.json");
         try {
-            Folder folder = reader.read();
-            assertEquals("review", folder.getName());
+            Folder ler = reader.lerRead();
+            assertEquals("Learned Folder", ler.getName());
         } catch (IOException e) {
             fail("Couldn't read empty folder from file");
         }
@@ -44,9 +50,9 @@ public class JsonReaderTest {
     void testReaderNormalFolder() {
         JsonReader reader = new JsonReader("./data/testReaderNormalFolder.json");
         try {
-            Folder folder = reader.read();
-            assertEquals("review", folder.getName());
-            List<Mineral> mineralList = folder.getMineralList();
+            Folder rev = reader.revRead();
+            assertEquals("Review Folder", rev.getName());
+            List<Mineral> mineralList = rev.getMineralList();
             assertEquals(2, mineralList.size());
             Mineral min1 = mineralList.get(0);
             Mineral min2 = mineralList.get(1);

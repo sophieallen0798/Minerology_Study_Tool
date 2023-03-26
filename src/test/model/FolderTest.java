@@ -18,21 +18,21 @@ public class FolderTest {
     @BeforeEach
     void runBefore() {
         testMineralA = new Mineral();
-        testMineralA.setLab(1);
+        testMineralA.setLab("1");
         testMineralA.setName("A");
         testMineralA.setColor("green");
         testMineralA.setHardness("4");
         testMineralA.setCrystalSystem("isometric");
 
         testMineralB = new Mineral();
-        testMineralB.setLab(2);
+        testMineralB.setLab("2");
         testMineralB.setName("B");
         testMineralB.setColor("blue");
         testMineralB.setHardness("7");
         testMineralB.setCrystalSystem("hexagonal");
 
-        testFolder = new Folder("test");
-        testFolder2 = new Folder("test2");
+        testFolder = new ReviewFolder();
+        testFolder2 = new LearnedFolder();
     }
 
     // Test get mineral list

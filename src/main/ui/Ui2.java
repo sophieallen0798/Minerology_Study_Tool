@@ -1,8 +1,6 @@
 package ui;
 
-import model.Folder;
 import model.LearnedFolder;
-import model.Mineral;
 import model.ReviewFolder;
 import persistance.JsonReader;
 import persistance.JsonWriter;
@@ -10,69 +8,26 @@ import persistance.JsonWriter;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.List;
-import java.util.Scanner;
 
 import static ui.AddMineralGUI.label;
 
 
 // Application to study and keep a list of minerals
 public class Ui2 extends JFrame {
-    // sout colors
-    public static final String BLUE = "\u001B[34m";
-    public static final String PURPLE = "\u001B[35m";
-    public static final String YELLOW = "\u001B[33m";
-    public static final String GREEN = "\u001B[32m";
-    public static final String RED = "\u001B[31m";
-    public static final String RESET = "\u001B[0m";
 
-    //private static JLabel label;
     private Table table;
     private AddMineralGUI addMinGUI;
 
-    private Mineral mineral;
-    private JTextField field;
     static Color green1;
     static Color green2;
     static Color red1;
     static Color purple1;
     static Color blueish;
 
-    private JLabel labLabel;
-    private JLabel nameLabel;
-    private JLabel lustreLabel;
-    private JLabel colorLabel;
-    private JLabel streakLabel;
-    private JLabel hardnessLabel;
-    private JLabel specificGravityLabel;
-    private JLabel cleavageLabel;
-    private JLabel fractureLabel;
-    private JLabel habitLabel;
-    private JLabel crystalSystemLabel;
-    private JLabel otherLabel;
-
-    static JLabel menuLabel;
-
-    private JTextField labBox;
-    private JTextField nameBox;
-    private JTextField lustreBox;
-    private JTextField colorBox;
-    private JTextField streakBox;
-    private JTextField hardnessBox;
-    private JTextField specificGravityBox;
-    private JTextField cleavageBox;
-    private JTextField fractureBox;
-    private JTextField habitBox;
-    private JTextField crystalSystemBox;
-    private JTextField otherBox;
-
-    private int mineralsStudied;
     private static final int NUM_PROPERTIES = 12;  // number of fields in mineral class
-    private Scanner input;
     static ReviewFolder toReview;
     static LearnedFolder learned;
     static JsonWriter jsonWriterRev;
@@ -82,29 +37,14 @@ public class Ui2 extends JFrame {
     private static final String JSON_FOLDERS_R = "./data/review.json";
     private static final String JSON_FOLDERS_L = "./data/learned.json";
 
-    private Table tableR;
-    private Table tableL;
-
-    private JInternalFrame controlPanel;
-
-    private JButton studyButton;
-    private JPanel panel1;
-    private JButton organizeFoldersButton;
-    private JButton addMineralsButton;
-    private JButton viewFoldersButton;
-    private JButton loadFoldersButton;
-    private JButton saveFoldersButton;
-    private JButton quitButton;
-
     private JLabel pic;
-    private ImageIcon photo;
-
     protected JButton button;
+    static JLabel menuLabel;
 
     // EFFECTS: Initialize Folders and json writers and readers, goes to open menu
     public Ui2() throws FileNotFoundException {
-        this.learned = new LearnedFolder();
-        this.toReview = new ReviewFolder();
+        learned = new LearnedFolder();
+        toReview = new ReviewFolder();
         jsonReaderRev = new JsonReader(JSON_FOLDERS_R);
         jsonWriterRev = new JsonWriter(JSON_FOLDERS_R);
         jsonReaderLearn = new JsonReader(JSON_FOLDERS_L);
@@ -126,14 +66,8 @@ public class Ui2 extends JFrame {
         JButton loadBtn = new JButton("Load Folders");
         JButton saveBtn = new JButton("Save Folders");
         JButton viewCsImageBtn = new JButton("Display Photo");
-        //addMinBtn.setForeground(purple1);
-//        addMinBtn.setBackground(blueish);
-//        saveBtn.setBackground(green2);
-//        loadBtn.setBackground(green2);
         setButtons(addMinBtn, studyBtn, viewRev, viewLer, loadBtn, saveBtn, viewCsImageBtn);
         setButtonActions(addMinBtn, studyBtn, viewRev, viewLer, loadBtn, viewCsImageBtn);
-        field = new JTextField(5);
-        //add(makeButton());
         addButtons(addMinBtn, studyBtn, viewRev, viewLer, loadBtn, saveBtn, viewCsImageBtn);
         pack();
         setLocationRelativeTo(null);
@@ -147,13 +81,13 @@ public class Ui2 extends JFrame {
         green2 = new Color(150, 210, 150);
         red1 = new Color(230, 20, 20);
         purple1 = new Color(170, 20, 100);
-        blueish = new Color(200,200,250);
+        blueish = new Color(200, 200, 250);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(400, 500));
         setLayout(new GridLayout(14, 2, 2, 2));
         ((JPanel) getContentPane()).setBorder(new EmptyBorder(13, 13, 13, 13));
         menuLabel = new JLabel("");
-        photo = new ImageIcon("data/rock.jpg");
+        ImageIcon photo = new ImageIcon("data/rock.jpg");
         pic = new JLabel(photo);
     }
 
@@ -196,53 +130,45 @@ public class Ui2 extends JFrame {
 
     // EFFECTS: Creates action listener for add and organize buttons, accessed from AddMineralGUI
     static ActionListener actions() {
-        ActionListener actionListener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //addMinGUI = new AddMineralGUI(toReview);
-                if (e.getActionCommand().equals("addMin")) {
-                    try {
-                        new AddMineralGUI(toReview);
-                    } catch (FileNotFoundException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                }
-                if (e.getActionCommand().equals("save")) {
-                    saveFolders();
-                    label.setForeground(green1);
+        return e -> {
+            //addMinGUI = new AddMineralGUI(toReview);
+            if (e.getActionCommand().equals("addMin")) {
+                try {
+                    new AddMineralGUI();
+                } catch (FileNotFoundException ex) {
+                    throw new RuntimeException(ex);
                 }
             }
+            if (e.getActionCommand().equals("save")) {
+                saveFolders();
+                label.setForeground(green1);
+            }
         };
-        return actionListener;
     }
 
     // EFFECTS: Creates action listener for other menu buttons
     public ActionListener actionHappening() {
-        ActionListener actListen = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (e.getActionCommand().equals("load")) {
-                    loadFolders();
-                } else if (e.getActionCommand().equals("save") | e.getActionCommand().equals("save")) {
-                    //toReview = addMinGUI.getFolder();
-                    saveFolders();
-                } else if (e.getActionCommand().equals("viewRev")) {
-                    table = new Table(toReview);
-                    table.fun("a");
-                } else if (e.getActionCommand().equals("viewLer")) {
-                    table = new Table(learned);
-                    table.fun("a");
-                } else if (e.getActionCommand().equals("study")) {
-                    tryStudy();
-                } else if (e.getActionCommand().equals("viewCS")) {
-                    csImage();
-                }
+        return e -> {
+            if (e.getActionCommand().equals("load")) {
+                loadFolders();
+            } else if (e.getActionCommand().equals("save") | e.getActionCommand().equals("save")) {
+                //toReview = addMinGUI.getFolder();
+                saveFolders();
+            } else if (e.getActionCommand().equals("viewRev")) {
+                table = new Table(toReview);
+                table.fun();
+            } else if (e.getActionCommand().equals("viewLer")) {
+                table = new Table(learned);
+                table.fun();
+            } else if (e.getActionCommand().equals("study")) {
+                tryStudy();
+            } else if (e.getActionCommand().equals("viewCS")) {
+                csImage();
+            }
 //                } else if (e.getActionCommand().equals("clear")) {
 //                    clearFolders();
 //                }
-            }
         };
-        return actListen;
     }
 
     private void tryStudy() {
@@ -252,15 +178,6 @@ public class Ui2 extends JFrame {
             System.out.println("hi");
             emptyWarning();
         }
-    }
-
-    // MODIFIES: Learned folder and Review folder
-    // EFFECTS: Reset both learned and review folders
-    private void clearFolders() {
-        toReview = new ReviewFolder();
-        learned = new LearnedFolder();
-        menuLabel.setForeground(red1);
-        menuLabel.setText("Folders cleared");
     }
 
     // EFFECTS: Starts studyGUI
@@ -285,34 +202,6 @@ public class Ui2 extends JFrame {
         JLabel warningLabel = new JLabel("Review list empty. Please add minerals to study.");
         warningLabel.setForeground(red1);
         JOptionPane.showMessageDialog(button, warningLabel);
-    }
-
-
-
-    // EFFECTS: Remove mineral from learned and put in review
-    public void checkInLearned(String inName) {
-        List<Mineral> reviewList = learned.getMineralList();
-        for (int i = 0; i < learned.getMineralList().size(); i++) {
-            Mineral inMineral = reviewList.get(i);
-            if (inName.equals(inMineral.getName())) {
-                learned.removeFromMineralList(inMineral);
-                toReview.addToMineralList(inMineral);
-                System.out.println(GREEN + "\t" + inMineral.getName() + " moved to review list." + RESET);
-            }
-        }
-    }
-
-    // EFFECTS: Remove mineral from review and put in learn
-    public void checkInReview(String inName) {
-        List<Mineral> reviewList = toReview.getMineralList();
-        for (int i = 0; i < toReview.getMineralList().size(); i++) {
-            Mineral inMineral = reviewList.get(i);
-            if (inName.equals(inMineral.getName())) {
-                toReview.removeFromMineralList(inMineral);
-                learned.addToMineralList(inMineral);
-                System.out.println(GREEN + "\t" + inMineral.getName() + " moved to learned list." + RESET);
-            }
-        }
     }
 
     // SAVE and LOAD methods:

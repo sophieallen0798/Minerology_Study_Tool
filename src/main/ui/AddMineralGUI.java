@@ -1,9 +1,6 @@
 package ui;
 
-import model.Folder;
 import model.Mineral;
-import model.ReviewFolder;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -17,7 +14,6 @@ import static ui.Ui2.*;
 public class AddMineralGUI extends JFrame {
 
     private Mineral min;
-    private JTextField field;
     private Color green1;
 
     private JLabel labLabel;
@@ -50,20 +46,15 @@ public class AddMineralGUI extends JFrame {
     private JTextField crystalSystemBox;
     private JTextField otherBox;
 
-    private ReviewFolder revFolder;
-    private Ui2 ui2;
-
-    public AddMineralGUI(ReviewFolder folder) throws FileNotFoundException {
+    public AddMineralGUI() throws FileNotFoundException {
         super();
-        jframe = new JFrame();
+        //jframe = new JFrame();
         addMineralMenu();
     }
 
     public void addMineralMenu() {
-        //super("The title");
-        //add(controlPanel);
         ((JPanel) getContentPane()).setBorder(new EmptyBorder(13, 13, 13, 13));
-        setLayout(new GridLayout(14,2));
+        setLayout(new GridLayout(14, 2));
         JButton addBtn = new JButton("Add");
         JButton saveBtn = new JButton("Save");
         addBtn.setActionCommand("add");
@@ -73,7 +64,7 @@ public class AddMineralGUI extends JFrame {
         saveBtn.addActionListener(actions());
 
         label = new JLabel("");
-        green1 = new Color(90, 180,  90);
+        green1 = new Color(90, 180, 90);
 
         makeMineralLabels();
         //mineral = new Mineral();
@@ -91,24 +82,20 @@ public class AddMineralGUI extends JFrame {
     }
 
     public ActionListener myActions() {
-        ActionListener myListener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Mineral min = new Mineral();
-                min = getMineral();
-                System.out.println(min.getName());
-                if (toReview.mineralInFolder(min.getName())) {
-                    label.setForeground(red1);
-                    label.setText("   Mineral " + min.getName() + " already exists in review folder.");
-                } else if (learned.mineralInFolder(min.getName())) {
-                    label.setForeground(red1);
-                    label.setText("   Mineral " + min.getName() + " already exists in learned folder.");
-                } else {
-                    toReview.addToMineralList(min);
-                    label.setForeground(green1);
-                    label.setText("   " + min.getName() + " added to review list.");
-                    resetBoxesEmpty();
-                }
+        ActionListener myListener = e -> {
+            min = getMineral();
+            System.out.println(min.getName());
+            if (toReview.mineralInFolder(min.getName())) {
+                label.setForeground(red1);
+                label.setText("   Mineral " + min.getName() + " already exists in review folder.");
+            } else if (learned.mineralInFolder(min.getName())) {
+                label.setForeground(red1);
+                label.setText("   Mineral " + min.getName() + " already exists in learned folder.");
+            } else {
+                toReview.addToMineralList(min);
+                label.setForeground(green1);
+                label.setText("   " + min.getName() + " added to review list.");
+                resetBoxesEmpty();
             }
         };
         return myListener;

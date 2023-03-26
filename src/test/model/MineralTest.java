@@ -18,8 +18,8 @@ public class MineralTest {
     // Test set, get lab
     @Test
     void testLab() {
-        testMineral.setLab(1);
-        assertEquals(1, testMineral.getLab());
+        testMineral.setLab("1");
+        assertEquals("1", testMineral.getLab());
     }
 
     // Test set, get name

@@ -5,7 +5,6 @@ import model.Folder;
 import model.Mineral;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -45,14 +44,11 @@ public class Table extends JPanel {
         table.setPreferredScrollableViewportSize(new Dimension(700, 70));
         table.setFillsViewportHeight(true);
         table.setAutoCreateRowSorter(true);
-        //Create the scroll pane and add the table to it.
         JScrollPane scrollPane = new JScrollPane(table);
-        //Add the scroll pane to this panel.
-        //add(pic);
         add(scrollPane);
-
         add(deleteBtn);
         add(moveBtn);
+        add(tableMessage);
     }
 
     private void fillTable() {
@@ -65,46 +61,42 @@ public class Table extends JPanel {
     }
 
     public ActionListener moveMineral() {
-        ActionListener moveMineral = new ActionListener() {
+        return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int i = table.getSelectedRow();
-                String minToMove = String.valueOf(table.getValueAt(i,0));
+                String minToMove = String.valueOf(table.getValueAt(i, 0));
                 for (Mineral m : folder.getMineralList()) {
                     if (m.getName().equals(minToMove)) {
                         tableMessage.setForeground(green1);
                         if (folder.getName().equals("Review Folder")) {
                             toReview.removeFromMineralList(m);
                             learned.addToMineralList(m);
-                            tableMessage.setText(m.getName() + " moved to learned list.Reload table to show changes.");
+                            tableMessage.setText(m.getName() + " moved to learned list. Reload table to show changes.");
                         } else if (folder.getName().equals("Learned Folder")) {
                             toReview.removeFromMineralList(m);
                             learned.addToMineralList(m);
-                            tableMessage.setText(m.getName() + " moved to learned list.Reload table to show changes.");
+                            tableMessage.setText(m.getName() + " moved to learned list. Reload table to show changes.");
                         }
                     }
                 }
-
             }
         };
-        return moveMineral;
     }
 
     public ActionListener deleteAction() {
-        ActionListener deleteAction = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int i = table.getSelectedRow();
-                String minNameToDelete = String.valueOf(table.getValueAt(i,0));
-                for (Mineral m : toReview.getMineralList()) {
-                    if (m.getName().equals(minNameToDelete)) {
-                        toReview.removeFromMineralList(m);
-                        tableMessage.setForeground(red1);
-                        tableMessage.setText(m.getName() + " removed. Reload table to show changes.");
-                    }
+        ActionListener deleteAction = e -> {
+            int i = table.getSelectedRow();
+            String minNameToDelete = String.valueOf(table.getValueAt(i, 0));
+            for (Mineral m : toReview.getMineralList()) {
+                if (m.getName().equals(minNameToDelete)) {
+                    toReview.removeFromMineralList(m);
+                    tableMessage.setForeground(red1);
+                    tableMessage.setText(m.getName() + " removed. Reload table to show changes.");
+                    break;
                 }
-
             }
+
         };
         return deleteAction;
     }
@@ -142,7 +134,7 @@ public class Table extends JPanel {
         frame.setVisible(true);
     }
 
-    public void fun(String args) {
+    public void fun() {
         //Schedule a job for the event-dispatching thread:
         //creating and showing this application's GUI.
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
@@ -175,7 +167,6 @@ public class Table extends JPanel {
 
     // EFFECTS: get table entry
     public String createObject(int i, int j) {
-        String entry = getMin(j, mineralList.get(i));
-        return entry;
+        return getMin(j, mineralList.get(i));
     }
 }

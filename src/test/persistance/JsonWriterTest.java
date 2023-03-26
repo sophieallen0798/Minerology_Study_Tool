@@ -2,6 +2,7 @@ package persistance;
 
 import model.Folder;
 import model.Mineral;
+import model.ReviewFolder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -22,11 +23,11 @@ public class JsonWriterTest {
     // Create new folder and 2 minerals, specify mineral names
     @BeforeEach
     void runBefore() {
-        folder = new Folder("review");
+        folder = new ReviewFolder();
         testMin1 = new Mineral();
         testMin2 = new Mineral();
         testMin1.setName("mica");
-        testMin1.setLab(1);
+        testMin1.setLab("1");
         testMin1.setLustre("shiny");
         testMin1.setColor("green");
         testMin1.setHardness("4");
@@ -56,8 +57,8 @@ public class JsonWriterTest {
             writer.close();
 
             JsonReader reader = new JsonReader("./data/testReaderEmptyFolder.json");
-            folder = reader.read();
-            assertEquals("review", folder.getName());
+            folder = reader.revRead();
+            assertEquals("Review Folder", folder.getName());
             assertEquals(0, folder.getMineralList().size());
         } catch (IOException e) {
             fail("Unexpected exception thrown on writing empty folder");
@@ -76,9 +77,9 @@ public class JsonWriterTest {
             writer.close();
 
             JsonReader reader = new JsonReader("./data/testReaderNormalFolder.json");
-            folder = reader.read();
+            folder = reader.revRead();
             List<Mineral> mineralList = folder.getMineralList();
-            assertEquals("review", folder.getName());
+            assertEquals("Review Folder", folder.getName());
             assertEquals("mica", mineralList.get(0).getName());
             assertEquals("quartz", mineralList.get(1).getName());
 
