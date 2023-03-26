@@ -2,8 +2,9 @@ package ui;
 
 
 import javax.swing.*;
-import java.awt.Dimension;
-import java.awt.GridLayout;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.util.List;
@@ -13,18 +14,16 @@ import model.Folder;
 
 // Source: modified from https://docs.oracle.com/javase/tutorial/uiswing/components/table.html
 public class Table extends JPanel {
-    private static boolean DEBUG = false;
     private String[] columnNames;
     private JTable table;
     private Object[][] data;
     private static Folder folder;
-//    private Folder testFolder;
     private List<Mineral> mineralList;
-//    private Mineral mineral2;
-//    private Mineral mineral;
 
     public Table(Folder folder) {
         super(new GridLayout(0, 1));
+        setPreferredSize(new Dimension(500, 400));
+        //super(new FlowLayout());
         this.folder = folder;
         mineralList = folder.getMineralList();
         data = new Object[mineralList.size()][12];
@@ -35,34 +34,34 @@ public class Table extends JPanel {
         }
         columnNames = new String[]{"Name", "Lab", "Lustre", "Color", "Streak", "Hardness", "Specific Gravity",
                 "Cleavage", "Fracture", "Habit", "Crystal System", "Other"};
-        final JTable table = new JTable(data, columnNames);
-        JButton deleteBtn = new JButton("Delete Selected");
-        deleteBtn.setActionCommand("delete");
-        table.setPreferredScrollableViewportSize(new Dimension(1000, 70));
+        table = new JTable(data, columnNames);
+        ImageIcon photo = new ImageIcon("data/rock.jpg");
+        JLabel pic = new JLabel(photo);
+        //JButton deleteBtn = new JButton("Delete Selected");
+        //deleteBtn.setActionCommand("delete");
+        //deleteBtn.addActionListener(deleteAction());
+        table.setPreferredScrollableViewportSize(new Dimension(500, 70));
         table.setFillsViewportHeight(true);
         table.setAutoCreateRowSorter(true);
-//        if (DEBUG) {
-//            table.addMouseListener(new MouseAdapter() {
-//                public void mouseClicked(MouseEvent e) {
-//                    printDebugData(table);
-//                }
-//            });
-//        }
         //Create the scroll pane and add the table to it.
         JScrollPane scrollPane = new JScrollPane(table);
         //Add the scroll pane to this panel.
+        add(pic);
         add(scrollPane);
 
-//        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-//            public void run() {
-//                createAndShowGUI();
-//            }
-//        });
+        //add(deleteBtn);
     }
 
-//    public ActionListener tableListener() {
-//        int i = table.getSelectedRow();
-//        table.removeRow(i);
+//    public ActionListener deleteAction() {
+//        ActionListener deleteAction = new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                int i = table.getSelectedRow();
+//                ((DefaultTableModel)table.getModel()).removeRow(i);
+//                //table.removeRow(i);
+//            }
+//        };
+//        return deleteAction;
 //    }
 
 //    private void printDebugData(JTable table) {
@@ -81,15 +80,12 @@ public class Table extends JPanel {
 //        System.out.println("--------------------------");
 //    }
 
-    /**
-     * Create the GUI and show it.  For thread safety,
-     * this method should be invoked from the
-     * event-dispatching thread.
-     */
+
     private static void createAndShowGUI() {
         //Create and set up the window.
         JFrame frame = new JFrame("Table");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setPreferredSize(new Dimension(500, 400));
+        frame.setLayout(new GridLayout(14, 2, 2, 2));
 
         //Create and set up the content pane.
         Table newContentPane = new Table(folder);
@@ -110,17 +106,8 @@ public class Table extends JPanel {
             }
         });
     }
-//    public static void main(String[] args) {
-//        //Schedule a job for the event-dispatching thread:
-//        //creating and showing this application's GUI.
-//        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-//            public void run() {
-//                createAndShowGUI();
-//            }
-//        });
-//    }
 
-    double[][] matrix = new double[20][4];
+    //double[][] matrix = new double[20][4];
 
     // EFFECTS: Get mineral property for table entry
     public String getMin(int i, Mineral m) {

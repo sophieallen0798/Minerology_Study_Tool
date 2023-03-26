@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import static javax.swing.UIManager.put;
+
 
 // Application to study and keep a list of minerals
 public class Ui2 extends JFrame {
@@ -36,6 +38,7 @@ public class Ui2 extends JFrame {
     private Mineral mineral;
     private JTextField field;
     static Color green1;
+    static Color red1;
 
     private JLabel labLabel;
     private JLabel nameLabel;
@@ -91,6 +94,9 @@ public class Ui2 extends JFrame {
     private JButton saveFoldersButton;
     private JButton quitButton;
 
+    private JLabel pic;
+    private ImageIcon photo;
+
     protected JButton button;
 
     // EFFECTS: Initialize Folders and json writers and readers, goes to open menu
@@ -106,18 +112,24 @@ public class Ui2 extends JFrame {
     }
 
     public void guiMenu() {
+        green1 = new Color(90, 180,  90);
+        red1 = new Color(230, 20,  20);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setPreferredSize(new Dimension(400, 400));
-        setLayout(new GridLayout(14, 2,2,2));
-        menuLabel = new JLabel("lab");
+        setPreferredSize(new Dimension(500, 400));
+        setLayout(new GridLayout(14, 2, 2, 2));
+        ((JPanel) getContentPane()).setBorder(new EmptyBorder(13, 13, 13, 13));
+        menuLabel = new JLabel("");
+        photo = new ImageIcon("data/rock.jpg");
+        pic = new JLabel(photo);
         JButton addMinBtn = new JButton("Add Minerals");
         JButton studyBtn = new JButton("Study");
         JButton viewBtn = new JButton("View Folders");
         JButton organizeBtn = new JButton("Organize Folders");
         JButton loadBtn = new JButton("Load Folders");
         JButton saveBtn = new JButton("Save Folders");
-        JButton sortButton = new JButton("Sort By Lab");
+        JButton viewCsImageBtn = new JButton("View Crystal Systems");
         JButton clearButton = new JButton("Clear All Folders");
+        clearButton.setForeground(red1);
         addMinBtn.setActionCommand("addMin");
         studyBtn.setActionCommand("study");
         viewBtn.setActionCommand("view");
@@ -125,26 +137,27 @@ public class Ui2 extends JFrame {
         loadBtn.setActionCommand("load");
         saveBtn.setActionCommand("saveButton");
         clearButton.setActionCommand("clear");
-        sortButton.setActionCommand("sort");
+        viewCsImageBtn.setActionCommand("viewCS");
 
         addMinBtn.addActionListener(actions());
         studyBtn.addActionListener(actionHappening());
         viewBtn.addActionListener(actionHappening());
         organizeBtn.addActionListener(actions());
         loadBtn.addActionListener(actionHappening());
-        sortButton.addActionListener(actionHappening());
+        viewCsImageBtn.addActionListener(actionHappening());
         clearButton.addActionListener(actionHappening());
         field = new JTextField(5);
         //add(makeButton());
+        add(viewCsImageBtn);
         add(addMinBtn);
         add(studyBtn);
         add(viewBtn);
         add(organizeBtn);
         add(loadBtn);
         add(saveBtn);
-        add(sortButton);
         add(clearButton);
         add(menuLabel);
+        add(pic);
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
@@ -191,9 +204,6 @@ public class Ui2 extends JFrame {
                     menuLabel.setForeground(green1);
                     menuLabel.setText("Folders Loaded");
                 }
-//        if (e.getActionCommand().equals("addMin")) {
-//            addMinGUI = new AddMineralGUI(toReview);
-//        }
                 if (e.getActionCommand().equals("save") | e.getActionCommand().equals("saveButton")) {
                     toReview = addMinGUI.getFolder();
                     saveFolders();
@@ -209,14 +219,21 @@ public class Ui2 extends JFrame {
                     organizeFolders(learned);
                 }
                 if (e.getActionCommand().equals("study")) {
-                    studyGUI();
+                    try {
+                        studyGUI();
+                    } catch (IllegalArgumentException k) {
+                        System.out.println("hi");
+                        emptyWarning();
+                    }
                 }
-                if (e.getActionCommand().equals("sort")) {
-                    sortLab();
+                if (e.getActionCommand().equals("viewCS")) {
+                    csImage();
                 }
                 if (e.getActionCommand().equals("clear")) {
                     toReview = new ReviewFolder();
                     learned = new LearnedFolder();
+                    label.setForeground(red1);
+                    label.setText("Folders cleared");
                 }
             }
         };
@@ -224,14 +241,28 @@ public class Ui2 extends JFrame {
 
     }
 
+    // EFFECTS: Starts studyGUI
     public static void studyGUI() {
         Study frame = new Study();
         frame.setSize(500, 500);
         frame.setVisible(true);
     }
 
-    public void sortLab() {
+    // EFFECTS: opens image of a rock in a new panel
+    public void csImage() {
+        JPanel pan = new JPanel();
+        JFrame frame1 = new JFrame();
+        frame1.setVisible(true);
+        frame1.add(pan);
+        frame1.setSize(500, 500);
+        frame1.add(pic);
+    }
 
+    // EFFECTS: Produces JOptionPane with review list empty warning
+    public void emptyWarning() {
+        JLabel warningLabel = new JLabel("Review list empty. Please add minerals to study.");
+        warningLabel.setForeground(red1);
+        JOptionPane.showMessageDialog(button, warningLabel);
     }
 
 //    public ActionListener globalActions() {

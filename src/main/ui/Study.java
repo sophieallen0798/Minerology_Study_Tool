@@ -55,9 +55,8 @@ public class Study extends JFrame {
     }
 
     public void studyButtons() {
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        //setDefaultCloseOperation(EXIT_ON_CLOSE);
         makeMineralLabels();
-        labels();
         message = new JLabel();
         JTextField text = new JTextField(20);
         JPanel panel = new JPanel(new GridLayout(14, 2,8,8));
@@ -114,17 +113,6 @@ public class Study extends JFrame {
         habit.addActionListener(propertyButton());
         cs.addActionListener(propertyButton());
         other.addActionListener(propertyButton());
-
-//        panel.add(lustre);
-//        panel.add(color);
-//        panel.add(streak);
-//        panel.add(hardness);
-//        panel.add(sg);
-//        panel.add(cleavage);
-//        panel.add(fracture);
-//        panel.add(habit);
-//        panel.add(cs);
-//        panel.add(other);
         panel.add(titleLabel);
         panel.add(currentMineral);
         //panel.add(new JLabel(new ImageIcon("data/tobs.jpg")));
@@ -187,7 +175,7 @@ public class Study extends JFrame {
 //        });
     }
 
-// EFFECTS: Determine if user guessed mineral name correctly, give option to continue playing or return to menu
+// EFFECTS: Determine if user guessed mineral name correctly, move to next mineral
     private ActionListener guessButton() {
         ActionListener guessAction = new ActionListener() {
             @Override
@@ -197,7 +185,7 @@ public class Study extends JFrame {
                 } else {
                     message.setText("Incorrect, the mineral was " + mineral.getName());
                 }
-                resetBoxesEmpty();
+                resetLabels();
                 mineral = toReview.nextStudyMineral();
                 mineralsStudied += 1;
                 currentMineral.setText("Mineral Number " + mineralsStudied);
@@ -206,38 +194,30 @@ public class Study extends JFrame {
         return guessAction;
     }
 
+    // EFFECTS: Action Listener for buttons to reveal properties - sets corresponding label to mineral property
     private ActionListener propertyButton() {
         ActionListener action = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getActionCommand().equals("lustre")) {
                     lustreLabel.setText(mineral.getLustre());
-                }
-                if (e.getActionCommand().equals("color")) {
+                } else if (e.getActionCommand().equals("color")) {
                     colorLabel.setText(mineral.getColor());
-                }
-                if (e.getActionCommand().equals("streak")) {
+                } else if (e.getActionCommand().equals("streak")) {
                     streakLabel.setText(mineral.getStreak());
-                }
-                if (e.getActionCommand().equals("hardness")) {
+                } else if (e.getActionCommand().equals("hardness")) {
                     hardnessLabel.setText(mineral.getHardness());
-                }
-                if (e.getActionCommand().equals("sg")) {
+                } else if (e.getActionCommand().equals("sg")) {
                     specificGravityLabel.setText(mineral.getSpecificGravity());
-                }
-                if (e.getActionCommand().equals("cleavage")) {
+                } else if (e.getActionCommand().equals("cleavage")) {
                     cleavageLabel.setText(mineral.getCleavage());
-                }
-                if (e.getActionCommand().equals("fracture")) {
+                } else if (e.getActionCommand().equals("fracture")) {
                     fractureLabel.setText(mineral.getFracture());
-                }
-                if (e.getActionCommand().equals("habit")) {
+                } else if (e.getActionCommand().equals("habit")) {
                     habitLabel.setText(mineral.getHabit());
-                }
-                if (e.getActionCommand().equals("cs")) {
+                } else if (e.getActionCommand().equals("cs")) {
                     crystalSystemLabel.setText(mineral.getCrystalSystem());
-                }
-                if (e.getActionCommand().equals("other")) {
+                } else if (e.getActionCommand().equals("other")) {
                     otherLabel.setText(mineral.getOther());
                 }
             }
@@ -245,6 +225,7 @@ public class Study extends JFrame {
         return action;
     }
 
+    // EFFECTS: make labels used to display mineral property requested by user
     private void makeMineralLabels() {
         lustreLabel = new JLabel("");
         colorLabel = new JLabel("");
@@ -258,34 +239,9 @@ public class Study extends JFrame {
         otherLabel = new JLabel("");
     }
 
-    private void labels() {
-//        add(lustreLabel);
-//        add(lustre);
-//        add(colorLabel);
-//        add(color);
-//        add(streakLabel);
-//        add(streak);
-//        add(hardnessLabel);
-//        add(hardness);
-//        add(specificGravityLabel);
-//        add(sg);
-//        add(cleavageLabel);
-//        add(cleavage);
-//        add(fractureLabel);
-//        add(fracture);
-//        add(habitLabel);
-//        add(habit);
-//        add(crystalSystemLabel);
-//        add(cs);
-//        add(otherLabel);
-//        add(other);
-    }
 
-
-
-
-
-    private void resetBoxesEmpty() {
+    // EFFECTS: reset labels to empty string
+    private void resetLabels() {
         lustreLabel.setText("");
         colorLabel.setText("");
         streakLabel.setText("");
@@ -297,84 +253,5 @@ public class Study extends JFrame {
         crystalSystemLabel.setText("");
         otherLabel.setText("");
     }
-
-
-    // EFFECTS: Get new random mineral, start study game, continue game while user does not input "q"
-//    public void startGame() {
-//        String selection;
-//        if (toReview.mineralListNotEmpty()) {
-//            while (true) {
-//                Mineral currentMin = toReview.nextStudyMineral();
-//                System.out.println("\nMineral Number " + mineralsStudied + ":");
-//                mineralsStudied += 1;
-//                studyMenu();
-//                selection = input.next().toLowerCase();
-//                if (selection.equals("q")) {
-//                    quitMenu();
-//                    break;
-//                }
-//                nextProperty(selection, currentMin);
-//            }
-//        } else {
-//            System.out.println(RED + "Review list is empty. Please add at least one mineral.\n" + RESET);
-//        }
-//    }
-//
-//    // EFFECTS: Determine if user guessed mineral name correctly, give option to continue playing or return to menu
-//    public void guessMineral(Mineral currentMin) {
-//        System.out.println("Enter guess:");
-//        if (selection.equals(currentMin.getName())) {
-//            message.setText("Correct!");
-//        } else {
-//            message.setText("Incorrect, the mineral was " + currentMin.getName());
-//        }
-//    }
-//
-//
-//
-//    // EFFECTS: Display properties specified by user input
-//    @SuppressWarnings("methodlength")
-//    public void continueGame(String selection, Mineral currentMin) {
-//        if (selection.equals("q") | selection.equals("m")) {
-//            quit(selection);
-//        } else if (selection.equals("l")) {
-//            System.out.println(PURPLE + "\nLustre: " + RESET + currentMin.getLustre());
-//        } else if (selection.equals("co")) {
-//            System.out.println(PURPLE + "\nColor: " + RESET + currentMin.getColor());
-//        } else if (selection.equals("s")) {
-//            System.out.println(PURPLE + "\nStreak: " + RESET + currentMin.getStreak());
-//        } else if (selection.equals("har")) {
-//            System.out.println(PURPLE + "\nHardness: " + RESET + currentMin.getHardness());
-//        } else if (selection.equals("sp")) {
-//            System.out.println(PURPLE + "\nSpecific Gravity: " + RESET + currentMin.getSpecificGravity());
-//        } else if (selection.equals("cl")) {
-//            System.out.println(PURPLE + "\nCleavage: " + RESET + currentMin.getCleavage());
-//        } else if (selection.equals("f")) {
-//            System.out.println(PURPLE + "\nFracture: " + RESET + currentMin.getFracture());
-//        } else if (selection.equals("hab")) {
-//            System.out.println(PURPLE + "\nHabit: " + RESET + currentMin.getHabit());
-//        } else if (selection.equals("cs")) {
-//            System.out.println(PURPLE + "\nCrystal System: " + RESET + currentMin.getCrystalSystem());
-//        } else if (selection.equals("o")) {
-//            System.out.println(PURPLE + "\nOther: " + RESET + currentMin.getOther());
-//        } else if (selection.equals("g")) {
-//            guessMineral(currentMin);
-//        }
-//    }
-//
-//    public void nextProperty(String selection, Mineral currentMin) {
-//        while (!selection.equals("q")) {
-//            if (propertyValid(selection)) {
-//                continueGame(selection, currentMin);
-//                studyMenu();
-//                selection = input.next().toLowerCase();
-//                quit(selection);
-//            } else if (!propertyValid(selection)) {
-//                System.out.println(RED + "Please enter a valid property code." + RESET);
-//                selection = input.next().toLowerCase();
-//                quit(selection);
-//            }
-//        }
-//    }
 
 }
