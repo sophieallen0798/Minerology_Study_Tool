@@ -83,8 +83,8 @@ public class Table extends JPanel {
                             + "changes.");
                     break;
                 } else if (folder.getName().equals("Learned Folder")) {
-                    toReview.removeFromMineralList(m);
-                    learned.addToMineralList(m);
+                    learned.removeFromMineralList(m);
+                    toReview.addToMineralList(m);
                     tableMessage.setText(m.getName() + " moved to learned list. Reload table to show "
                             + "changes.");
                     break;

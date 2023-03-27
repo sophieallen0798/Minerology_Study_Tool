@@ -1,15 +1,14 @@
 package ui;
 
 import model.Mineral;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
-
 import static ui.Ui2.*;
 
+// Class Declaration: JFrame hosting add mineral activity and add mineral methods
 
 public class AddMineralGUI extends JFrame {
 
@@ -52,6 +51,7 @@ public class AddMineralGUI extends JFrame {
         addMineralMenu();
     }
 
+    // EFFECTS: Adds buttons and labels to main menu
     public void addMineralMenu() {
         ((JPanel) getContentPane()).setBorder(new EmptyBorder(13, 13, 13, 13));
         setLayout(new GridLayout(14, 2));
@@ -78,10 +78,10 @@ public class AddMineralGUI extends JFrame {
         setResizable(true);
     }
 
+    // EFFECTS: Creates action listeners, ensures that name entered is not already present in a folder
     public ActionListener myActions() {
         return e -> {
             min = getMineral();
-            System.out.println(min.getName());
             if (toReview.mineralInFolder(min.getName())) {
                 label.setForeground(red1);
                 label.setText("   Mineral " + min.getName() + " already exists in review folder.");
@@ -97,6 +97,7 @@ public class AddMineralGUI extends JFrame {
         };
     }
 
+    // EFFECTS: Make labels for properties
     private void makeMineralLabels() {
         labLabel = new JLabel("Lab Number:");
         nameLabel = new JLabel("Name:");
@@ -112,6 +113,7 @@ public class AddMineralGUI extends JFrame {
         otherLabel = new JLabel("Other:");
     }
 
+    // EFFECTS: Make text fields for user entry
     private void makeMineralBoxes() {
         labBox = new JTextField(5);
         nameBox = new JTextField(5);
@@ -127,6 +129,7 @@ public class AddMineralGUI extends JFrame {
         otherBox = new JTextField(5);
     }
 
+    // EFFECTS: Adds labels and text fields to panel
     @SuppressWarnings("methodlength")
     private void labelsBoxes() {
         add(labLabel);
@@ -155,6 +158,7 @@ public class AddMineralGUI extends JFrame {
         add(otherBox);
     }
 
+    // EFFECTS: Resets text fields to empty
     private void resetBoxesEmpty() {
         labBox.setText("");
         nameBox.setText("");
@@ -170,6 +174,7 @@ public class AddMineralGUI extends JFrame {
         otherBox.setText("");
     }
 
+    // EFFECTS: Creates new mineral from properties in text fields
     private Mineral getMineral() {
         this.min = new Mineral();
         min.setLab(labBox.getText());

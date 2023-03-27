@@ -1,0 +1,176 @@
+<html>
+<head>
+<title>Table.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #0033b3;}
+.s1 { color: #080808;}
+.s2 { color: #8c8c8c; font-style: italic;}
+.s3 { color: #1750eb;}
+.s4 { color: #067d17;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Table.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">ui;</span>
+
+
+<span class="s0">import </span><span class="s1">model.Folder;</span>
+<span class="s0">import </span><span class="s1">model.Mineral;</span>
+
+<span class="s0">import </span><span class="s1">javax.swing.*;</span>
+<span class="s0">import </span><span class="s1">java.awt.*;</span>
+<span class="s0">import </span><span class="s1">java.awt.event.ActionListener;</span>
+<span class="s0">import </span><span class="s1">java.util.Arrays;</span>
+<span class="s0">import </span><span class="s1">java.util.List;</span>
+
+<span class="s0">import static </span><span class="s1">ui.Ui2.*;</span>
+
+<span class="s2">// Source: modified from https://docs.oracle.com/javase/tutorial/uiswing/components/table.html</span>
+<span class="s0">public class </span><span class="s1">Table </span><span class="s0">extends </span><span class="s1">JPanel {</span>
+    <span class="s0">private </span><span class="s1">String[] columnNames;</span>
+    <span class="s0">private </span><span class="s1">JTable table;</span>
+    <span class="s0">private </span><span class="s1">Object[][] data;</span>
+    <span class="s0">private static </span><span class="s1">Folder folder;</span>
+    <span class="s0">private </span><span class="s1">List&lt;Mineral&gt; mineralList;</span>
+    <span class="s0">private </span><span class="s1">JLabel tableMessage;</span>
+
+    <span class="s0">public </span><span class="s1">Table(Folder folder) {</span>
+        <span class="s0">super</span><span class="s1">(</span><span class="s0">new </span><span class="s1">GridLayout(</span><span class="s3">0</span><span class="s1">, </span><span class="s3">1</span><span class="s1">));</span>
+        <span class="s1">setPreferredSize(</span><span class="s0">new </span><span class="s1">Dimension(</span><span class="s3">700</span><span class="s1">, </span><span class="s3">400</span><span class="s1">));</span>
+        <span class="s1">tableMessage = </span><span class="s0">new </span><span class="s1">JLabel(</span><span class="s4">&quot;&quot;</span><span class="s1">);</span>
+        <span class="s2">//this.folder = toReview;</span>
+        <span class="s0">this</span><span class="s1">.folder = folder;</span>
+        <span class="s1">mineralList = folder.getMineralList();</span>
+        <span class="s1">fillTable();</span>
+        <span class="s1">columnNames = </span><span class="s0">new </span><span class="s1">String[]{</span><span class="s4">&quot;Name&quot;</span><span class="s1">, </span><span class="s4">&quot;Lab&quot;</span><span class="s1">, </span><span class="s4">&quot;Lustre&quot;</span><span class="s1">, </span><span class="s4">&quot;Color&quot;</span><span class="s1">, </span><span class="s4">&quot;Streak&quot;</span><span class="s1">, </span><span class="s4">&quot;Hardness&quot;</span><span class="s1">, </span><span class="s4">&quot;Specific Gravity&quot;</span><span class="s1">,</span>
+                <span class="s4">&quot;Cleavage&quot;</span><span class="s1">, </span><span class="s4">&quot;Fracture&quot;</span><span class="s1">, </span><span class="s4">&quot;Habit&quot;</span><span class="s1">, </span><span class="s4">&quot;Crystal System&quot;</span><span class="s1">, </span><span class="s4">&quot;Other&quot;</span><span class="s1">};</span>
+        <span class="s1">table = </span><span class="s0">new </span><span class="s1">JTable(data, columnNames);</span>
+        <span class="s2">//ImageIcon photo = new ImageIcon(&quot;data/learnedHeading.png&quot;);</span>
+        <span class="s2">//JLabel pic = new JLabel(photo);</span>
+        <span class="s1">JButton deleteBtn = </span><span class="s0">new </span><span class="s1">JButton(</span><span class="s4">&quot;Delete Selected&quot;</span><span class="s1">);</span>
+        <span class="s1">JButton moveBtn = </span><span class="s0">new </span><span class="s1">JButton(</span><span class="s4">&quot;Move Selected to Other Folder&quot;</span><span class="s1">);</span>
+        <span class="s1">moveBtn.setActionCommand(</span><span class="s4">&quot;move&quot;</span><span class="s1">);</span>
+        <span class="s1">moveBtn.addActionListener(moveMineral());</span>
+        <span class="s1">deleteBtn.setActionCommand(</span><span class="s4">&quot;delete&quot;</span><span class="s1">);</span>
+        <span class="s1">deleteBtn.addActionListener(deleteAction());</span>
+        <span class="s1">table.setPreferredScrollableViewportSize(</span><span class="s0">new </span><span class="s1">Dimension(</span><span class="s3">700</span><span class="s1">, </span><span class="s3">70</span><span class="s1">));</span>
+        <span class="s1">table.setFillsViewportHeight(</span><span class="s0">true</span><span class="s1">);</span>
+        <span class="s1">table.setAutoCreateRowSorter(</span><span class="s0">true</span><span class="s1">);</span>
+        <span class="s1">JScrollPane scrollPane = </span><span class="s0">new </span><span class="s1">JScrollPane(table);</span>
+        <span class="s1">add(scrollPane);</span>
+        <span class="s1">add(deleteBtn);</span>
+        <span class="s1">add(moveBtn);</span>
+        <span class="s1">add(tableMessage);</span>
+    <span class="s1">}</span>
+
+    <span class="s0">private void </span><span class="s1">fillTable() {</span>
+        <span class="s1">data = </span><span class="s0">new </span><span class="s1">Object[mineralList.size()][</span><span class="s3">12</span><span class="s1">];</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i &lt; mineralList.size(); i++) {</span>
+            <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">j = </span><span class="s3">0</span><span class="s1">; j &lt; </span><span class="s3">12</span><span class="s1">; j++) {</span>
+                <span class="s1">data[i][j] = createObject(i, j);</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">ActionListener moveMineral() {</span>
+        <span class="s0">return </span><span class="s1">e -&gt; {</span>
+            <span class="s0">if </span><span class="s1">(table.getSelectedRowCount() == </span><span class="s3">0</span><span class="s1">) {</span>
+                <span class="s1">tableMessage.setForeground(red1);</span>
+                <span class="s1">tableMessage.setText(</span><span class="s4">&quot;Please select a row.&quot;</span><span class="s1">);</span>
+            <span class="s1">} </span><span class="s0">else </span><span class="s1">{</span>
+                <span class="s1">removeAdd();</span>
+            <span class="s1">}</span>
+        <span class="s1">};</span>
+    <span class="s1">}</span>
+
+    <span class="s0">private void </span><span class="s1">removeAdd() {</span>
+        <span class="s0">int </span><span class="s1">i = table.getSelectedRow();</span>
+        <span class="s1">String minToMove = String.valueOf(table.getValueAt(i, </span><span class="s3">0</span><span class="s1">));</span>
+        <span class="s0">for </span><span class="s1">(Mineral m : folder.getMineralList()) {</span>
+            <span class="s0">if </span><span class="s1">(m.getName().equals(minToMove)) {</span>
+                <span class="s1">tableMessage.setForeground(green1);</span>
+                <span class="s0">if </span><span class="s1">(folder.getName().equals(</span><span class="s4">&quot;Review Folder&quot;</span><span class="s1">)) {</span>
+                    <span class="s1">toReview.removeFromMineralList(m);</span>
+                    <span class="s1">learned.addToMineralList(m);</span>
+                    <span class="s1">tableMessage.setText(m.getName() + </span><span class="s4">&quot; moved to learned list. Reload table to show &quot;</span>
+                            <span class="s1">+ </span><span class="s4">&quot;changes.&quot;</span><span class="s1">);</span>
+                    <span class="s0">break</span><span class="s1">;</span>
+                <span class="s1">} </span><span class="s0">else if </span><span class="s1">(folder.getName().equals(</span><span class="s4">&quot;Learned Folder&quot;</span><span class="s1">)) {</span>
+                    <span class="s1">toReview.removeFromMineralList(m);</span>
+                    <span class="s1">learned.addToMineralList(m);</span>
+                    <span class="s1">tableMessage.setText(m.getName() + </span><span class="s4">&quot; moved to learned list. Reload table to show &quot;</span>
+                            <span class="s1">+ </span><span class="s4">&quot;changes.&quot;</span><span class="s1">);</span>
+                    <span class="s0">break</span><span class="s1">;</span>
+                <span class="s1">}</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">ActionListener deleteAction() {</span>
+        <span class="s0">return </span><span class="s1">e -&gt; {</span>
+            <span class="s0">if </span><span class="s1">(table.getSelectedRowCount() == </span><span class="s3">0</span><span class="s1">) {</span>
+                <span class="s1">tableMessage.setForeground(red1);</span>
+                <span class="s1">tableMessage.setText(</span><span class="s4">&quot;Please select a row.&quot;</span><span class="s1">);</span>
+            <span class="s1">} </span><span class="s0">else </span><span class="s1">{</span>
+                <span class="s0">int </span><span class="s1">i = table.getSelectedRow();</span>
+                <span class="s1">String minNameToDelete = String.valueOf(table.getValueAt(i, </span><span class="s3">0</span><span class="s1">));</span>
+                <span class="s0">for </span><span class="s1">(Mineral m : folder.getMineralList()) {</span>
+                    <span class="s0">if </span><span class="s1">(m.getName().equals(minNameToDelete)) {</span>
+                        <span class="s1">folder.removeFromMineralList(m);</span>
+                        <span class="s1">tableMessage.setForeground(red1);</span>
+                        <span class="s1">tableMessage.setText(m.getName() + </span><span class="s4">&quot; removed. Reload table to show changes.&quot;</span><span class="s1">);</span>
+                        <span class="s0">break</span><span class="s1">;</span>
+                    <span class="s1">}</span>
+                <span class="s1">}</span>
+            <span class="s1">}</span>
+        <span class="s1">};</span>
+    <span class="s1">}</span>
+
+    <span class="s0">private static void </span><span class="s1">createAndShowGUI() {</span>
+        <span class="s1">JFrame frame = </span><span class="s0">new </span><span class="s1">JFrame(</span><span class="s4">&quot;Table&quot;</span><span class="s1">);</span>
+        <span class="s1">frame.setPreferredSize(</span><span class="s0">new </span><span class="s1">Dimension(</span><span class="s3">700</span><span class="s1">, </span><span class="s3">400</span><span class="s1">));</span>
+        <span class="s1">frame.setLayout(</span><span class="s0">new </span><span class="s1">GridLayout(</span><span class="s3">14</span><span class="s1">, </span><span class="s3">2</span><span class="s1">, </span><span class="s3">2</span><span class="s1">, </span><span class="s3">2</span><span class="s1">));</span>
+
+        <span class="s1">Table newContentPane = </span><span class="s0">new </span><span class="s1">Table(folder);</span>
+        <span class="s1">newContentPane.setOpaque(</span><span class="s0">true</span><span class="s1">);</span>
+        <span class="s1">frame.setContentPane(newContentPane);</span>
+        <span class="s1">frame.pack();</span>
+        <span class="s1">frame.setVisible(</span><span class="s0">true</span><span class="s1">);</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">fun() {</span>
+        <span class="s1">javax.swing.SwingUtilities.invokeLater(Table::createAndShowGUI);</span>
+    <span class="s1">}</span>
+
+    <span class="s2">// EFFECTS: Get mineral property for table entry</span>
+    <span class="s0">public </span><span class="s1">String getMin(</span><span class="s0">int </span><span class="s1">i, Mineral m) {</span>
+        <span class="s1">String lab = String.valueOf(m.getLab());</span>
+        <span class="s1">String name = m.getName();</span>
+        <span class="s1">String lustre = m.getLustre();</span>
+        <span class="s1">String color = m.getColor();</span>
+        <span class="s1">String s = m.getStreak();</span>
+        <span class="s1">String hardness = String.valueOf(m.getHardness());</span>
+        <span class="s1">String sg = String.valueOf(m.getSpecificGravity());</span>
+        <span class="s1">String cleavage = m.getCleavage();</span>
+        <span class="s1">String fracture = m.getFracture();</span>
+        <span class="s1">String habit = m.getHabit();</span>
+        <span class="s1">String cs = m.getCrystalSystem();</span>
+        <span class="s1">String o = m.getOther();</span>
+        <span class="s1">List&lt;String&gt; messages = Arrays.asList(name, lab, lustre, color, s, hardness, sg, cleavage, fracture, habit, cs,</span>
+                <span class="s1">o);</span>
+        <span class="s0">return </span><span class="s1">messages.get(i);</span>
+    <span class="s1">}</span>
+
+    <span class="s2">// EFFECTS: get table entry</span>
+    <span class="s0">public </span><span class="s1">String createObject(</span><span class="s0">int </span><span class="s1">i, </span><span class="s0">int </span><span class="s1">j) {</span>
+        <span class="s0">return </span><span class="s1">getMin(j, mineralList.get(i));</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

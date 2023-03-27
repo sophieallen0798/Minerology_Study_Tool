@@ -6,8 +6,11 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.Random;
 
 import static ui.Ui2.*;
+
+// Class Declaration: JFrame for studying minerals
 
 public class Study extends JFrame {
 
@@ -38,6 +41,7 @@ public class Study extends JFrame {
 
     private Mineral mineral;
     private int mineralsStudied;
+    private static int MINERAL_PROBABILITY;
 
     private JTextField guessBox;
     private JLabel guessLabel;
@@ -45,12 +49,14 @@ public class Study extends JFrame {
 
     public Study() {
         super();
+        MINERAL_PROBABILITY = 5; // change of selecting mineral from learned folder (ex 5 = 1 in 5 chance)
         jframe = new JFrame();
-        mineral = toReview.nextStudyMineral();
+        mineral = randomFolder();
         mineralsStudied = 1;
         studyButtons();
     }
 
+    // EFFECTS: creates display with buttons and labels
     public void studyButtons() {
         JPanel panel = new JPanel(new GridLayout(14, 2, 8, 8));
         ((JPanel) getContentPane()).setBorder(new EmptyBorder(13, 13, 13, 13));
@@ -75,6 +81,7 @@ public class Study extends JFrame {
         add(panel, BorderLayout.CENTER);
     }
 
+    // EFFECTS: add guess boxes and labels to panel
     private void addGuesses(JPanel panel) {
         panel.add(guessLabel);
         panel.add(guessBox);
@@ -96,6 +103,7 @@ public class Study extends JFrame {
         otherLabel = new JLabel("");
     }
 
+    // EFFECTS: Makes guess display and sets actions
     private void guessDisplay() {
         guessBox = new JTextField(5);
         guessLabel = new JLabel("Guess Mineral Name:");
@@ -105,6 +113,7 @@ public class Study extends JFrame {
         currentMineral = new JLabel("Mineral Number " + mineralsStudied);
     }
 
+    // EFFECTS: sets action listener for buttons
     private void setActionListeners() {
         lustre.addActionListener(propertyButton());
         color.addActionListener(propertyButton());
@@ -118,6 +127,7 @@ public class Study extends JFrame {
         other.addActionListener(propertyButton());
     }
 
+    // EFFECTS: sets commands for buttons
     private void setButtonCommands() {
         lustre.setActionCommand("lustre");
         color.setActionCommand("color");
@@ -131,6 +141,7 @@ public class Study extends JFrame {
         other.setActionCommand("other");
     }
 
+    // EFFECTS: make new buttons for panel
     private void makeButtons() {
         lustre = new JButton("Lustre");
         color = new JButton("Color");
@@ -144,6 +155,7 @@ public class Study extends JFrame {
         other = new JButton("Other Properties");
     }
 
+    // EFFECTS: add property labels to panel
     private void addPropertyLabels(JPanel panel) {
         panel.add(currentMineral);
         panel.add(lustre);
@@ -179,7 +191,7 @@ public class Study extends JFrame {
                 message.setText("Incorrect, the mineral was " + mineral.getName());
             }
             resetLabels();
-            mineral = toReview.nextStudyMineral();
+            mineral = randomFolder();
             mineralsStudied += 1;
             currentMineral.setText("Mineral Number " + mineralsStudied);
         };
@@ -213,7 +225,6 @@ public class Study extends JFrame {
         };
     }
 
-
     // EFFECTS: reset labels to empty string
     private void resetLabels() {
         lustreLabel.setText("");
@@ -226,6 +237,21 @@ public class Study extends JFrame {
         habitLabel.setText("");
         crystalSystemLabel.setText("");
         otherLabel.setText("");
+    }
+
+    // EFFECTS: Randomly (with weighted probability) selects folder and returns next random mineral
+    public Mineral randomFolder() {
+        Random rand = new Random();
+        int randomFolder = rand.nextInt(MINERAL_PROBABILITY);
+        if (learned.mineralListNotEmpty()) {
+            if (randomFolder == 1) {
+                return learned.nextStudyMineral();
+            } else {
+                return toReview.nextStudyMineral();
+            }
+        } else {
+            return toReview.nextStudyMineral();
+        }
     }
 
 }
