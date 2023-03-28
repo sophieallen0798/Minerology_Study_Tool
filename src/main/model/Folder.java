@@ -10,7 +10,6 @@ public abstract class Folder {
     protected String name;
     protected List<Mineral> mineralList;
 
-
     public abstract String getName();
 
     public abstract List<Mineral> getMineralList();
@@ -23,7 +22,6 @@ public abstract class Folder {
 
     // MODIFIES: this
     // EFFECTS: If list is not empty, remove specified mineral
-    //          If list is empty, throw empty list exception
     public void removeFromMineralList(Mineral min) {
         if (!this.getMineralList().isEmpty()) {
             this.getMineralList().remove(min);
@@ -64,6 +62,7 @@ public abstract class Folder {
         return jsonArray;
     }
 
+    // EFFECTS: Select next mineral for study activity
     public abstract Mineral nextStudyMineral();
 
     // EFFECTS: Check if given mineral is in given folder, return false if mineral not in folder

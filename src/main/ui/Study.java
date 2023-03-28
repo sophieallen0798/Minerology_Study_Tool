@@ -81,7 +81,7 @@ public class Study extends JFrame {
         add(panel, BorderLayout.CENTER);
     }
 
-    // EFFECTS: add guess boxes and labels to panel
+    // EFFECTS: Add guess boxes and labels to panel
     private void addGuesses(JPanel panel) {
         panel.add(guessLabel);
         panel.add(guessBox);
@@ -89,7 +89,7 @@ public class Study extends JFrame {
         panel.add(message);
     }
 
-    // EFFECTS: make labels used to display mineral property requested by user
+    // EFFECTS: Make labels used to display mineral property requested by user
     private void makeMineralLabels() {
         lustreLabel = new JLabel("");
         colorLabel = new JLabel("");
@@ -113,7 +113,7 @@ public class Study extends JFrame {
         currentMineral = new JLabel("Mineral Number " + mineralsStudied);
     }
 
-    // EFFECTS: sets action listener for buttons
+    // EFFECTS: Sets action listener for buttons
     private void setActionListeners() {
         lustre.addActionListener(propertyButton());
         color.addActionListener(propertyButton());
@@ -127,7 +127,7 @@ public class Study extends JFrame {
         other.addActionListener(propertyButton());
     }
 
-    // EFFECTS: sets commands for buttons
+    // EFFECTS: Sets commands for buttons
     private void setButtonCommands() {
         lustre.setActionCommand("lustre");
         color.setActionCommand("color");
@@ -141,7 +141,7 @@ public class Study extends JFrame {
         other.setActionCommand("other");
     }
 
-    // EFFECTS: make new buttons for panel
+    // EFFECTS: Make new buttons for panel
     private void makeButtons() {
         lustre = new JButton("Lustre");
         color = new JButton("Color");
@@ -155,7 +155,7 @@ public class Study extends JFrame {
         other = new JButton("Other Properties");
     }
 
-    // EFFECTS: add property labels to panel
+    // EFFECTS: Add property labels to panel
     private void addPropertyLabels(JPanel panel) {
         panel.add(currentMineral);
         panel.add(lustre);
@@ -225,7 +225,7 @@ public class Study extends JFrame {
         };
     }
 
-    // EFFECTS: reset labels to empty string
+    // EFFECTS: Reset labels to empty string
     private void resetLabels() {
         lustreLabel.setText("");
         colorLabel.setText("");
@@ -237,6 +237,7 @@ public class Study extends JFrame {
         habitLabel.setText("");
         crystalSystemLabel.setText("");
         otherLabel.setText("");
+        guessBox.setText("");
     }
 
     // EFFECTS: Randomly (with weighted probability) selects folder and returns next random mineral

@@ -1,1 +1,14 @@
-{"minerals": []}
+{"minerals": [{
+    "hardness": "ln",
+    "crystalSystem": "k",
+    "cleavage": "nj",
+    "other": "n",
+    "habit": "n",
+    "color": "mkl",
+    "name": "lkm",
+    "specificGravity": "nj",
+    "streak": "mk",
+    "lab": "1",
+    "lustre": "mkl",
+    "fracture": "nj"
+}]}

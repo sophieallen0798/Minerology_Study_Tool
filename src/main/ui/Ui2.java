@@ -4,7 +4,6 @@ import model.LearnedFolder;
 import model.ReviewFolder;
 import persistance.JsonReader;
 import persistance.JsonWriter;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -15,6 +14,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import static ui.AddMineralGUI.label;
 
+// Rock photo source: https://fairdinkumseeds.com/products-page/ethnobotanical-or-medicinal-plants/smiley-rock-massive-
+// 175-00-discount/?fbclid=IwAR1XmPqBKLMuIK8tOwgKQQafO2VtkG1bsvwyIeuNHPc-m2CEmev6nEiTmIg
 
 // Application to study and keep a list of minerals
 public class Ui2 extends JFrame {
@@ -28,7 +29,6 @@ public class Ui2 extends JFrame {
     static Color purple1;
     static Color blueish;
 
-    private static final int NUM_PROPERTIES = 12;  // number of fields in mineral class
     static ReviewFolder toReview;
     static LearnedFolder learned;
     static JsonWriter jsonWriterRev;
@@ -56,7 +56,7 @@ public class Ui2 extends JFrame {
         JOptionPane optionPane = new JOptionPane(getPanel(),
                 JOptionPane.PLAIN_MESSAGE, JOptionPane.DEFAULT_OPTION, null,
                 new Object[] {}, null);
-        dialog = optionPane.createDialog("import");
+        dialog = optionPane.createDialog("Start Mineral App");
         dialog.setVisible(true);
         guiMenu();
     }
@@ -74,16 +74,12 @@ public class Ui2 extends JFrame {
         noBtn.addActionListener(e -> dialog.dispose());
         panel.setLayout(new FlowLayout());
         panel.setSize(400, 400);
-
         panel.add(label);
         panel.add(loadFolders);
         panel.add(noBtn);
         panel.add(pic);
         return panel;
     }
-
-    // Photo source: https://fairdinkumseeds.com/products-page/ethnobotanical-or-medicinal-plants/smiley-rock-massive-
-    // 175-00-discount/?fbclid=IwAR1XmPqBKLMuIK8tOwgKQQafO2VtkG1bsvwyIeuNHPc-m2CEmev6nEiTmIg
 
     // EFFECTS: Display start menu with button options
     public void guiMenu() {
@@ -136,7 +132,6 @@ public class Ui2 extends JFrame {
         });
     }
 
-
     // EFFECTS: Add buttons, photo, and label to JFrame
     private void addButtons(JButton addMinBtn, JButton studyBtn, JButton viewRev, JButton viewLer,
                             JButton loadBtn, JButton saveBtn) {
@@ -183,8 +178,13 @@ public class Ui2 extends JFrame {
             }
             if (e.getActionCommand().equals("save")) {
                 saveFolders();
-                label.setForeground(green1);
-                label.setText("Folders Saved");
+                try {
+                    label.setForeground(green1);
+                    label.setText("Folders Saved");
+                } catch (NullPointerException n) {
+                    menuLabel.setForeground(green1);
+                    menuLabel.setText("Folders Saved");
+                }
             }
         };
     }
@@ -227,16 +227,6 @@ public class Ui2 extends JFrame {
         frame.setVisible(true);
     }
 
-    // EFFECTS: Opens image of a rock in a new frame
-    public void csImage() {
-        JPanel pan = new JPanel();
-        JFrame frame1 = new JFrame();
-        frame1.setVisible(true);
-        frame1.add(pan);
-        frame1.setSize(400, 500);
-        frame1.add(pic);
-    }
-
     // EFFECTS: Produces JOptionPane with review list empty warning
     public void emptyWarning() {
         JLabel warningLabel = new JLabel("Review list empty. Please add minerals to study.");
@@ -271,8 +261,13 @@ public class Ui2 extends JFrame {
         try {
             toReview = jsonReaderRev.revRead();
             learned = jsonReaderLearn.lerRead();
-//            menuLabel.setForeground(green1);
-//            menuLabel.setText("Folders Loaded");
+            try {
+                menuLabel.setForeground(green1);
+                menuLabel.setText("Folders Loaded");
+            } catch (NullPointerException e) {
+                // Set no labels
+            }
+
         } catch (IOException e) {
             menuLabel.setForeground(red1);
             menuLabel.setText("Unable to read from file: " + JSON_FOLDERS_R + JSON_FOLDERS_L);

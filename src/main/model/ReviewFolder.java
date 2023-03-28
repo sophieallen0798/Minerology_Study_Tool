@@ -16,7 +16,6 @@ public class ReviewFolder extends Folder {
     private JsonWriter jsonWriterLearn;
     private JsonReader jsonReaderLearn;
     private static final String JSON_FOLDERS_R = "./data/review.json";
-    private static final String JSON_FOLDERS_L = "./data/learned.json";
 
     // EFFECTS: Constructs a folder with a name and list of minerals
     public ReviewFolder() {
@@ -25,8 +24,6 @@ public class ReviewFolder extends Folder {
         reviewFolder = this;
         jsonReaderRev = new JsonReader(JSON_FOLDERS_R);
         jsonWriterRev = new JsonWriter(JSON_FOLDERS_R);
-        jsonReaderLearn = new JsonReader(JSON_FOLDERS_L);
-        jsonWriterLearn = new JsonWriter(JSON_FOLDERS_L);
     }
 
     public String getName() {

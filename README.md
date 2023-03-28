@@ -5,7 +5,7 @@ The application will allow users to practice identifying minerals based on their
 track of minerals they think they have learned, and minerals they think need more review. 
 When the user starts the app, they will be prompted to choose between viewing and organizing their review and learned 
 folders, entering minerals into their folder, loading or saving their folders, and studying minerals. The minerals that 
-they can study will be the minerals on the review list that they created. 
+they can study will be the minerals on the review list and learned list that they created. 
 
 **The properties each mineral will have associated with it are:**
 - lab number

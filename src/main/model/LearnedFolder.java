@@ -14,15 +14,12 @@ public class LearnedFolder extends Folder {
     private JsonReader jsonReaderRev;
     private JsonWriter jsonWriterLearn;
     private JsonReader jsonReaderLearn;
-    private static final String JSON_FOLDERS_R = "./data/review.json";
     private static final String JSON_FOLDERS_L = "./data/learned.json";
 
     // EFFECTS: Constructs a folder with a name and list of minerals
     public LearnedFolder() {
         this.name = "Learned Folder";
         this.mineralList = new ArrayList<>();
-        jsonReaderRev = new JsonReader(JSON_FOLDERS_R);
-        jsonWriterRev = new JsonWriter(JSON_FOLDERS_R);
         jsonReaderLearn = new JsonReader(JSON_FOLDERS_L);
         jsonWriterLearn = new JsonWriter(JSON_FOLDERS_L);
     }

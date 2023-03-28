@@ -13,8 +13,6 @@ import static ui.Ui2.*;
 public class AddMineralGUI extends JFrame {
 
     private Mineral min;
-    private Color green1;
-
     private JLabel labLabel;
     private JLabel nameLabel;
     private JLabel lustreLabel;
@@ -28,10 +26,8 @@ public class AddMineralGUI extends JFrame {
     private JLabel crystalSystemLabel;
     private JLabel otherLabel;
     static JLabel label;
-
     private JFrame jframe;
     private JPanel jpanel;
-
     private JTextField labBox;
     private JTextField nameBox;
     private JTextField lustreBox;
@@ -47,10 +43,10 @@ public class AddMineralGUI extends JFrame {
 
     public AddMineralGUI() throws FileNotFoundException {
         super();
-        //jframe = new JFrame();
         addMineralMenu();
     }
 
+    // MODIFIES: this
     // EFFECTS: Adds buttons and labels to main menu
     public void addMineralMenu() {
         ((JPanel) getContentPane()).setBorder(new EmptyBorder(13, 13, 13, 13));
@@ -61,10 +57,7 @@ public class AddMineralGUI extends JFrame {
         addBtn.addActionListener(myActions());
         saveBtn.setActionCommand("save");
         saveBtn.addActionListener(actions());
-
         label = new JLabel("");
-        green1 = new Color(90, 180, 90);
-
         makeMineralLabels();
         makeMineralBoxes();
         resetBoxesEmpty();
