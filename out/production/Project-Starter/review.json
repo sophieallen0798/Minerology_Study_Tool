@@ -40,5 +40,47 @@
         "lab": "1",
         "lustre": "s",
         "fracture": "o"
+    },
+    {
+        "hardness": "b",
+        "crystalSystem": "isometric",
+        "cleavage": "n",
+        "other": "h",
+        "habit": "k",
+        "color": "m",
+        "name": "dff",
+        "specificGravity": "b",
+        "streak": "",
+        "lab": "8",
+        "lustre": "m",
+        "fracture": ""
+    },
+    {
+        "hardness": "very",
+        "crystalSystem": "importnat",
+        "cleavage": "ok",
+        "other": "hum",
+        "habit": "biting sophie fingernails",
+        "color": "green",
+        "name": "kezar",
+        "specificGravity": "strog",
+        "streak": "108",
+        "lab": "p",
+        "lustre": "bright",
+        "fracture": "ouch"
+    },
+    {
+        "hardness": "b",
+        "crystalSystem": "`",
+        "cleavage": "^%$##",
+        "other": ",,dkm 448    3j;;!",
+        "habit": "      ",
+        "color": "iih",
+        "name": "sop",
+        "specificGravity": "9999.00",
+        "streak": "",
+        "lab": "7",
+        "lustre": "j",
+        "fracture": "[][['"
     }
 ]}
