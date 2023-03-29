@@ -18,7 +18,7 @@ import static ui.AddMineralGUI.label;
 // 175-00-discount/?fbclid=IwAR1XmPqBKLMuIK8tOwgKQQafO2VtkG1bsvwyIeuNHPc-m2CEmev6nEiTmIg
 
 // Application to study and keep a list of minerals
-public class Ui2 extends JFrame {
+public class MineralApp extends JFrame {
 
     private Table table;
     private AddMineralGUI addMinGUI;
@@ -44,7 +44,7 @@ public class Ui2 extends JFrame {
     private JDialog dialog;
 
     // EFFECTS: Initialize Folders and json writers and readers, goes to open menu
-    public Ui2() throws FileNotFoundException {
+    public MineralApp() throws FileNotFoundException {
         learned = new LearnedFolder();
         toReview = new ReviewFolder();
         jsonReaderRev = new JsonReader(JSON_FOLDERS_R);

@@ -6,7 +6,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
-import static ui.Ui2.*;
+import static ui.MineralApp.*;
 
 // Class Declaration: JFrame hosting add mineral activity and add mineral methods
 

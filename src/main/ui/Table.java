@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.util.List;
-import static ui.Ui2.*;
+import static ui.MineralApp.*;
 
 // Source: modified from https://docs.oracle.com/javase/tutorial/uiswing/components/table.html
 // Creates a JPanel table containing all minerals in the folder provided
