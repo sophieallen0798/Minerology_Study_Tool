@@ -15,8 +15,8 @@ public class Table extends JPanel {
     private String[] columnNames;
     private JTable table;
     private Object[][] data;
-    private static Folder folder;
-    private List<Mineral> mineralList;
+    static Folder folder;
+    static List<Mineral> mineralList;
     private JLabel tableMessage;
 
     // EFFECTS: Creates a table with display and content specifications
@@ -27,8 +27,7 @@ public class Table extends JPanel {
         this.folder = folder;
         mineralList = folder.getMineralList();
         fillTable();
-        columnNames = new String[]{"Name", "Lab", "Lustre", "Color", "Streak", "Hardness", "Specific Gravity",
-                "Cleavage", "Fracture", "Habit", "Crystal System", "Other"};
+        columnNames = folder.getColNames();
         table = new JTable(data, columnNames);
         JButton deleteBtn = new JButton("Delete Selected");
         JButton moveBtn = new JButton("Move Selected to Other Folder");
@@ -113,23 +112,6 @@ public class Table extends JPanel {
         };
     }
 
-    // EFFECTS: Creates new JFrame and sets preferences
-    private static void createAndShowGUI() {
-        JFrame frame = new JFrame("Table");
-        frame.setPreferredSize(new Dimension(700, 400));
-        frame.setLayout(new GridLayout(14, 2, 2, 2));
-        Table newContentPane = new Table(folder);
-        newContentPane.setOpaque(true);
-        frame.setContentPane(newContentPane);
-        frame.pack();
-        frame.setVisible(true);
-    }
-
-    // EFFECTS: Function called to show table from Ui2
-    public void fun() {
-        javax.swing.SwingUtilities.invokeLater(Table::createAndShowGUI);
-    }
-
     // EFFECTS: Gets mineral property for table entry
     public String getMin(int i, Mineral m) {
         String lab = String.valueOf(m.getLab());
@@ -153,4 +135,5 @@ public class Table extends JPanel {
     public String createObject(int i, int j) {
         return getMin(j, mineralList.get(i));
     }
+
 }

@@ -1,9 +1,7 @@
 package ui;
 
+import model.*;
 import model.Event;
-import model.EventLog;
-import model.LearnedFolder;
-import model.ReviewFolder;
 import persistance.JsonReader;
 import persistance.JsonWriter;
 import javax.swing.*;
@@ -215,15 +213,25 @@ public class MineralApp extends JFrame {
                 label.setForeground(green1);
                 label.setText("Folders Saved");
             } else if (e.getActionCommand().equals("viewRev")) {
-                table = new Table(toReview);
-                table.fun();
+                createAndShowGUI(toReview);
             } else if (e.getActionCommand().equals("viewLer")) {
-                table = new Table(learned);
-                table.fun();
+                createAndShowGUI(learned);
             } else if (e.getActionCommand().equals("study")) {
                 tryStudy();
             }
         };
+    }
+
+    // EFFECTS: Creates new JFrame and sets preferences
+    public void createAndShowGUI(Folder folder) {
+        JFrame frame = new JFrame("Table");
+        frame.setPreferredSize(new Dimension(700, 400));
+        frame.setLayout(new GridLayout(14, 2, 2, 2));
+        Table newContentPane = new Table(folder);
+        newContentPane.setOpaque(true);
+        frame.setContentPane(newContentPane);
+        frame.pack();
+        frame.setVisible(true);
     }
 
     // EFFECTS: Start study if review list not empty, otherwise show warning message

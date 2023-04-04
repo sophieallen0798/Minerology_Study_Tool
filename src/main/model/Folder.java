@@ -2,7 +2,9 @@ package model;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import ui.Table;
 
+import java.util.Arrays;
 import java.util.List;
 
 // Folder objects consists of a name and a list of minerals
@@ -79,5 +81,15 @@ public abstract class Folder {
         return val;
     }
 
+    public abstract String[] getColNames();
+
+    // EFFECTS: Fills table with mineral properties
+    public abstract Object[][] fillTable();
+
+    // EFFECTS: Gets mineral property for table entry
+    public abstract String getMin(int i, Mineral m);
+
+    // EFFECTS: Get table entry
+    public abstract String createObject(int i, int j);
 }
 

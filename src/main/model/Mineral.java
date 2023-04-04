@@ -97,7 +97,6 @@ public class Mineral {
         this.other = other;
     }
 
-
     // GET methods:
 
     public String getLab() {
