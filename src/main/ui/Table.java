@@ -2,11 +2,13 @@ package ui;
 
 import model.Folder;
 import model.Mineral;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.util.List;
+
 import static ui.MineralApp.*;
 
 // Source: modified from https://docs.oracle.com/javase/tutorial/uiswing/components/table.html

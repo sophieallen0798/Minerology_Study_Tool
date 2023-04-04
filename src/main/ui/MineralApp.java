@@ -1,13 +1,13 @@
 package ui;
 
-import model.*;
 import model.Event;
+import model.*;
 import persistance.JsonReader;
 import persistance.JsonWriter;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -58,7 +58,7 @@ public class MineralApp extends JFrame {
         pic = new JLabel(photo);
         JOptionPane optionPane = new JOptionPane(getPanel(),
                 JOptionPane.PLAIN_MESSAGE, JOptionPane.DEFAULT_OPTION, null,
-                new Object[] {}, null);
+                new Object[]{}, null);
         dialog = optionPane.createDialog("Start Mineral App");
         dialog.setVisible(true);
         guiMenu();
@@ -122,7 +122,7 @@ public class MineralApp extends JFrame {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent we) {
-                String[] objButtons = new String[]{"Yes","No"};
+                String[] objButtons = new String[]{"Yes", "No"};
                 int promptResult = JOptionPane.showOptionDialog(null,
                         "Save folders?", "Save",
                         JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,

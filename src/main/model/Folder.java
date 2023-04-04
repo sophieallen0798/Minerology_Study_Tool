@@ -83,13 +83,5 @@ public abstract class Folder {
 
     public abstract String[] getColNames();
 
-    // EFFECTS: Fills table with mineral properties
-    public abstract Object[][] fillTable();
-
-    // EFFECTS: Gets mineral property for table entry
-    public abstract String getMin(int i, Mineral m);
-
-    // EFFECTS: Get table entry
-    public abstract String createObject(int i, int j);
 }
 
