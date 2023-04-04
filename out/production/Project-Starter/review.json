@@ -1,19 +1,5 @@
 {"minerals": [
     {
-        "hardness": "nlkj",
-        "crystalSystem": "jnjn",
-        "cleavage": "nlk",
-        "other": "n",
-        "habit": "jnlk",
-        "color": "nlkj",
-        "name": "kn",
-        "specificGravity": "nlkj",
-        "streak": "nlkj",
-        "lab": "1",
-        "lustre": "klj",
-        "fracture": "jnkl"
-    },
-    {
         "hardness": "km",
         "crystalSystem": "km",
         "cleavage": "mkm",
@@ -70,17 +56,59 @@
         "fracture": "ouch"
     },
     {
-        "hardness": "b",
-        "crystalSystem": "`",
-        "cleavage": "^%$##",
-        "other": ",,dkm 448    3j;;!",
-        "habit": "      ",
-        "color": "iih",
-        "name": "sop",
-        "specificGravity": "9999.00",
-        "streak": "",
-        "lab": "7",
-        "lustre": "j",
-        "fracture": "[][['"
+        "hardness": "jn",
+        "crystalSystem": "jn",
+        "cleavage": "jn",
+        "other": "j",
+        "habit": "kn",
+        "color": "jn",
+        "name": "kjnnn",
+        "specificGravity": "jn",
+        "streak": "n",
+        "lab": "2",
+        "lustre": "kjn",
+        "fracture": "jk"
+    },
+    {
+        "hardness": "lkj",
+        "crystalSystem": "j",
+        "cleavage": "lkjkl",
+        "other": "j",
+        "habit": "kj",
+        "color": "lkj",
+        "name": "lkj",
+        "specificGravity": "klj",
+        "streak": "klj",
+        "lab": "1",
+        "lustre": "klj",
+        "fracture": "j"
+    },
+    {
+        "hardness": "jlk",
+        "crystalSystem": "",
+        "cleavage": "jk",
+        "other": "",
+        "habit": "",
+        "color": "jlk",
+        "name": "klj",
+        "specificGravity": "jk",
+        "streak": "jkl",
+        "lab": "1",
+        "lustre": "jkl",
+        "fracture": "jk"
+    },
+    {
+        "hardness": "lmkl",
+        "crystalSystem": "",
+        "cleavage": "",
+        "other": "",
+        "habit": "",
+        "color": "lmk",
+        "name": "mkl",
+        "specificGravity": "kmml",
+        "streak": "lkm",
+        "lab": "1",
+        "lustre": "mk",
+        "fracture": ""
     }
 ]}

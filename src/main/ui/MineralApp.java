@@ -1,5 +1,7 @@
 package ui;
 
+import model.Event;
+import model.EventLog;
 import model.LearnedFolder;
 import model.ReviewFolder;
 import persistance.JsonReader;
@@ -7,11 +9,14 @@ import persistance.JsonWriter;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Iterator;
+
 import static ui.AddMineralGUI.label;
 
 // Rock photo source: https://fairdinkumseeds.com/products-page/ethnobotanical-or-medicinal-plants/smiley-rock-massive-
@@ -61,7 +66,7 @@ public class MineralApp extends JFrame {
         guiMenu();
     }
 
-    // Source: Code adaped from http://www.java2s.com/Tutorials/Java/Swing_How_to/JOptionPane/Create_JOptionPane_
+    // Source: Code adapted from http://www.java2s.com/Tutorials/Java/Swing_How_to/JOptionPane/Create_JOptionPane_
     // from_an_inner_JPanel.htm
     private JPanel getPanel() {
         JPanel panel = new JPanel();
@@ -127,6 +132,10 @@ public class MineralApp extends JFrame {
                 if (promptResult == 0) {
                     saveFolders();
                 }
+                Iterator<Event> eventList = EventLog.getInstance().iterator();
+                while (eventList.hasNext()) {
+                    System.out.println(eventList.next());
+                }
                 System.exit(0);
             }
         });
@@ -147,7 +156,7 @@ public class MineralApp extends JFrame {
     // EFFECTS: Sets Action Listener for buttons
     private void setButtonActions(JButton addMinBtn, JButton studyBtn, JButton viewRev, JButton viewLer,
                                   JButton loadBtn, JButton saveBtn) {
-        addMinBtn.addActionListener(actions());
+        addMinBtn.addActionListener(addMinAction());
         studyBtn.addActionListener(actionHappening());
         viewRev.addActionListener(actionHappening());
         viewLer.addActionListener(actionHappening());
@@ -169,13 +178,6 @@ public class MineralApp extends JFrame {
     // EFFECTS: Creates action listener for add and organize buttons, accessed from AddMineralGUI
     static ActionListener actions() {
         return e -> {
-            if (e.getActionCommand().equals("addMin")) {
-                try {
-                    new AddMineralGUI();
-                } catch (FileNotFoundException ex) {
-                    throw new RuntimeException(ex);
-                }
-            }
             if (e.getActionCommand().equals("save")) {
                 saveFolders();
                 try {
@@ -184,6 +186,19 @@ public class MineralApp extends JFrame {
                 } catch (NullPointerException n) {
                     menuLabel.setForeground(green1);
                     menuLabel.setText("Folders Saved");
+                }
+            }
+        };
+    }
+
+    // EFFECTS: Creates action listener for add and organize buttons, accessed from AddMineralGUI
+    private ActionListener addMinAction() {
+        return e -> {
+            if (e.getActionCommand().equals("addMin")) {
+                try {
+                    new AddMineralGUI();
+                } catch (FileNotFoundException ex) {
+                    throw new RuntimeException(ex);
                 }
             }
         };
@@ -267,7 +282,6 @@ public class MineralApp extends JFrame {
             } catch (NullPointerException e) {
                 // Set no labels
             }
-
         } catch (IOException e) {
             menuLabel.setForeground(red1);
             menuLabel.setText("Unable to read from file: " + JSON_FOLDERS_R + JSON_FOLDERS_L);

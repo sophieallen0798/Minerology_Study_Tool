@@ -1,5 +1,6 @@
 package ui;
 
+import model.EventLog;
 import model.Mineral;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

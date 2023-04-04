@@ -42,4 +42,10 @@ public class ReviewFolder extends Folder {
         return selectedMineral;
     }
 
+    @Override
+    public void addToMineralList(Mineral mineral) {
+        this.getMineralList().add(mineral);
+        EventLog.getInstance().logEvent(new Event("Mineral Added."));
+    }
+
 }

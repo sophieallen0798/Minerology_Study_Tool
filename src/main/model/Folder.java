@@ -18,6 +18,7 @@ public abstract class Folder {
     // EFFECTS: Add mineral to list
     public void addToMineralList(Mineral mineral) {
         this.getMineralList().add(mineral);
+        EventLog.getInstance().logEvent(new Event("Mineral Added."));
     }
 
     // MODIFIES: this
@@ -25,6 +26,7 @@ public abstract class Folder {
     public void removeFromMineralList(Mineral min) {
         if (!this.getMineralList().isEmpty()) {
             this.getMineralList().remove(min);
+            EventLog.getInstance().logEvent(new Event("Mineral removed."));
         }
     }
 
