@@ -14,6 +14,8 @@ public class FolderTest {
     private Folder testFolder;
     private Folder testFolder2;
     private Folder testFolderFolder;
+    private ReviewFolder revFolder;
+    private LearnedFolder lerFolder;
     private List<Mineral> mineralList;
 
     // Before each run, make 2 test minerals and 2 test folders
@@ -157,4 +159,14 @@ public class FolderTest {
         assertTrue(testFolder.mineralInFolder(testMineralA.getName()));
         assertTrue(testFolder.mineralInFolder(testMineralB.getName()));
     }
+
+    // Test event logged
+    @Test
+    void testEventLog() {
+        String[] columnNames = new String[]{"Name", "Lab", "Lustre", "Color", "Streak", "Hardness", "Specific Gravity",
+                "Cleavage", "Fracture", "Habit", "Crystal System", "Other"};
+        assertEquals(columnNames, testFolder.getColNames());
+        assertEquals(columnNames, testFolder2.getColNames());
+    }
+
 }

@@ -1,13 +1,12 @@
 package ui;
 
-import model.EventLog;
 import model.Mineral;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
-import static ui.MineralApp.*;
+import static ui.MineralAppGUI.*;
 
 // Class Declaration: JFrame hosting add mineral activity and add mineral methods
 

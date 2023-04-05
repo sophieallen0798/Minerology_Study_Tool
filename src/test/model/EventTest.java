@@ -35,4 +35,12 @@ public class EventTest {
     public void testToString() {
         assertEquals(d.toString() + "\n" + "Mineral added.", e.toString());
     }
+
+    @Test
+    public void hashCodeTest() {
+        assertEquals(13 * Calendar.getInstance().getTime().hashCode() + "Mineral added.".hashCode(),
+                e.hashCode());
+
+    }
+
 }

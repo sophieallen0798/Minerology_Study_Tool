@@ -9,11 +9,11 @@ import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.util.List;
 
-import static ui.MineralApp.*;
+import static ui.MineralAppGUI.*;
 
 // Source: modified from https://docs.oracle.com/javase/tutorial/uiswing/components/table.html
 // Creates a JPanel table containing all minerals in the folder provided
-public class Table extends JPanel {
+public class TableGUI extends JPanel {
     private String[] columnNames;
     private JTable table;
     private Object[][] data;
@@ -22,7 +22,7 @@ public class Table extends JPanel {
     private JLabel tableMessage;
 
     // EFFECTS: Creates a table with display and content specifications
-    public Table(Folder folder) {
+    public TableGUI(Folder folder) {
         super(new GridLayout(0, 1));
         setPreferredSize(new Dimension(700, 400));
         tableMessage = new JLabel("");

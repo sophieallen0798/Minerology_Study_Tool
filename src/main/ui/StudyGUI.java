@@ -8,11 +8,11 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.Random;
 
-import static ui.MineralApp.*;
+import static ui.MineralAppGUI.*;
 
 // Class Declaration: JFrame for studying minerals
 
-public class Study extends JFrame {
+public class StudyGUI extends JFrame {
 
     private JButton lustre;
     private JButton color;
@@ -47,7 +47,7 @@ public class Study extends JFrame {
     private JLabel guessLabel;
     private JFrame jframe;
 
-    public Study() {
+    public StudyGUI() {
         super();
         MINERAL_PROBABILITY = 5; // change of selecting mineral from learned folder (ex 5 = 1 in 5 chance)
         jframe = new JFrame();

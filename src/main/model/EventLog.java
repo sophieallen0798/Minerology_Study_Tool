@@ -4,59 +4,38 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
-/**
- * Represents a log of alarm system events.
- * We use the Singleton Design Pattern to ensure that there is only
- * one EventLog in the system and that the system has global access
- * to the single instance of the EventLog.
- */
+// Code adapted from https://github.students.cs.ubc.ca/CPSC210/AlarmSystem.git
+
+// EventLog tracking events occuring while application runs - created using singleton design pattern
 public class EventLog implements Iterable<model.Event> {
-    /**
-     * the only EventLog in the system (Singleton Design Pattern)
-     */
     private static EventLog theLog;
     private Collection<model.Event> events;
 
-    /**
-     * Prevent external construction.
-     * (Singleton Design Pattern).
-     */
+    // EFFECTS: Constructs EventLog with list of events - Prevent external construction.
     private EventLog() {
         events = new ArrayList<model.Event>();
     }
 
-    /**
-     * Gets instance of EventLog - creates it
-     * if it doesn't already exist.
-     * (Singleton Design Pattern)
-     *
-     * @return instance of EventLog
-     */
+    // EFFECTS: Gets instance of EventLog
     public static EventLog getInstance() {
         if (theLog == null) {
             theLog = new EventLog();
         }
-
         return theLog;
     }
 
-    /**
-     * Adds an event to the event log.
-     *
-     * @param e the event to be added
-     */
+    // EFFECTS: Adds event e to the event log
     public void logEvent(model.Event e) {
         events.add(e);
     }
 
-    /**
-     * Clears the event log and logs the event.
-     */
+    // EFFECTS: Clears the event log and events
     public void clear() {
         events.clear();
         logEvent(new model.Event("Event log cleared."));
     }
 
+    // EFFECTS: Iterates over EventLog
     @Override
     public Iterator<model.Event> iterator() {
         return events.iterator();

@@ -48,3 +48,20 @@ they can study will be the minerals on the review list and learned list that the
   selecting the "Save Folders" button from the main menu, or by selecting "Yes" when prompted on close. 
 - You can reload the state of my application by selecting "Yes" when the program runs and prompts you to load folders
   or by selecting the "Load Folders" button from the main menu.
+
+
+**Phase 4: Task 3**  
+Reflect on the design presented in your UML class diagram.  If you had more time to work on the project, 
+what substantive refactoring might you use to improve your design?  In 1-2 paragraphs in this section of your README, 
+describe the refactoring you are imagining and your reasons for it.  You do NOT need to perform the refactoring - 
+just identify the changes you would make if you had more time.  Keep in mind that refactoring does not mean adding 
+more features to your application.
+
+My Mineral class has 11 fields. In other classes, I had to make several methods getting, setting, and displaying these
+fields. I think I could have refactored to make more generic methods that I would be able to apply to more situations.
+This would save me a lot of time and typing, and make it easier if someone wanted to add or remove fields from the 
+class later. For example, the table class needs to add each field to a table. The study class needs to display all the
+fields as labels. Both actions required huge methods that could probably be simplified. 
+
+My folder class could probably have just been a regular class that takes in a string as a name. My GUI and other
+classes would just be able to use two folders with different names.

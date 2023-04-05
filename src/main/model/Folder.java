@@ -2,9 +2,7 @@ package model;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import ui.Table;
 
-import java.util.Arrays;
 import java.util.List;
 
 // Folder objects consists of a name and a list of minerals

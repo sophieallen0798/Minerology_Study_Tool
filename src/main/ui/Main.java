@@ -8,7 +8,7 @@ public class Main {
 
         javax.swing.SwingUtilities.invokeLater(() -> {
             try {
-                new MineralApp();
+                new MineralAppGUI();
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
             }

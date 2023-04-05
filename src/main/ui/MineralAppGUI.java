@@ -21,9 +21,9 @@ import static ui.AddMineralGUI.label;
 // 175-00-discount/?fbclid=IwAR1XmPqBKLMuIK8tOwgKQQafO2VtkG1bsvwyIeuNHPc-m2CEmev6nEiTmIg
 
 // Application to study and keep a list of minerals
-public class MineralApp extends JFrame {
+public class MineralAppGUI extends JFrame {
 
-    private Table table;
+    private TableGUI table;
     private AddMineralGUI addMinGUI;
 
     static Color green1;
@@ -47,7 +47,7 @@ public class MineralApp extends JFrame {
     private JDialog dialog;
 
     // EFFECTS: Initialize Folders and json writers and readers, goes to open menu
-    public MineralApp() throws FileNotFoundException {
+    public MineralAppGUI() throws FileNotFoundException {
         learned = new LearnedFolder();
         toReview = new ReviewFolder();
         jsonReaderRev = new JsonReader(JSON_FOLDERS_R);
@@ -227,7 +227,7 @@ public class MineralApp extends JFrame {
         JFrame frame = new JFrame("Table");
         frame.setPreferredSize(new Dimension(700, 400));
         frame.setLayout(new GridLayout(14, 2, 2, 2));
-        Table newContentPane = new Table(folder);
+        TableGUI newContentPane = new TableGUI(folder);
         newContentPane.setOpaque(true);
         frame.setContentPane(newContentPane);
         frame.pack();
@@ -245,7 +245,7 @@ public class MineralApp extends JFrame {
 
     // EFFECTS: Starts studyGUI
     public static void studyGUI() {
-        Study frame = new Study();
+        StudyGUI frame = new StudyGUI();
         frame.setSize(400, 500);
         frame.setVisible(true);
     }
