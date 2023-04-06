@@ -13,8 +13,8 @@ public class LearnedFolder extends Folder {
     protected String name;
     private JsonWriter jsonWriterRev;
     private JsonReader jsonReaderRev;
-    private JsonWriter jsonWriterLearn;
-    private JsonReader jsonReaderLearn;
+    private final JsonWriter jsonWriterLearn;
+    private final JsonReader jsonReaderLearn;
     private static final String JSON_FOLDERS_L = "./data/learned.json";
 
     // EFFECTS: Constructs a folder with a name and list of minerals
@@ -41,7 +41,7 @@ public class LearnedFolder extends Folder {
         return selectedMineral;
     }
 
-    // EFFECTS: Return column names for table
+    // EFFECTS: Return column names for table and adds to event log
     @Override
     public String[] getColNames() {
         String[] columnNames = new String[]{"Name", "Lab", "Lustre", "Color", "Streak", "Hardness", "Specific Gravity",

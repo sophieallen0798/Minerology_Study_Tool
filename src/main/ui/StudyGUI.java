@@ -45,7 +45,7 @@ public class StudyGUI extends JFrame {
 
     private JTextField guessBox;
     private JLabel guessLabel;
-    private JFrame jframe;
+    private final JFrame jframe;
 
     public StudyGUI() {
         super();

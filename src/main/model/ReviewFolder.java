@@ -10,9 +10,9 @@ import java.util.Random;
 public class ReviewFolder extends Folder {
     protected List<Mineral> mineralList;
     protected String name;
-    private Folder reviewFolder;
-    private JsonWriter jsonWriterRev;
-    private JsonReader jsonReaderRev;
+    private final Folder reviewFolder;
+    private final JsonWriter jsonWriterRev;
+    private final JsonReader jsonReaderRev;
     private JsonWriter jsonWriterLearn;
     private JsonReader jsonReaderLearn;
     private static final String JSON_FOLDERS_R = "./data/review.json";

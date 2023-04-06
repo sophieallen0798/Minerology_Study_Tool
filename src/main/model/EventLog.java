@@ -9,7 +9,7 @@ import java.util.Iterator;
 // EventLog tracking events occuring while application runs - created using singleton design pattern
 public class EventLog implements Iterable<model.Event> {
     private static EventLog theLog;
-    private Collection<model.Event> events;
+    private final Collection<model.Event> events;
 
     // EFFECTS: Constructs EventLog with list of events - Prevent external construction.
     private EventLog() {

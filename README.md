@@ -64,4 +64,5 @@ class later. For example, the table class needs to add each field to a table. Th
 fields as labels. Both actions required huge methods that could probably be simplified. 
 
 My folder class could probably have just been a regular class that takes in a string as a name. My GUI and other
-classes would just be able to use two folders with different names.
+classes would just be able to use two folders with different names. I also could have organized my action listeners in
+my GUI better and consolidate them. 

@@ -23,9 +23,6 @@ import static ui.AddMineralGUI.label;
 // Application to study and keep a list of minerals
 public class MineralAppGUI extends JFrame {
 
-    private TableGUI table;
-    private AddMineralGUI addMinGUI;
-
     static Color green1;
     static Color green2;
     static Color red1;
@@ -41,10 +38,10 @@ public class MineralAppGUI extends JFrame {
     private static final String JSON_FOLDERS_R = "./data/review.json";
     private static final String JSON_FOLDERS_L = "./data/learned.json";
 
-    private JLabel pic;
+    private final JLabel pic;
     protected JButton button;
     static JLabel menuLabel;
-    private JDialog dialog;
+    private final JDialog dialog;
 
     // EFFECTS: Initialize Folders and json writers and readers, goes to open menu
     public MineralAppGUI() throws FileNotFoundException {

@@ -17,7 +17,7 @@ import java.util.stream.Stream;
 
 // Reader that reads folders from JSON data stored in learned and review files
 public class JsonReader {
-    private String source;
+    private final String source;
 
     // EFFECTS: Constructs reader to read from source file
     public JsonReader(String source) {

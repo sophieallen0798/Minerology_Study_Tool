@@ -14,19 +14,19 @@ import static ui.MineralAppGUI.*;
 // Source: modified from https://docs.oracle.com/javase/tutorial/uiswing/components/table.html
 // Creates a JPanel table containing all minerals in the folder provided
 public class TableGUI extends JPanel {
-    private String[] columnNames;
-    private JTable table;
+    private final String[] columnNames;
+    private final JTable table;
     private Object[][] data;
     static Folder folder;
     static List<Mineral> mineralList;
-    private JLabel tableMessage;
+    private final JLabel tableMessage;
 
     // EFFECTS: Creates a table with display and content specifications
     public TableGUI(Folder folder) {
         super(new GridLayout(0, 1));
         setPreferredSize(new Dimension(700, 400));
         tableMessage = new JLabel("");
-        this.folder = folder;
+        TableGUI.folder = folder;
         mineralList = folder.getMineralList();
         fillTable();
         columnNames = folder.getColNames();

@@ -9,8 +9,8 @@ import java.util.Date;
 // Mineral App event
 public class Event {
     private static final int HASH_CONSTANT = 13;
-    private Date dateLogged;
-    private String description;
+    private final Date dateLogged;
+    private final String description;
 
     // EFFECTS: Creates an event with current date, time, and description of event
     public Event(String description) {
