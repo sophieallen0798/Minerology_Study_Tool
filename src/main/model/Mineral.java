@@ -19,6 +19,7 @@ public class Mineral {
     private String crystalSystem;
     private String other;
 
+    // EFFECTS: Constructs minerals with the properties listed above
     public Mineral() {
         lab = "";
         name = "";

@@ -79,6 +79,7 @@ public abstract class Folder {
         return val;
     }
 
+    // EFFECTS: Gets names of folder columns (names of mineral properties)
     public abstract String[] getColNames();
 
 }

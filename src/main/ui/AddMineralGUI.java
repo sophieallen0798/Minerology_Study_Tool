@@ -41,6 +41,7 @@ public class AddMineralGUI extends JFrame {
     private JTextField crystalSystemBox;
     private JTextField otherBox;
 
+    // EFFECTS: Creates GUI for creating minerals and adding to Review folder
     public AddMineralGUI() throws FileNotFoundException {
         super();
         addMineralMenu();
